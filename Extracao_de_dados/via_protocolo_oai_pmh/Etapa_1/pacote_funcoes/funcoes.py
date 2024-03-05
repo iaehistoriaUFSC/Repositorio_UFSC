@@ -11,12 +11,23 @@ import joblib
 os_name = os.name
 
 def limparConsole():
+    """
+    Função responsável por limpar a tela do console. Ela já considera, usando a bibliteca OS 
+    o seu sistema operacional para executar o comando mais adequado.
+    """
     if os_name == 'posix':
         os.system('clear')
     elif os_name == 'nt':
         os.system('cls')
 
 def criarDiretorio(caminho : str) -> None:
+    """
+    Função que cria o diretório, caso ele não exista.
+
+    Parâmetros:
+    -----------
+    - param caminho: String contendo o caminho para o diretório que será analisado.
+    """
     if not os.path.exists(caminho):
         os.makedirs(caminho)
         return caminho
@@ -56,8 +67,13 @@ def enviarRequisicao(link : str) -> tuple[bool, requests.Response] | tuple[bool,
     em caso afirmativo, um booleano "True" e a resposta da requisição ou, em caso
     negativo, um booleano "False" e uma string com o código de status da resposta.
 
-    :param link: URL/link da requisição que será enviada.
-    :return: Tupla com o status do processo (True ocorreu tudo certo e False
+    Parâmetros:
+    -----------
+    - param link: URL/link da requisição que será enviada.
+    
+    Retorno:
+    --------
+    - return: Tupla com o status do processo (True ocorreu tudo certo e False
     aconteceu algo indesejado) e uma string. Em caso do status ser True, a string
     será a própria resposta da requisição, em caso de False, a string será o
     erro identificado no processo de enviar a requisição e esperar a resposta.
@@ -80,9 +96,14 @@ def criarListaDeColecoes(link_colecoes: str) -> tuple[bool, list] | tuple[bool, 
     ('Nome da coleção','Número da coleção',Número de trabalhos publicados),
     ou seja, com os tipos: [(str, str, int)].
 
-    :param link_colecoes: URL/link da página da comunidade de Teses e Dissertações
+    Parâmetros:
+    -----------
+    - param link_colecoes: URL/link da página da comunidade de Teses e Dissertações
     do Repositório Institucional da UFSC.
-    :return: Lista contendo tuplas que armazenam as informações das coleções
+    
+    Retornos:
+    ---------
+    - return: Lista contendo tuplas que armazenam as informações das coleções
     presentes na página da comunidade de Teses e Dissertações do RI da UFSC.
     """
     status_requisicao_colecoes, response_colecoes = enviarRequisicao(link=link_colecoes)
@@ -130,8 +151,13 @@ def comunicarComAPI(link : str) -> tuple[bool, dict] | tuple[bool, str]:
     Realiza a comunicação com a interface OAI-PMH do RI da UFSC para coletar a
     resposta (em XML) e transformá-la em um dicionário Python.
 
-    :param link: URL/Link da requisição que será enviada para a interface.
-    :return: Tupla contendo o status do processo (True para indicar que deu tudo
+    Parâmetros:
+    -----------
+    - param link: URL/Link da requisição que será enviada para a interface.
+    
+    Retornos:
+    ---------
+    - return: Tupla contendo o status do processo (True para indicar que deu tudo
     certo e False para indicar que não ocorreu como desejado) e o dicionário
     da resposta (em caso afirmativo do status) ou uma string com o erro
     encontrado (em caso negativo do status).
@@ -155,8 +181,13 @@ def formatarNomeArquivoColecao(nome_colecao : str) -> str:
     arquivos (sem caractéres especiais, "/", ":", "-", "ç", "~", etc...), para
     evitar qualquer conflito ou prejuízo por conta da nomenclatura.
 
-    :param nome_colecao: Nome da coleção proveniente do site.
-    :return: Nome da coleção formatado para salvar e "manusear" adequadamente
+    Parâmetros:
+    -----------
+    - param nome_colecao: Nome da coleção proveniente do site.
+    
+    Retornos:
+    ---------
+    - return: Nome da coleção formatado para salvar e "manusear" adequadamente
     o(s) arquivo(s).
     """
     nome_colecao_formatado = re.sub(r'[^\w]', '_', unidecode(nome_colecao))
@@ -171,9 +202,14 @@ def validaFormatoDicXML(dic_xml : dict) -> bool:
     Realiza a validação do dicionário retornado da comunicação com a
     interface do RI UFSC.
 
-    :param dic_xml: Dicionário XML retornado da comunicação com a
+    Parâmetros:
+    -----------
+    - param dic_xml: Dicionário XML retornado da comunicação com a
     interface depois da transformação XML --> dict.
-    :return: Booleano indicando se o dicionário em questão tem ou não
+    
+    Retornos:
+    ---------
+    - return: Booleano indicando se o dicionário em questão tem ou não
     todos os campos esperados na resposta para a adequada coleta dos
     metadados. True quer dizer que o dicionário contém os campos
     adequadamente e False quer dizer que faltou algum campo necessário
@@ -198,9 +234,14 @@ def encontrarDataNaDescricao(data_descricao : str) -> str:
     qualquer outro ano, com 4 dígitos em sequência, ao final da descrição,
     caso exista.
 
-    :param data_descricao: String contendo toda a descrição do trabalho
+    Parâmetros:
+    -----------
+    - param data_descricao: String contendo toda a descrição do trabalho
     proveniente da comunicação com a interface.
-    :return: Data contendo os 4 dígitos, caso encontrada ou "N.I." em
+
+    Retornos:
+    ---------
+    - return: Data contendo os 4 dígitos, caso encontrada ou "N.I." em
     caso de não identificação da data na descrição (sem correspondência
     entre o padrão de data e a string da descrição).
     """
@@ -221,9 +262,14 @@ def encontrarPDFNaListagemDeArquivos(listagem_de_arquivos : list) -> str:
     encontra o arquivo que for PDF ou o arquivo PDF, dentre outros arquivos
     PDFs, que tiver o maior tamanho.
 
-    :param listagem_de_arquivos: Lista contendo os dicionários que representam
+    Parâmetros:
+    -----------
+    - param listagem_de_arquivos: Lista contendo os dicionários que representam
     os campos dos arquivos em questão.
-    :return: String contendo o link do PDF do trabalho ou "N.I." caso não
+    
+    Retornos:
+    ---------
+    - return: String contendo o link do PDF do trabalho ou "N.I." caso não
     encontre um arquivo PDF ("application/pdf").
     """
     link_pdf = 'N.I.'
@@ -273,11 +319,16 @@ def processarDicXML(dic : Dict[str,list], dic_xml : dict) -> Dict[str,list]:
     (o atualizando). Caso algum metadado não for propriamente encontrado, é
     preenchido como "N.I." (Não Identificado).
 
-    :param dic: Dicionário de entrada, no qual será preenchido/adicionado os
+    Parâmetros:
+    -----------
+    - param dic: Dicionário de entrada, no qual será preenchido/adicionado os
     metadados encontrados no dicionário de resposta da interface "dic_xml".
-    :param dic_xml: Dicionário retornado da comunicação com a interface do RI,
+    - param dic_xml: Dicionário retornado da comunicação com a interface do RI,
     após transformação de "XML" para "dict".
-    :return: Dicionário "dic" passado como entrada atualizado, depois da
+    
+    Retornos:
+    ---------
+    - return: Dicionário "dic" passado como entrada atualizado, depois da
     coleta dos metadados presentes no dicionário de entrada "dic_xml".
     """
     if isinstance(dic_xml['OAI-PMH']['ListRecords']['record'],list):
@@ -551,11 +602,17 @@ def printarAdicionandoProblemaNumTxt(string_problema : str, caminho_pasta_etapa_
     """
     Imprime na tela a mensagem de problema encontrada durante a execução e a adiciona num arquivo
     de texto referente aos problemas encontrados na etapa 1.
-    :param string_problema: String da descrição do problema encontrado durante a execução de algum
+    
+    Parâmetros:
+    -----------
+    - param string_problema: String da descrição do problema encontrado durante a execução de algum
     processo ao decorrer da execução.
-    :param caminho_pasta_etapa_1: String do caminho referente a pasta da etapa 1 no Google Drive, aonde o
+    - param caminho_pasta_etapa_1: String do caminho referente a pasta da etapa 1 no Google Drive, aonde o
     arquivo de texto dos problemas deve ser salvo.
-    :return: None, não há retornos nessa função.
+    
+    Retornos:
+    ---------
+    - return: None, não há retornos nessa função.
     """
     try:
         with open(os.path.join(caminho_pasta_etapa_1,'Problemas_etapa_1.txt'),'a',encoding='utf-8') as f:
@@ -572,9 +629,10 @@ def main():
     """
     Função principal a qual se encarregará de fazer as chamadas para as outras funções na sequência adequada.
 
-    :param exec_google_colab: Bool que decidirá se a execução será feita no Colab ou em outro ambiente de 
+    Parâmetros:
+    -----------
+    - param exec_google_colab: Bool que decidirá se a execução será feita no Colab ou em outro ambiente de 
     execução.
-    :return: None, não há retornos nessa função.
     """
     print('\n\n\tColetando informações das coleções do repositório (nome, número para API, número de publicações)...')
     time.sleep(2)
