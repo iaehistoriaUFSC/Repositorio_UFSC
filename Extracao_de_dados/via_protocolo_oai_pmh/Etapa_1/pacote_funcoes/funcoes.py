@@ -1,4 +1,20 @@
-from .setup_bibs import *
+import os
+import time
+import re
+from typing import Dict
+import requests
+from bs4 import BeautifulSoup
+import xmltodict
+from unidecode import unidecode
+import joblib
+
+os_name = os.name
+
+def limparConsole():
+    if os_name == 'posix':
+        os.system('clear')
+    elif os_name == 'nt':
+        os.system('cls')
 
 def criarDiretorio(caminho : str) -> None:
     if not os.path.exists(caminho):
@@ -9,11 +25,13 @@ def criarDiretorio(caminho : str) -> None:
 
 def ObterDiretorioAtual() -> str:
     """
-    This function gives the current executed script's directory.
+    Essa função retornará o diretório atual da pasta de trabalho que está executando o 
+    script em questão.
 
-    Return:
+    Retorno:
     -------
-    - return: String containing the full path to find the folder that contains the script you are currently executing.
+    - return: String contendo o caminho total até a pasta de trabalho que está executando 
+    este script.
     """
     return os.getcwd()
 
