@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #cc0404;
+    text-align: center;
+}
+/*
+h2 {
+    color: #000000;
+    background-color: #cc0404;
+}
+*/
+.linha-vermelha {
+    color: #cc0404;
+    background-color: #cc0404;
+    height: 3px;
+}
+.linha-cinza {
+    color: #919191;
+    background-color: #919191;
+    height: 0.25px; 
+}
+
+div {
+    page-break-inside: avoid;
+}
+cor_vermelha{
+    color: #cc0404;
+}
+cor_verde{
+    color: #1ea300;
+}
+cor_laranja{
+    color: #cc7904;
+}
+.quebra-de-pagina{
+    page-break-before: always; /* ou page-break-after: always; */
+}
+ul {
+    list-style-type: disc;
+    padding-left: 10px
+    /* Outras opções: circle, square, none (sem marcador) */
+}
