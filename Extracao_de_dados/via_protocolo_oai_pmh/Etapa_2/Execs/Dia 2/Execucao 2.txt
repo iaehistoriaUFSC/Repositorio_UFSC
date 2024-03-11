@@ -1,0 +1,10 @@
+Fim da exec. 2.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Engenharia de Produção: 4409
+
+
+	Duração da execução: 20773,22 segundos.
+

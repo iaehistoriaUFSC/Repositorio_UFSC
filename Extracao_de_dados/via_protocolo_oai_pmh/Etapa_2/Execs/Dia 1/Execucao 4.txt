@@ -1,0 +1,15 @@
+Fim da exec. 4.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Direito: 1591
+Programa de Pós-Graduação em Economia: 360
+Programa de Pós-Graduação em Educação Científica e Tecnológica: 546
+Programa de Pós-Graduação em Engenharia Ambiental (Mestrado Profissional): 48
+Programa de Pós-Graduação em Engenharia de Sistemas Eletrônicos: 21
+Programa de Pós-Graduação em Engenharia de Transportes e Gestão Territorial: 137
+
+
+	Duração da execução: 14121,65 segundos.
+

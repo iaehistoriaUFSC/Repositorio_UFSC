@@ -1,0 +1,11 @@
+Fim da exec. 4.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Teses e dissertações não defendidas na UFSC: 192
+Teses e dissertações do Centro Tecnológico: 2074
+
+
+	Duração da execução: 9875,31 segundos.
+

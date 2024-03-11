@@ -1,0 +1,20 @@
+Fim da exec. 2.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Arquitetura e Urbanismo: 470
+Programa de Pós-Graduação em Assistência Farmacêutica: 23
+Programa de Pós-Graduação em Biologia Celular e do Desenvolvimento: 155
+Programa de Pós-Graduação em Biologia de Fungos, Algas e Plantas: 126
+Programa de Pós-Graduação em Biologia Vegetal: 118
+Programa de Pós-Graduação em Bioquímica: 188
+Programa de Pós-Graduação em Biotecnologia: 156
+Programa de Pós-Graduação em Biotecnologia e Biociências: 188
+Programa de Pós-Graduação em Ciência da Computação: 1062
+Programa de Pós-Graduação em Ciências da Reabilitação: 75
+Programa de Pós-Graduação em Controle de Gestão (Mestrado Profissional): 70
+
+
+	Duração da execução: 13159,81 segundos.
+

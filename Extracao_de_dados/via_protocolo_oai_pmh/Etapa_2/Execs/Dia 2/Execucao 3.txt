@@ -1,0 +1,12 @@
+Fim da exec. 3.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Engenharia Elétrica: 1956
+Programa de Pós-Graduação em Farmacologia: 442
+Programa de Pós-Graduação em Física: 365
+
+
+	Duração da execução: 12453,81 segundos.
+

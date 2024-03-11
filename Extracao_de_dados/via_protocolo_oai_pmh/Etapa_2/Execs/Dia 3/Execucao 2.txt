@@ -1,0 +1,17 @@
+Fim da exec. 2.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Química: 857
+Programa de Pós-Graduação em Recursos Genéticos Vegetais: 350
+Programa de Pós-Graduação em Saúde Coletiva: 338
+Programa de Pós-Graduação em Saúde Mental e Atenção Psicossocial (Mestrado Profissional): 100
+Programa de Pós-Graduação em Saúde Pública: 162
+Programa de Pós-Graduação em Sociologia e Ciência Política: 60
+Programa de Pós-Graduação em Serviço Social: 285
+Programa de Pós-Graduação em Sociologia Política: 594
+
+
+	Duração da execução: 18493,19 segundos.
+

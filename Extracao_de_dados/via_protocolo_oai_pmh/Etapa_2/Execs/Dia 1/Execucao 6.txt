@@ -1,0 +1,24 @@
+Fim da exec. 6.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Enfermagem: 1042
+Programa de Pós-Graduação em Engenharia Ambiental: 656
+Programa de Pós-Graduação em Engenharia de Automação e Sistemas: 418
+Programa de Pós-Graduação em Engenharia e Ciências Mecânicas: 132
+Programa de Pós-Graduação em Engenharia Mecânica (Mestrado Profissional): 1
+Programa de Pós-Graduação em Engenharia Têxtil: 31
+Programa de Pós-Graduação em Ensino de Biologia (Mestrado Profissional): 44
+Programa de Pós-Graduação em Ensino de Biologia: 4
+Programa de Pós-Graduação em Ensino de História (Mestrado Profissional): 53
+Programa de Pós-Graduação em Ensino de Física (Mestrado Profissional): 97
+Programa de Pós-Graduação em Farmacologia (Mestrado Profissional): 61
+Programa de Pós-Graduação em Fonoaudiologia: 11
+Programa de Pós-Graduação em Gestão do Cuidado em Enfermagem: 20
+Programa de Pós-Graduação em Geologia: 13
+Programa de Pós-Graduação em Gestão do Cuidado em Enfermagem (Mestrado Profissional): 158
+
+
+	Duração da execução: 15003,08 segundos.
+

@@ -1,0 +1,20 @@
+Fim da exec. 3.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Tecnologias da Informação e Comunicação: 158
+Programa de Pós-Graduação em Urbanismo, História e Arquitetura da Cidade: 130
+Programa de Pós-Graduação Interdisciplinar em Ciências Humanas: 256
+Programa de Pós-Graduação Multicêntrico em Ciências Fisiológicas: 47
+Programa de Pós-Graduação Multidisciplinar em Saúde (Mestrado Profissional): 27
+Teses e dissertações do Centro de Ciências Agrárias: 24
+Teses e dissertações do Centro de Ciências da Saúde: 338
+Teses e dissertações do Centro de Ciências Físicas e Matemáticas: 449
+Teses e dissertações do Centro de Comunicação e Expressão: 423
+Teses e dissertações do Centro de Filosofia e Ciências Humanas: 394
+Teses e dissertações do Centro Sócio-Econômico: 392
+
+
+	Duração da execução: 13569,29 segundos.
+

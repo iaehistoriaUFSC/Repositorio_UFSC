@@ -1,0 +1,15 @@
+Fim da exec. 1.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Administração: 788
+Programa de Pós-Graduação em Administração Universitária (Mestrado Profissional): 292
+Programa de Pós-Graduação em Agroecossistemas: 438
+Programa de Pós-Graduação em Agroecossistemas (Mestrado Profissional): 59
+Programa de Pós-Graduação em Antropologia Social: 496
+Programa de Pós-Graduação em Aquicultura: 554
+
+
+	Duração da execução: 15077,97 segundos.
+

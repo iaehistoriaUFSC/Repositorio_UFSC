@@ -1,0 +1,6 @@
+Problema ao fazer download do PDF com link: https://repositorio.ufsc.br/bitstream/123456789/106032/1/321356.pdf.
+Coleção: Linguistica
+Trabalho: 110
+Erro "HTTPError": HTTP Error 404: Not Found
+
+****************************************************************************************************

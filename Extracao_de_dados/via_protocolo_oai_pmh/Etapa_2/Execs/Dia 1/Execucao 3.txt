@@ -1,0 +1,22 @@
+Fim da exec. 3.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Ciência da Informação: 332
+Programa de Pós-Graduação em Ciência dos Alimentos: 358
+Programa de Pós-Graduação em Ciência e Engenharia de Materiais: 568
+Programa de Pós-Graduação em Ciências Médicas: 296
+Programa de Pós-Graduação em Contabilidade: 286
+Programa de Pós-Graduação em Cuidados Intensivos e Paliativos (Mestrado Profissional): 67
+Programa de Pós-Graduação em Desastres Naturais (Mestrado Profissional): 23
+Programa de Pós-Graduação em Design: 133
+Programa de Pós-Graduação em Design e Expressão Gráfica: 126
+Programa de Pós-Graduação em Direito (Mestrado Profissional): 106
+Programa de Pós-Graduação em Ecologia: 229
+Programa de Pós-Graduação em Ecossistemas Agrícolas e Naturais: 53
+Programa de Pós-Graduação em Energia e Sustentabilidade: 64
+
+
+	Duração da execução: 16050,48 segundos.
+

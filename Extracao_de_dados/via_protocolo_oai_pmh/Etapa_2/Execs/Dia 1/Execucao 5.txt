@@ -1,0 +1,12 @@
+Fim da exec. 5.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Educação: 1678
+Programa de Pós-Graduação em Educação Física: 620
+Programa de Pós-Graduação em Engenharia de Alimentos: 422
+
+
+	Duração da execução: 14423,24 segundos.
+

@@ -1,0 +1,14 @@
+Fim da exec. 1.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Engenharia Civil: 1158
+Programa de Pós-Graduação em Engenharia e Gestão do Conhecimento: 790
+Programa de Pós-Graduação em Estudos da Tradução: 574
+Programa de Pós-Graduação em Informática em Saúde (Mestrado Profissional): 57
+Programa de Pós-Graduação em Jornalismo: 194
+
+
+	Duração da execução: 16289,71 segundos.
+

@@ -1,0 +1,18 @@
+Fim da exec. 1.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Nanotecnologia Farmacêutica: 3
+Programa de Pós-Graduação em Neurociências: 381
+Programa de Pós-Graduação em Nutrição: 325
+Programa de Pós-Graduação em Oceanografia: 66
+Programa de Pós-Graduação em Odontologia: 717
+Programa de Pós-Graduação em Perícias Criminais Ambientais (Mestrado Profissional): 67
+Programa de Pós-Graduação em Propriedade Intelectual e Transferência de Tecnologia para Inovação (Mestrado Profissional): 43
+Programa de Pós-Graduação em Psicologia: 949
+Programa de Pós-Graduação em Relações Internacionais: 123
+
+
+	Duração da execução: 15023,63 segundos.
+

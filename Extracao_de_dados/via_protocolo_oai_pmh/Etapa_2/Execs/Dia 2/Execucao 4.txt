@@ -1,0 +1,11 @@
+Fim da exec. 4.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Engenharia Mecânica: 1791
+Programa de Pós-Graduação em Engenharia Química: 898
+
+
+	Duração da execução: 14532,91 segundos.
+

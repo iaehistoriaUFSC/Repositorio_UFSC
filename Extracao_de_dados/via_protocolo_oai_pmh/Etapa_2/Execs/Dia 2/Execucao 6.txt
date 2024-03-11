@@ -1,0 +1,21 @@
+Fim da exec. 6.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Letras (Mestrado Profissional): 57
+Programa de Pós-Graduação em Letras/Inglês e Literatura Correspondente: 330
+Programa de Pós-Graduação em Letras/Literatura Brasileira: 63
+Programa de Pós-Graduação em Linguística: 827
+Programa de Pós-Graduação em Literatura: 813
+Programa de Pós-Graduação em Matemática e Computação Científica: 75
+Programa de Pós-Graduação em Matemática (Mestrado Profissional): 88
+Programa de Pós-Graduação em Medicina Veterinária Convencional e Integrativa: 9
+Programa de Pós-Graduação em Matemática Pura e Aplicada: 170
+Programa de Pós-Graduação em Metrologia Científica e Industrial: 87
+Programa de Pós-Graduação em Nanociência, Processos e Materiais Avançados: 14
+Programa de Pós-Graduação em Métodos e Gestão em Avaliação (Mestrado Profissional): 70
+
+
+	Duração da execução: 12876,08 segundos.
+

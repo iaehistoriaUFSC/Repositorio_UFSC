@@ -1,0 +1,14 @@
+Fim da exec. 5.
+
+
+Coleções e quantidades de trabalhos analisados:
+
+Programa de Pós-Graduação em Farmácia: 533
+Programa de Pós-Graduação em Filosofia: 438
+Programa de Pós-Graduação em Geografia: 699
+Programa de Pós-Graduação em História: 707
+Programa de Pós-Graduação em Inglês: Estudos Linguísticos e Literários: 238
+
+
+	Duração da execução: 13411,17 segundos.
+
