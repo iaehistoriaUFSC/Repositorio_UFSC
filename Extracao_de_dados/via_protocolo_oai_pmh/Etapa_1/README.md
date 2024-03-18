@@ -1,4 +1,4 @@
-# Descrição do Programa - Etapa 1 - Extração de Dados
+# Etapa 1 da Extração de Dados do RI da UFSC usando o Protocolo OAI-PMH
 
 Neste programa será coletado, via protocolo OAI-PMH, os **metadados** dos trabalhos presentes nas coleções da comunidade de *[Teses e Dissertações do Repositório Institucional da UFSC](https://repositorio.ufsc.br/handle/123456789/74645)*.
 
