@@ -7,17 +7,17 @@ Já havíamos feito uma estimativa, por cima, de quanto tempo levava para extrai
 Com isso, dividimos as coleções pensando em não ultrapassar 2.800 trabalhos em cada programa para os 6 programas diferentes ao decorrer dos dias em um dicionário do tipo:
 
 ```python
-  dic_listagem_execs = {'Dia 1':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]},
-                      'Dia 2':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]},
-                      'Dia 3':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]},
-                      'Dia 4':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]},
-                      'Dia 5':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]},
-                      'Dia 6':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]}}
+dic_listagem_execs = {'Dia 1':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]},
+                    'Dia 2':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]},
+                    'Dia 3':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]},
+                    'Dia 4':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]},
+                    'Dia 5':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]},
+                    'Dia 6':{'Programa 1':[0,[]],'Programa 2':[0,[]],'Programa 3':[0,[]],'Programa 4':[0,[]],'Programa 5':[0,[]],'Programa 6':[0,[]]}}
 ```
 
 Aonde:
 ```python
-  {'Dia 1':{'Programa 1':[0,[]]}}
+{'Dia 1':{'Programa 1':[0,[]]}}
 ```
 faz menção à o programa 1, no dia 1, passaria por 0 trabalhos e sua listagem de coleções está vazia.
 
