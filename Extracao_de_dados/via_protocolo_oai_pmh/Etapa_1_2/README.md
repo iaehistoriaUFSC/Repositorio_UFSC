@@ -21,6 +21,6 @@ Aonde:
 ```
 faz menção à o programa 1, no dia 1, passaria por 0 trabalhos e sua listagem de coleções está vazia.
 
-Depois, só desenvolvemos uma lógica para alocar as coleções na lista para o determinado programa no determinado dia que ficasse entre 2600 e 2800 trabalhos.
+Depois, só desenvolvemos uma lógica para alocar as coleções na lista para o determinado programa no determinado dia que ficasse entre 2.600 e 2.800 trabalhos.
 
 As coleções que ultrapassassem 2.800 trabalhos, seriam executadas em um único programa, com o programador cuidando para executar este programa mais cedo do que os outros.
