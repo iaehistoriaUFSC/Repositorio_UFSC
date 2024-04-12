@@ -12,7 +12,7 @@ A primeira etapa foi desenvolver um conjunto de programas para a raspagem e arma
 Feita a coleta dos textos, partiu-se para a etapa de pré-processamento dos mesmos, a qual consistiu-se em limpar, tokenizar e armazenar os textos pré-processados, prontos para alimentarem o treinamento.
 
 ## Treinamento
-Depois de coletar e pré-processar os textos, está na hora de iniciar o treinamento. Optou-se por utilizar um método de múltiplos treinamentos (com diversos parâmetros) analisando sempre o modelo que melhor performar diante de "perguntas" (analogias) e de similaridade de palavras com base na realidade.
+Depois de coletar e pré-processar os textos, está na hora de iniciar o treinamento. Optou-se por utilizar o método Word2Vec juntamento com um método de múltiplos treinamentos (treinos com alternância de parâmetros) analisando sempre o modelo que melhor performar diante de "perguntas" (analogias) e de similaridade de palavras com base na realidade.
 
 ## Visualização dos resultados
 Em posse dos arquivos referentes aos modelos treinados, pode-se gerar diversas visualizações, tais como: mapa de calor, rede dinâmica de nuvem de palavras, gráficos mostrando as tendências de mudança semântica para uma determinada palavra comparada à outras demais, etc.
