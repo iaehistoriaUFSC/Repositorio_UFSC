@@ -5,7 +5,7 @@ Treinar modelos de Word Embeddings com textos puramente acadêmicos, extraídos 
 
 ## 📃 Etapas
 
-### Extração de Dados
+## Extração de Dados
 A primeira etapa foi desenvolver um conjunto de programas para a raspagem e armazenamento dos dados. Tendo isso em vista, criou-se uma sessão dedicada exclusivamente para os códigos e arquivos gerados nesta parte de extração de dados. *Vale destacar que alguns arquivos estão presentes somente no Google Drive do Grupo de Estudos, o qual está armazenando os textos extraídos e os metadados em formato de planilha. Como a quantidade de textos armazenados passa de 30.000, optou-se por deixá-los somente no Drive, sem cloná-los para o GitHub. Arquivos voltados para análise das etapas ficará disponível na pasta de "Resultados".*
 
 ## Pré-processamento dos textos extraídos
