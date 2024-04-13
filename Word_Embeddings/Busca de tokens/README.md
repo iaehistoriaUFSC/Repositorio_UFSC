@@ -1,4 +1,4 @@
-# Buaca de tokens
+# Busca de tokens
 
 Este programa foi desenvolvido devido à vontade do grupo de analisar as frases que constituiram os campos semânticos relacionados aos tokens mais similares à um determinado token de entrada.
 
@@ -8,4 +8,4 @@ Desta forma, desenvolveu-se um programa que coleta o token desejado e a quantida
 ***O programa ainda está em desenvolvimento.***
 
 # Desenvolvedor do programa
-Igor Caetano de Souza
+[Igor Caetano de Souza](https://github.com/IgorCaetano)
