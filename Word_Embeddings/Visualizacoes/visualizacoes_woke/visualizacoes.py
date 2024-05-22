@@ -103,6 +103,7 @@ def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple],pasta_para_sa
 
   plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
+  plt.clf()
   # plt.show()
   print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Gráfico Similaridades','-->',palavra_central,'\n\n')
   
@@ -258,6 +259,7 @@ def MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados,pasta_para_salva
   
   print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Mapas de Calor','-->',palavra_central,'\n\n')
   
+  plt.clf()
   # plt.show()
 
 
