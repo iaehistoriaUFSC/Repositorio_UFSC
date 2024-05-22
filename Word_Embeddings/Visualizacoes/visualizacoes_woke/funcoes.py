@@ -3,7 +3,6 @@ import os
 import platform
 from gensim.models import KeyedVectors
 import gdown
-from ferramentas_basicas_pln import removerCaracteresEstranhos
 
 try:
     from google.colab import output

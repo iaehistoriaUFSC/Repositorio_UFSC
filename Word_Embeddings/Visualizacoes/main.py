@@ -41,3 +41,5 @@ def main():
     limparConsole()
 
     print('\n\n\tPrograma finalizado!\n\n')
+
+# Fim do programa
