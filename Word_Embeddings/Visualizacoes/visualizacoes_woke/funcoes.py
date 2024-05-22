@@ -224,6 +224,7 @@ def carregarModelos(lista_caminhos_modelos_temporais : list[str]):
 lista_de_acoes_com_series_temporais = ['Gráfico das similaridades ao decorrer do tempo',
                                        'Vizinhos mais próximos ao decorrer do tempo',
                                        'Mapa de calor das similaridades ao decorrer do tempo',
+                                       'Estratos do Tempo',
                                        'Frequência de Palavras ao decorrer do tempo']
 
 def escolherAcao(tipo_treinamento):

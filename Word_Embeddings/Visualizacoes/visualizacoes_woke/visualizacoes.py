@@ -301,3 +301,88 @@ def FrequenciaDePalavras(tupla_modelo_escolhido,pasta_para_salvar=PASTA_SAVE_IMA
   plt.clf()
 
   # plt.show()
+
+
+def EstratosDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
+  def pega_cor(bg_color):
+      gray = np.dot(bg_color, [0.2989, 0.5870, 0.1140])
+      return 'black' if gray > 0.5 else 'white'
+
+  def agrupar_em_trios(lista):
+      lista_nova = [(lista[i], lista[i + 1], lista[i + 2]) for i in range(0, len(lista), 3)]
+      return lista_nova
+  
+  print('\n\n\tVocê está montando uma visualização para Estratos do Tempo.\n\n')
+  palavra_central = input('Digite a palavra central: ').lower().strip()
+
+  while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central):
+    palavra_central = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra palavra: ').lower().strip()
+
+  data = {}
+
+  for nome_modelo, modelo in modelos_treinados:
+
+    ano_inicial = re.search(r'(\d{4})\_\d{4}',nome_modelo).group(1)
+    ano_final = re.search(r'\d{4}\_(\d{4})',nome_modelo).group(1)
+
+    chave = ano_inicial + ' - ' + ano_final
+
+    lista_valores = [{r[0]:r[1]} for r in modelo.most_similar(palavra_central)]
+
+    data[chave] = lista_valores
+
+
+  lista_de_tuplas = list(data.items())
+  lista_de_tuplas_invertida = lista_de_tuplas[::-1]
+  data = dict(lista_de_tuplas_invertida)
+
+
+  index = list(data.keys())
+  values = [[list(d.values())[0] for d in data[key]] for key in data]
+
+  heatmap_values = [[list(data[key][0].values())[0]] for key in data]
+  df = pd.DataFrame(heatmap_values, index=index)
+
+  plt.figure(figsize=(8, 8))
+  heatmap = sns.heatmap(df, annot=False, fmt="", cmap='coolwarm', cbar=True, cbar_kws={'shrink': 0.8})
+  # heatmap = sns.heatmap(df, annot=False, fmt="", cmap='coolwarm', cbar=True, cbar_kws={'shrink': 0.8}, linewidths=1, linecolor='black')
+
+
+  for i in range(len(df.index)):
+      key = df.index[i]
+      principal_key = list(data[key][0].keys())[0]
+      principal_value = round(list(data[key][0].values())[0],4)
+      
+      lista_nova = agrupar_em_trios(data[key][1:])
+      other_keys_values = [f"{list(c.keys())[0]}: {round(list(c.values())[0],4)} / {list(d.keys())[0]}: {round(list(d.values())[0],4)} / {list(b.keys())[0]}: {round(list(b.values())[0],4)}" for c,d,b in lista_nova]
+      bg_color = heatmap.get_children()[0].get_facecolor()[i][:3]
+      text_color = pega_cor(bg_color)
+
+      plt.text(0.5, i + 0.2, f"{principal_key}: {principal_value}", ha='center', va='center', fontsize=12, weight='bold',
+              color=text_color)
+      for j, line in enumerate(other_keys_values):
+          plt.text(0.5, i + 0.45 + j * 0.15, line, ha='center', va='center', fontsize=8, color=text_color)
+
+  plt.xticks([])
+  heatmap.set_yticklabels(sorted(list(df.index[::-1]),reverse=True), fontsize=12, rotation=0, weight='bold')
+
+  plt.title(f'Estratos do Tempo\npara "{palavra_central}"', fontsize=20, pad=30)
+  plt.tight_layout()
+
+  limparConsole()
+
+  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Estratos do Tempo',palavra_central)
+
+  if not os.path.exists(pasta_para_salvar_palavra_central):
+    os.makedirs(pasta_para_salvar_palavra_central)
+  
+  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Estratos do Tempo para {palavra_central}.png')
+
+  while os.path.exists(caminho_save_fig):  
+    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+
+  plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
+  
+  print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Estratos do Tempo','-->',palavra_central,'\n\n')
+  
+  plt.clf()

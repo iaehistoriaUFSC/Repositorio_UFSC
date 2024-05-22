@@ -37,6 +37,8 @@ def main():
             VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
         elif acao == 'Mapa de calor das similaridades ao decorrer do tempo':
             MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+        elif acao == 'Estratos do Tempo':
+            EstratosDoTempo(modelos_treinados=modelos_carregados)
         elif acao == 'Frequência de Palavras ao decorrer do tempo':
             FrequenciaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
         else:

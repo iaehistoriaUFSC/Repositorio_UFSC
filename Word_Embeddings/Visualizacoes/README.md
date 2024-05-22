@@ -53,6 +53,10 @@ Agora você finalmente está apto para explorar nosso modelo, escolha qual visua
 
 ![imgheatmap](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Mapa_de_Calor_para_nazismo.png?raw=true)
 
+- **Estratos do Tempo:**
+
+![imgestrtmp](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Estratos_do_Tempo_para_racismo.png?raw=true)
+
 - **Frequência de Palavras ao decorrer do tempo:**
 
 ![imgfreq](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Frequencia_de_palavras_para_WOKE_1_UFSC_2003_2006_w2v.png?raw=true)
