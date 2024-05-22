@@ -156,7 +156,7 @@ def baixarModelos(escopo_treino : str,
 
 
 def escolherModelos(caminho_pasta_modo_treino : str):
-    lista_pastas_modelos = [m for m in os.listdir(caminho_pasta_modo_treino) if '.' not in m]
+    lista_pastas_modelos = sorted([m for m in os.listdir(caminho_pasta_modo_treino) if '.' not in m])
     qtd_pastas = len(lista_pastas_modelos)
 
     print('Escolha a pasta do modelo:\n')
@@ -194,7 +194,7 @@ def escolherModelos(caminho_pasta_modo_treino : str):
     return caminho_pasta_modelo_escolhido
 
 def escolherModelosTemporais(caminho_pasta_modelo : str):
-    lista_modelos_temporais = [m for m in os.listdir(caminho_pasta_modelo) if m.endswith('.wordvectors')]
+    lista_modelos_temporais = sorted([m for m in os.listdir(caminho_pasta_modelo) if m.endswith('.wordvectors')])
     qtd_modelos = len(lista_modelos_temporais)
 
     print('Escolha os modelos temporais que serão utilizados:\n')
