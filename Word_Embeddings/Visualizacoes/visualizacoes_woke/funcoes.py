@@ -15,6 +15,12 @@ else:
 CAMINHO_GERAL = r'modelos_treinados'
 OS_ATUAL = platform.system()
 
+DIC_INFO = {'RI_todo_2003_2006':{'quantidade_de_intervalos':10,
+                                'modelos':{'Modelo_1':'1mibDVSGMQMvmhkQYs95SX1QrYtu_dGuW',
+                                           'Modelo_2':'1QtiaU5rWTkLTwGUDRgHN4m1kC5d-c4UB',
+                                           'Modelo_3':'1UYrnDwemzjmGKApe1ssYJkvXvyF7aW9s'}}}
+
+
 def limparConsole():
     if GOOGLE_COLAB:
         output.clear()        
@@ -111,9 +117,6 @@ def escolherTreinamento(pasta_tipo_treinamento : str):
     caminho_pasta_treinamento_escolhida = os.path.join(pasta_tipo_treinamento,pasta_treinamento_escolhida)
     return caminho_pasta_treinamento_escolhida
 
-DIC_INFO = {'RI_todo_2003_2006':{'quantidade_de_intervalos':10,
-                                'modelos':{'Modelo_1':'1mibDVSGMQMvmhkQYs95SX1QrYtu_dGuW',
-                                           'Modelo_2':''}}}
 
 def baixarModelos(escopo_treino : str,
                   nome_modelo: str,
@@ -154,7 +157,7 @@ def escolherModelos(caminho_pasta_treino : str):
     escopo_treino = os.path.basename(caminho_pasta_treino)
     nome_modelo = os.path.basename(caminho_pasta_modelo_escolhido)
 
-    if len([modelo for modelo in os.listdir(caminho_pasta_modelo_escolhido) if modelo.endswith('.wordvector')]) != DIC_INFO[escopo_treino]['quantidade_de_intervalos']:
+    if len([modelo for modelo in os.listdir(caminho_pasta_modelo_escolhido) if modelo.endswith('.wordvectors')]) != DIC_INFO[escopo_treino]['quantidade_de_intervalos']:
         print('Parece que a pasta do modelo escolhido está vazia ou incompleta, vamos fazer o donwload adequadamente de todos os nossos arquivos para este modelo!')
 
         for arquivo in [os.path.join(caminho_pasta_modelo_escolhido,arq) for arq in os.listdir(caminho_pasta_modelo_escolhido)]:
@@ -196,9 +199,10 @@ def carregarModelos(lista_caminhos_modelos_temporais : list[str]):
         modelos_carregados.append((os.path.basename(caminho_modelo).replace('.wordvectors',''),KeyedVectors.load(caminho_modelo,mmap='r')))
     return modelos_carregados
 
-lista_de_acoes_com_series_temporais = ['Similaridades ao decorrer do tempo',
-                                       'Campos Semânticos ao decorrer do tempo',
-                                       'Mapa de calor das similaridades ao decorrer do tempo']
+lista_de_acoes_com_series_temporais = ['Gráfico das similaridades ao decorrer do tempo',
+                                       'Vizinhos mais próximos ao decorrer do tempo',
+                                       'Mapa de calor das similaridades ao decorrer do tempo',
+                                       'Frequência de Palavras ao decorrer do tempo']
 
 def escolherAcao(tipo_treinamento):
     print('Escolha uma das visualizações abaixo:\n\n')
@@ -207,9 +211,11 @@ def escolherAcao(tipo_treinamento):
             print(f'{i+1} - {acao}')
 
     resposta = input('\nDigite o número referente à sua escolha: ').strip()
-    index_acao = obterResposta(resposta=resposta,qtd_respostas=3)
-
-    return lista_de_acoes_com_series_temporais[index_acao]
+    if resposta != '0':
+        index_acao = obterResposta(resposta=resposta,qtd_respostas=len(lista_de_acoes_com_series_temporais))    
+        return lista_de_acoes_com_series_temporais[index_acao]
+    else:
+        return 'Sair'
             
 
 def organizarAmbiente():
@@ -225,3 +231,7 @@ def organizarAmbiente():
         os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006'))
     if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_1')):
         os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_1'))
+    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_2')):
+        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_2'))
+    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_3')):
+        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_3'))

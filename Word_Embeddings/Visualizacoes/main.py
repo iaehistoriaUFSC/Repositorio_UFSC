@@ -23,17 +23,18 @@ def main():
 
     limparConsole()
 
-    acao = ''
+    acao = escolherAcao(os.path.basename(tipo_treinamento))        
 
-    while acao != '0':
-        acao = escolherAcao(os.path.basename(tipo_treinamento))
+    while acao != 'Sair':
         limparConsole()
-        if acao == 'Similaridades ao decorrer do tempo':
-            SimilaridadeSemanticaAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-        elif acao == 'Campos Semânticos ao decorrer do tempo':
-            campoSemanticoAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+        if acao == 'Gráfico das similaridades ao decorrer do tempo':
+            SimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+        elif acao == 'Vizinhos mais próximos ao decorrer do tempo':
+            VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
         elif acao == 'Mapa de calor das similaridades ao decorrer do tempo':
-            pass
+            MapaDeCalorAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+        elif acao == 'Frequência de Palavras ao decorrer do tempo':
+            FrequenciaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
         else:
             break
         acao = escolherAcao(os.path.basename(tipo_treinamento))
@@ -41,5 +42,3 @@ def main():
     limparConsole()
 
     print('\n\n\tPrograma finalizado!\n\n')
-
-# Fim do programa
