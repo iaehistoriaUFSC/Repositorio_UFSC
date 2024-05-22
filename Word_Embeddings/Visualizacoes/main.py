@@ -6,9 +6,13 @@ def main():
     tipo_treinamento = escolherTipoTreinamento()
     limparConsole()
 
-    treinamento = escolherTreinamento(tipo_treinamento)
+    treinamento = escolherTreinamento(pasta_tipo_treinamento=tipo_treinamento)
     limparConsole()
-    modelo = escolherModelos(caminho_pasta_treino=treinamento)
+
+    modo_treinado = escolherModoTreinado(caminho_pasta_treino=treinamento)
+    limparConsole()
+
+    modelo = escolherModelos(caminho_pasta_modo_treino=modo_treinado)
     limparConsole()
 
     descompactarPastaModelos(modelo,excluir_zip=True)
@@ -16,8 +20,8 @@ def main():
     limparConsole()
 
     caminhos_modelos_temporais_escolhidos = escolherModelosTemporais(modelo)
-    for m in caminhos_modelos_temporais_escolhidos:
-        print(os.path.basename(m))
+    # for m in caminhos_modelos_temporais_escolhidos:
+    #     print(os.path.basename(m))
 
     modelos_carregados = carregarModelos(lista_caminhos_modelos_temporais=caminhos_modelos_temporais_escolhidos)
 
@@ -32,7 +36,7 @@ def main():
         elif acao == 'Vizinhos mais próximos ao decorrer do tempo':
             VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
         elif acao == 'Mapa de calor das similaridades ao decorrer do tempo':
-            MapaDeCalorAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+            MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
         elif acao == 'Frequência de Palavras ao decorrer do tempo':
             FrequenciaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
         else:

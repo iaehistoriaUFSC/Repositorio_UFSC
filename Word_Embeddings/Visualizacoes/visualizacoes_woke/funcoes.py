@@ -15,10 +15,13 @@ else:
 CAMINHO_GERAL = r'modelos_treinados'
 OS_ATUAL = platform.system()
 
-DIC_INFO = {'RI_todo_2003_2006':{'quantidade_de_intervalos':10,
-                                'modelos':{'Modelo_1':'1mibDVSGMQMvmhkQYs95SX1QrYtu_dGuW',
-                                           'Modelo_2':'1QtiaU5rWTkLTwGUDRgHN4m1kC5d-c4UB',
-                                           'Modelo_3':'1UYrnDwemzjmGKApe1ssYJkvXvyF7aW9s'}}}
+DIC_INFO = {'RI_todo_2003_2006':{'Quantidade de intervalos':10,
+                                'Incremental':{'Modelo_1':'1mibDVSGMQMvmhkQYs95SX1QrYtu_dGuW',
+                                               'Modelo_2':'1QtiaU5rWTkLTwGUDRgHN4m1kC5d-c4UB',
+                                               'Modelo_3':'1UYrnDwemzjmGKApe1ssYJkvXvyF7aW9s'},
+                                'Temporal':{'Modelo_1':'',
+                                            'Modelo_2':'',
+                                            'Modelo_3':''}}}
 
 
 def limparConsole():
@@ -117,13 +120,31 @@ def escolherTreinamento(pasta_tipo_treinamento : str):
     caminho_pasta_treinamento_escolhida = os.path.join(pasta_tipo_treinamento,pasta_treinamento_escolhida)
     return caminho_pasta_treinamento_escolhida
 
+def escolherModoTreinado(caminho_pasta_treino : str):
+    lista_pastas_modos_treinados = [t for t in os.listdir(caminho_pasta_treino) if '.' not in t]
+    qtd_pastas = len(lista_pastas_modos_treinados)
+
+    print('Escolha o modo treinado:\n')
+    for i,pasta in enumerate(lista_pastas_modos_treinados):
+        print(f'{i+1} - {pasta}')
+    
+    resposta = input('\nDigite o número correspondente: ').strip()
+
+    resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
+    
+    pasta_tipo_treinamento_escolhida = lista_pastas_modos_treinados[resposta]
+    
+    caminho_pasta_tipo_treinamento_escolhida = os.path.join(caminho_pasta_treino,pasta_tipo_treinamento_escolhida)
+    return caminho_pasta_tipo_treinamento_escolhida
+
 
 def baixarModelos(escopo_treino : str,
+                  modo_treinado : str,
                   nome_modelo: str,
                   pasta_destino : str):
 
     try:
-        file_id = DIC_INFO[escopo_treino]['modelos'][nome_modelo]
+        file_id = DIC_INFO[escopo_treino][modo_treinado][nome_modelo]
     except Exception:
         return False
     else:
@@ -134,9 +155,8 @@ def baixarModelos(escopo_treino : str,
         gdown.download(url, output, quiet=False)
 
 
-
-def escolherModelos(caminho_pasta_treino : str):
-    lista_pastas_modelos = [m for m in os.listdir(caminho_pasta_treino) if '.' not in m]
+def escolherModelos(caminho_pasta_modo_treino : str):
+    lista_pastas_modelos = [m for m in os.listdir(caminho_pasta_modo_treino) if '.' not in m]
     qtd_pastas = len(lista_pastas_modelos)
 
     print('Escolha a pasta do modelo:\n')
@@ -150,14 +170,15 @@ def escolherModelos(caminho_pasta_treino : str):
 
     pasta_modelo_escolhido = lista_pastas_modelos[resposta]
 
-    caminho_pasta_modelo_escolhido = os.path.join(caminho_pasta_treino,pasta_modelo_escolhido)
+    caminho_pasta_modelo_escolhido = os.path.join(caminho_pasta_modo_treino,pasta_modelo_escolhido)
 
     limparConsole()
 
-    escopo_treino = os.path.basename(caminho_pasta_treino)
+    escopo_treino = os.path.basename(os.path.dirname(caminho_pasta_modo_treino))
+    modo_treinado = os.path.basename(caminho_pasta_modo_treino)
     nome_modelo = os.path.basename(caminho_pasta_modelo_escolhido)
 
-    if len([modelo for modelo in os.listdir(caminho_pasta_modelo_escolhido) if modelo.endswith('.wordvectors')]) != DIC_INFO[escopo_treino]['quantidade_de_intervalos']:
+    if len([modelo for modelo in os.listdir(caminho_pasta_modelo_escolhido) if modelo.endswith('.wordvectors')]) != DIC_INFO[escopo_treino]['Quantidade de intervalos']:
         print('Parece que a pasta do modelo escolhido está vazia ou incompleta, vamos fazer o donwload adequadamente de todos os nossos arquivos para este modelo!')
 
         for arquivo in [os.path.join(caminho_pasta_modelo_escolhido,arq) for arq in os.listdir(caminho_pasta_modelo_escolhido)]:
@@ -166,6 +187,7 @@ def escolherModelos(caminho_pasta_treino : str):
         print('\n\n\t Estamos baixando os arquivos referentes ao modelo escolhido!\n\n\t--> Por favor, aguarde...\n\n')
 
         baixarModelos(escopo_treino=escopo_treino,
+                      modo_treinado=modo_treinado,
                         nome_modelo=nome_modelo,
                         pasta_destino=caminho_pasta_modelo_escolhido)
 
@@ -221,17 +243,24 @@ def escolherAcao(tipo_treinamento):
 def organizarAmbiente():
     if not os.path.exists(r'imagens_geradas'):
         os.makedirs(r'imagens_geradas')
+
     if not os.path.exists(r'modelos_treinados'):
         os.makedirs(r'modelos_treinados')
+
     if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais')):
         os.makedirs(os.path.join('modelos_treinados','com_series_temporais'))
     if not os.path.exists(os.path.join('modelos_treinados','sem_series_temporais')):
         os.makedirs(os.path.join('modelos_treinados','sem_series_temporais'))
+
     if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006')):
         os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006'))
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_1')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_1'))
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_2')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_2'))
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_3')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Modelo_3'))
+
+    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental')):
+        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental'))
+
+    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_1')):
+        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_1'))
+    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_2')):
+        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_2'))
+    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_3')):
+        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_3'))

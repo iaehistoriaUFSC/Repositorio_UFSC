@@ -19,7 +19,7 @@ def verificaExistenciaNosModelos(modelos_treinados : list[tuple],palavra_central
   except Exception:
     return False
 
-def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple,tuple],pasta_para_salvar=PASTA_SAVE_IMAGENS):
+def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple],pasta_para_salvar=PASTA_SAVE_IMAGENS):
   
   print('\n\n\tVocê está montando uma visualização para Similaridade Semântica ao decorrer do tempo.\n\n')
   palavra_central = input('Digite a palavra central: ').lower().strip()
@@ -49,7 +49,7 @@ def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple,tuple],pasta_p
 
 
 
-  nomes = [modelo[0].replace('_','\n-\n') for modelo in modelos_treinados]
+  nomes = [re.search(r'(\d{4})\_\d{4}',modelo[0]).group(1) + '\n-\n' + re.search(r'\d{4}\_(\d{4})',modelo[0]).group(1) for modelo in modelos_treinados]
 
   fig, ax = plt.subplots(figsize=(16, 8))
 
@@ -75,7 +75,7 @@ def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple,tuple],pasta_p
       ax.text(x[i], y[i]+0.01, str(round(y[i],2)), fontsize=6, ha='center', va='bottom')
 
 
-  ax.set_title(f'Similaridade semântica entre "{palavra_central}" e outras palavras selecionadas\nWOKE', fontsize=20, pad= 25)
+  ax.set_title(f'Similaridade entre "{palavra_central}" e outras palavras selecionadas\nWOKE', fontsize=20, pad= 25)
   ax.set_xlabel('Intervalos de tempo', fontsize=15, labelpad=20)
   ax.set_ylabel('Similaridade', fontsize=15, labelpad=20)
 
@@ -93,13 +93,13 @@ def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple,tuple],pasta_p
   if not os.path.exists(pasta_para_salvar_palavra_central):
     os.makedirs(pasta_para_salvar_palavra_central)
 
-  ano_inicial = re.search(r'\d{4}\_',modelos_treinados[0][0]).group()
-  ano_final = re.search(r'\_\d{4}',modelos_treinados[-1][0]).group()
+  ano_inicial = re.search(r'(\d{4})\_',modelos_treinados[0][0]).group(1)
+  ano_final = re.search(r'\_(\d{4})',modelos_treinados[-1][0]).group(1)
 
   caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Similaridades para modelos de {ano_inicial} até {ano_final}.png')
 
-  if os.path.exists(caminho_save_fig):
-    caminho_save_fig = caminho_save_fig.replace('.png',caminho_save_fig[-5]+'_.png')
+  while os.path.exists(caminho_save_fig):  
+    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
 
   plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
@@ -183,8 +183,8 @@ def VizinhosMaisProximos(tupla_modelo_escolhido : tuple[str,KeyedVectors],
     
     caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Vizinhos mais próximos - {nome_modelo_escolhido}.png')
 
-    if os.path.exists(caminho_save_fig):
-      caminho_save_fig = caminho_save_fig.replace('.png',caminho_save_fig[-5]+'_.png')
+    while os.path.exists(caminho_save_fig):  
+      caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
 
     plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
@@ -200,7 +200,7 @@ def VizinhosMaisProximos(tupla_modelo_escolhido : tuple[str,KeyedVectors],
     plt.clf()
 
 
-def MapaDeCalorAoDecorrerDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
+def MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
   
   print('\n\n\tVocê está montando uma visualização para Mapa de Calor ao decorrer do tempo.\n\n')
   palavra_central = input('Digite a palavra central: ').lower().strip()
@@ -227,7 +227,9 @@ def MapaDeCalorAoDecorrerDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_
         dic_comparativo[palavra_selecionada] = modelo.similarity(palavra_central,palavra_selecionada)
       except:
         dic_comparativo[palavra_selecionada] = 0
-    data[nome_modelo_escolhido.replace('_','\n-\n')] = dic_comparativo
+    data[re.search(r'(\d{4})\_\d{4}',nome_modelo_escolhido).group(1) + '\n-\n' + re.search(r'\d{4}\_(\d{4})',nome_modelo_escolhido).group(1)] = dic_comparativo
+
+
 
 
   df = pd.DataFrame(data)
@@ -237,7 +239,6 @@ def MapaDeCalorAoDecorrerDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_
 
   heatmap.set_xticklabels(heatmap.get_xticklabels(), rotation=0)
   heatmap.set_yticklabels(heatmap.get_yticklabels(), rotation=0,fontsize=11)
-
 
   plt.title(f'Mapa de calor da similaridade para palavra "{palavra_central}"',fontsize=20)
   
@@ -250,8 +251,8 @@ def MapaDeCalorAoDecorrerDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_
   
   caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Mapa de Calor para {palavra_central}.png')
 
-  if os.path.exists(caminho_save_fig):
-    caminho_save_fig = caminho_save_fig.replace('.png',caminho_save_fig[-5]+'_.png')
+  while os.path.exists(caminho_save_fig):  
+    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
 
   plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
   
@@ -273,6 +274,10 @@ def FrequenciaDePalavras(tupla_modelo_escolhido,pasta_para_salvar=PASTA_SAVE_IMA
   
   plt.bar([word for word in [palavra for palavra in modelo.index_to_key[:500] if (palavra not in ['como','uma','um','ao','mais','mesmo','forma','pois','essa','apenas','parte','além','nesse']) and (len(palavra)>3)][:20]],[modelo.get_vecattr(word,'count') for word in [palavra for palavra in modelo.index_to_key[:500] if (palavra not in ['como','uma','um','ao','mais','mesmo','forma','pois','essa','apenas','parte','além','nesse']) and (len(palavra)>3)][:20]])
   
+  plt.xticks(rotation=45, ha='right')
+
+  plt.title(f'Frequência de palavras treinamento {re.search(r'(\d{4})\_\d{4}',nome_modelo_escolhido).group(1)} - {re.search(r'\d{4}\_(\d{4})',nome_modelo_escolhido).group(1)}',fontsize=20)
+
   pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Frequência de Palavras',nome_modelo_escolhido)
 
   if not os.path.exists(pasta_para_salvar_palavra_central):
@@ -280,8 +285,8 @@ def FrequenciaDePalavras(tupla_modelo_escolhido,pasta_para_salvar=PASTA_SAVE_IMA
     
   caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Frequência de palavras para {nome_modelo_escolhido}.png')
 
-  if os.path.exists(caminho_save_fig):
-    caminho_save_fig = caminho_save_fig.replace('.png',caminho_save_fig[-5]+'_.png')
+  while os.path.exists(caminho_save_fig):  
+    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
 
   plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
