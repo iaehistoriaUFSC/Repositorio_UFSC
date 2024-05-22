@@ -41,6 +41,8 @@ def main():
             EstratosDoTempo(modelos_treinados=modelos_carregados)
         elif acao == 'Frequência de Palavras ao decorrer do tempo':
             FrequenciaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+        elif acao == 'Vetores de Palavras':
+            VetoresDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
         else:
             break
         acao = escolherAcao(os.path.basename(tipo_treinamento))

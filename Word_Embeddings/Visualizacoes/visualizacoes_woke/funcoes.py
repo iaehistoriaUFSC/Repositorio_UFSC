@@ -22,7 +22,8 @@ DIC_INFO = {'RI_todo_2003_2006':{'Quantidade de intervalos':10,
                                                'Modelo_4':'1L8P58GRb9BQB5s1YQKY_jAeSxoDY-zsI'},
                                 'Temporal':{'Modelo_1':'',
                                             'Modelo_2':'',
-                                            'Modelo_3':''}}}
+                                            'Modelo_3':'',
+                                            'Modelo_4':''}}}
 
 
 def limparConsole():
@@ -226,6 +227,7 @@ lista_de_acoes_com_series_temporais = ['Gráfico das similaridades ao decorrer d
                                        'Vizinhos mais próximos ao decorrer do tempo',
                                        'Mapa de calor das similaridades ao decorrer do tempo',
                                        'Estratos do Tempo',
+                                       'Vetores de Palavras',
                                        'Frequência de Palavras ao decorrer do tempo']
 
 def escolherAcao(tipo_treinamento):
@@ -266,3 +268,5 @@ def organizarAmbiente():
         os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_2'))
     if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_3')):
         os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_3'))
+    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_4')):
+        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_4'))

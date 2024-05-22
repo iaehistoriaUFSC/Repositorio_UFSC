@@ -4,7 +4,7 @@ Acessando este diretório você conseguirá rodar programas destinados a exibiç
 
 ## Passo 1 - Escolher o tipo de treinamento
 
-Ao configurar o ambiente será pedido para você selecionar o tipo de treinamento, aonde:
+Ao configurar o ambiente será pedido para você selecionar o tipo de treinamento:
 - **com_series_temporais**: Treinamentos separados por intervalos de datas, que podem ser comparados entre si a fim de analisar mudanças entre as relações das palavras ao decorrer do tempo, por exemplo, quero analisar as relações entre as palavras num escopo do Repositório Institucional inteiro (todas as coleções) entre 2003 e 2024, verificando os resultados para cada instante "t" (que no nosso caso pode ser organizado em intervalo de anos, não especificamente um ano) de treinamento.
 - **sem_series_temporais**: Treinamentos realizados com uma data inicial e final fixas, os quais servem para analisar "globalmente" algum escopo específico, por exemplo, análise de todo corpus do Repositório Institucional desde 2003 até 2024.
 
@@ -14,14 +14,14 @@ Depois de escolher o tipo de treinamento, deve-se optar por algum dos escopos of
 
 ## Passo 3 - Escolher o modo utilizado no treinamento
 
-Se o modo de treino escolhido foi com séries temporais, seja solicitado que informe em que modo as séries temporais foram construídas:
+Se o modo de treino escolhido foi com séries temporais, será solicitado que informe em que modo as séries temporais foram construídas:
 
 - **Incremental**: Começou-se com um modelo base (geralmente de 2003 até 2006) e depois passou-se a incrementar corpus em treinos futuros, ou seja, adicionou-se um corpus de, por exemplo, 2007 a 2008 e atualizou-se o treinamento passado (que antes possuia só os textos referentes à 2003 e 2006). Este processo continua até a data final, 2024.
 - **Temporal**: Começou-se também com um modelo base (geralmente de 2003 até 2006) e depois passou-se a treinar mais modelos abrindo a janela temporal, ou seja, o próximo treinamento vai ser, por exemplo, de 2003 até 2008, o seguinte de 2003 até 2010, e assim por diante até chegar em 2003 à 2024. Este modo utilizado é o mais indicado para não se lidar com o "esquecimento catastrófico" causado pela atualização das redes neurais em modelos de linguagem natural.
 
 ## Passo 4 - Escolher os modelos disponíveis
 
-Nós treinamos diversos modelos com diferentes parâmetros e escolhemos os melhores. Nesta etapa será solicitado que escolha um desses modelos que se saíram melhor dentre todos os outros que treinamos.
+Foram treinamos diversos modelos com diferentes parâmetros e selecionou-se os melhores. Nesta etapa será solicitado que escolha um desses modelos que se saíram melhor dentre todos os outros que treinamos.
 
 ## Passo 5 - Escolher quais intervalos de anos serão contemplados na visualização
 
@@ -56,6 +56,12 @@ Agora você finalmente está apto para explorar nosso modelo, escolha qual visua
 - **Estratos do Tempo:**
 
 ![imgestrtmp](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Estratos_do_Tempo_para_racismo.png?raw=true)
+
+- **Vetores de Palavras:**
+
+![imgvetplvs](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Vetores_de_palavras_para_WOKE_4_UFSC_2003_2006_w2v.png?raw=true)
+
+![imgvetplvs_](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Vetores_de_palavras_para_WOKE_4_UFSC_2023_2024_w2v.png?raw=true)
 
 - **Frequência de Palavras ao decorrer do tempo:**
 

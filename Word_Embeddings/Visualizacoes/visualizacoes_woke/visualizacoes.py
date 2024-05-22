@@ -284,7 +284,7 @@ def FrequenciaDePalavras(tupla_modelo_escolhido,pasta_para_salvar=PASTA_SAVE_IMA
 
   plt.title(f"Frequência de palavras treinamento {ano_inicial} - {ano_final}",fontsize=20)
 
-  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Frequência de Palavras',nome_modelo_escolhido)
+  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Frequência de Palavras')
 
   if not os.path.exists(pasta_para_salvar_palavra_central):
     os.makedirs(pasta_para_salvar_palavra_central)
@@ -385,4 +385,96 @@ def EstratosDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
   
   print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Estratos do Tempo','-->',palavra_central,'\n\n')
   
+  plt.clf()
+
+def VetoresDePalavrasAoDecorrerDoTempo(modelos_treinados, pasta_para_salvar=PASTA_SAVE_IMAGENS):
+  print('\n\n\tVocê está montando uma visualização para Vetores de Palavras ao decorrer do tempo.\n\n')
+
+  lista_de_palavras = []
+  palavra = input('Digite a primeira palavra: ').lower().strip()
+  while palavra != '0':
+    while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra) and palavra != '1':
+      print(f'A palavra "{palavra}" não está presente em todos os modelos, em algumas imagens ela não aparecerá.')
+      print('Caso queira substituí-la por outra, digite abaixo qual palavra a substituirá.')
+      print('Caso queira removê-la do conjunto de palavras, digite 1')
+      print('Digite 0 caso queira parar de escolher palavras.')
+      palavra = input().lower().strip()    
+    
+    if palavra != '1':
+      if palavra not in lista_de_palavras:
+        lista_de_palavras.append(palavra)
+    palavra = input('\nDigite mais uma palavra (0 para parar): ').lower().strip()
+
+  for modelo in modelos_treinados:
+    vetoresDePalavras(tupla_modelo_escolhido=modelo,
+                      lista_de_palavras=lista_de_palavras,
+                      pasta_para_salvar=pasta_para_salvar)
+
+def vetoresDePalavras(tupla_modelo_escolhido,
+                      lista_de_palavras : list[str],
+                      pasta_para_salvar : str):
+
+  nome_modelo_escolhido,modelo_escolhido = tupla_modelo_escolhido
+  lista_de_vetores = [modelo_escolhido[palavra] for palavra in lista_de_palavras]
+
+  pca = PCA(n_components=2)
+  lista_de_vetores_2D = pca.fit_transform(lista_de_vetores)
+
+
+  limite_pos_x = 0
+  limite_neg_x = 0
+  limite_pos_y = 0
+  limite_neg_y = 0
+  x = []
+  y = []
+
+  for coords in lista_de_vetores_2D:
+    x.append(coords[0])
+    if coords[0] > limite_pos_x:
+      limite_pos_x = coords[0]
+    elif coords[0] < limite_neg_x:
+      limite_neg_x = coords[0]
+
+    y.append(coords[1])
+    if coords[1] > limite_pos_y:
+      limite_pos_y = coords[1]
+    elif coords[1] < limite_neg_y:
+      limite_neg_y = coords[1]
+
+  fig, ax = plt.subplots(1, 2,figsize=(12, 5),gridspec_kw={'width_ratios': [4, 1]})
+
+  ax[0].grid('on')
+  ax[1].axis('off')
+  # ax[0].grid('off')
+
+  for i, palavra in enumerate(lista_de_palavras):
+      ax[0].arrow(0, 0, lista_de_vetores_2D[i, 0], lista_de_vetores_2D[i, 1], head_width=0.1, head_length=0.1, fc='blue', ec='blue')
+      ax[0].text(lista_de_vetores_2D[i, 0], lista_de_vetores_2D[i, 1]+0.25, palavra, fontsize=12, ha='center', va='center', color='black')
+
+  ax[0].set_xlim(limite_neg_x-1, limite_pos_x+1)
+  ax[0].set_ylim(limite_neg_y-1, limite_pos_y+1)
+
+  cosseno_formula = r'$\cos(\theta) = \frac{\mathbf{v} \cdot \mathbf{u}}{\|\mathbf{v}\| \cdot \|\mathbf{u}\|}$'
+
+  ax[1].text(0.25, 0.5,cosseno_formula, fontsize=20, ha='center', va='center')
+
+  ax[0].set_title(f'Vetores de palavras representados em 2D com {nome_modelo_escolhido}')
+  ax[0].set_xlabel('Dimensão 1')
+  ax[0].set_ylabel('Dimensão 2')
+
+  
+  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Vetores de palavras',', '.join(lista_de_palavras[:3])+' etc')
+
+  if not os.path.exists(pasta_para_salvar_palavra_central):
+    os.makedirs(pasta_para_salvar_palavra_central)
+    
+  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Vetores de palavras para {nome_modelo_escolhido}.png')
+
+  while os.path.exists(caminho_save_fig):  
+    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+
+  plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
+
+  limparConsole()
+  print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Vetores de palavras','\n\n')
   plt.clf()
