@@ -276,7 +276,7 @@ def FrequenciaDePalavras(tupla_modelo_escolhido,pasta_para_salvar=PASTA_SAVE_IMA
   
   plt.xticks(rotation=45, ha='right')
 
-  plt.title(f'Frequência de palavras treinamento {re.search(r'(\d{4})\_\d{4}',nome_modelo_escolhido).group(1)} - {re.search(r'\d{4}\_(\d{4})',nome_modelo_escolhido).group(1)}',fontsize=20)
+  plt.title(f"Frequência de palavras treinamento {re.search(r'(\d{4})\_\d{4}',nome_modelo_escolhido).group(1)} - {re.search(r'\d{4}\_(\d{4})',nome_modelo_escolhido).group(1)}",fontsize=20)
 
   pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Frequência de Palavras',nome_modelo_escolhido)
 
