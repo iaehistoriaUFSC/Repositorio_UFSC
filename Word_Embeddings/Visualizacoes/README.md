@@ -35,24 +35,37 @@ Nesta etapa você deve ter um pouco de paciência, pois em alguns minutos você 
 
 Agora você finalmente está apto para explorar nosso modelo, escolha qual visualização você gostaria de gerar e divirta-se pesquisando e aprendendo mais sobre PLN na UFSC!
 
+**Importante: As imagens são armazenadas na pasta "*imagens_geradas*" !**
+
 ### Visualizações disponíveis:
 
 - **Gráfico das Similaridades ao decorrer do tempo:**
 
-![Imagem](Similaridades para modelos de 2003 até 2023.png)
+![imggrafsim](img_src\Similaridades_para_modelos_de_2003_ate_2023.png)
 
 - **Vizinhos mais próximos ao decorrer do tempo:**
 
+![imgvizprox](img_src\Vizinhos_mais_proximos_WOKE_1_UFSC_2003_2006_w2v.png)
+
+![imgvizprox_](img_src\Vizinhos_mais_proximos_WOKE_1_UFSC_2023_2024_w2v.png)
+
 - **Mapa de calor das similaridades ao decorrer do tempo:**
-Faça um estudo a respeito das palavras que mais são similares dentre o conjunto de palavras que você desejar com uma visualização bonita!
+
+![imgheatmap](img_src\Mapa_de_Calor_para_nazismo.png)
 
 - **Frequência de Palavras ao decorrer do tempo:**
-Analise as palavras mais utilizadas ao decorrer do tempo!
+
+![imgfreq](img_src\Frequencia_de_palavras_para_WOKE_1_UFSC_2003_2006_w2v.png)
+
+![imgfreq_](img_src\Frequencia_de_palavras_para_WOKE_1_UFSC_2013_2014_w2v.png)
+
+![imgfreq__](img_src\Frequencia_de_palavras_para_WOKE_1_UFSC_2023_2024_w2v.png)
+
 
 - **Mudança vetorial ao decorrer do tempo:**
 O quão mudado o vetor da palavra "gato" está depois de uma década?
     - **Similaridade entre um vetor no instante "t" e o mesmo vetor num instante "t" + "delta t":**
-    asjdasijd
+    *Visualização ainda em construção!*
     - **Mudança nos vizinhos mais próximos**
-    asjfailfj
+    *Visualização ainda em construção!*
 
