@@ -41,25 +41,25 @@ Agora você finalmente está apto para explorar nosso modelo, escolha qual visua
 
 - **Gráfico das Similaridades ao decorrer do tempo:**
 
-![imggrafsim](img_src\Similaridades_para_modelos_de_2003_ate_2023.png)
+![imggrafsim](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Similaridades_para_modelos_de_2003_ate_2023.png?raw=true)
 
 - **Vizinhos mais próximos ao decorrer do tempo:**
 
-![imgvizprox](img_src\Vizinhos_mais_proximos_WOKE_1_UFSC_2003_2006_w2v.png)
+![imgvizprox](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Vizinhos_mais_proximos_WOKE_1_UFSC_2003_2006_w2v.png?raw=true)
 
-![imgvizprox_](img_src\Vizinhos_mais_proximos_WOKE_1_UFSC_2023_2024_w2v.png)
+![imgvizprox_](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Vizinhos_mais_proximos_WOKE_1_UFSC_2023_2024_w2v.png?raw=true)
 
 - **Mapa de calor das similaridades ao decorrer do tempo:**
 
-![imgheatmap](img_src\Mapa_de_Calor_para_nazismo.png)
+![imgheatmap](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Mapa_de_Calor_para_nazismo.png?raw=true)
 
 - **Frequência de Palavras ao decorrer do tempo:**
 
-![imgfreq](img_src\Frequencia_de_palavras_para_WOKE_1_UFSC_2003_2006_w2v.png)
+![imgfreq](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Frequencia_de_palavras_para_WOKE_1_UFSC_2003_2006_w2v.png?raw=true)
 
-![imgfreq_](img_src\Frequencia_de_palavras_para_WOKE_1_UFSC_2013_2014_w2v.png)
+![imgfreq_](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Frequencia_de_palavras_para_WOKE_1_UFSC_2013_2014_w2v.png?raw=true)
 
-![imgfreq__](img_src\Frequencia_de_palavras_para_WOKE_1_UFSC_2023_2024_w2v.png)
+![imgfreq__](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Frequencia_de_palavras_para_WOKE_1_UFSC_2023_2024_w2v.png?raw=true)
 
 
 - **Mudança vetorial ao decorrer do tempo:**
