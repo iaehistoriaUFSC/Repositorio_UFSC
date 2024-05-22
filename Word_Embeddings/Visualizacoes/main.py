@@ -41,6 +41,3 @@ def main():
     limparConsole()
 
     print('\n\n\tPrograma finalizado!\n\n')
-
-if __name__ == '__main__':
-    main()
