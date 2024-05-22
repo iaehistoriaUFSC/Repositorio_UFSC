@@ -18,7 +18,8 @@ OS_ATUAL = platform.system()
 DIC_INFO = {'RI_todo_2003_2006':{'Quantidade de intervalos':10,
                                 'Incremental':{'Modelo_1':'1mibDVSGMQMvmhkQYs95SX1QrYtu_dGuW',
                                                'Modelo_2':'1QtiaU5rWTkLTwGUDRgHN4m1kC5d-c4UB',
-                                               'Modelo_3':'1UYrnDwemzjmGKApe1ssYJkvXvyF7aW9s'},
+                                               'Modelo_3':'1UYrnDwemzjmGKApe1ssYJkvXvyF7aW9s',
+                                               'Modelo_4':'1L8P58GRb9BQB5s1YQKY_jAeSxoDY-zsI'},
                                 'Temporal':{'Modelo_1':'',
                                             'Modelo_2':'',
                                             'Modelo_3':''}}}
