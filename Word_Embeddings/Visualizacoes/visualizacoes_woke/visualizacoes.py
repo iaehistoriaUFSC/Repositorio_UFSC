@@ -182,7 +182,7 @@ def VizinhosMaisProximos(tupla_modelo_escolhido : tuple[str,KeyedVectors],
     if not os.path.exists(pasta_para_salvar_palavra_central):
       os.makedirs(pasta_para_salvar_palavra_central)
     
-    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Vizinhos mais próximos - {nome_modelo_escolhido}.png')
+    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Vizinhos mais próximos - {nome_modelo_escolhido} - {palavra_central}.png')
 
     while os.path.exists(caminho_save_fig):  
       caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
@@ -468,10 +468,10 @@ def vetoresDePalavras(tupla_modelo_escolhido,
   if not os.path.exists(pasta_para_salvar_palavra_central):
     os.makedirs(pasta_para_salvar_palavra_central)
     
-  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Vetores de palavras para {nome_modelo_escolhido}.png')
+  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Vetores de palavras para {nome_modelo_escolhido} - {", ".join(lista_de_palavras[:3])+" etc"}.png')
 
   while os.path.exists(caminho_save_fig):  
-    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+    caminho_save_fig = caminho_save_fig.replace('.png',' copia.png')
 
   plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
