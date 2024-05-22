@@ -21,7 +21,7 @@ Se o modo de treino escolhido foi com séries temporais, será solicitado que in
 
 ## Passo 4 - Escolher os modelos disponíveis
 
-Foram treinamos diversos modelos com diferentes parâmetros e selecionou-se os melhores. Nesta etapa será solicitado que escolha um desses modelos que se saíram melhor dentre todos os outros que treinamos.
+Foram treinados diversos modelos com diferentes parâmetros e selecionou-se os melhores. Nesta etapa será solicitado que escolha um desses modelos que se saíram melhor dentre todos os outros que treinamos.
 
 ## Passo 5 - Escolher quais intervalos de anos serão contemplados na visualização
 
