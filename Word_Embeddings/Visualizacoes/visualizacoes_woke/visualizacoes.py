@@ -478,3 +478,156 @@ def vetoresDePalavras(tupla_modelo_escolhido,
   limparConsole()
   print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Vetores de palavras','\n\n')
   plt.clf()
+
+
+
+def ComparacaoEntrePalavrasAoDecorrerDoTempo(modelos_treinados, pasta_para_salvar=PASTA_SAVE_IMAGENS):
+  print('\n\n\tVocê está montando uma visualização para Comparacao Entre Palavras ao decorrer do tempo.\n\n')
+
+  print('\n\nHomem --> Rei\n\nMulher --> X\n\n')
+
+  homem = input('O que deseja substituir por "homem"? ').lower().strip()
+  while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=homem):
+    homem = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra: ').lower().strip()
+
+  rei = input('O que deseja substituir por "rei"? ')
+  while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=rei):
+    rei = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra: ').lower().strip()
+  
+  mulher = input('O que deseja substituir por "mulher"? ')
+  while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=mulher):
+    mulher = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra: ').lower().strip()      
+
+  tupla_comparacao = (homem,rei,mulher)
+
+  for modelo in modelos_treinados:
+    ComparacaoEntrePalavras(tupla_modelo_escolhido=modelo,
+                            tupla_comparacao=tupla_comparacao,
+                            pasta_para_salvar=pasta_para_salvar)
+
+def ComparacaoEntrePalavras(tupla_modelo_escolhido,
+                            tupla_comparacao : tuple[str],
+                            pasta_para_salvar : str):
+  nome_modelo_escolhido, modelo_escolhido = tupla_modelo_escolhido
+  homem,rei,mulher = tupla_comparacao
+     
+  lista_de_palavras = []
+  lista_de_palavras.append(homem)
+  lista_de_palavras.append(rei)
+  lista_de_palavras.append(mulher)
+
+  resultado = modelo_escolhido.most_similar_cosmul(positive=[rei,mulher], negative=[homem])
+  
+  lista_de_palavras.extend(r[0] for r in resultado)
+
+  lista_de_palavras_e_suas_similaridades = [(r[0],r[1]) for r in resultado]
+
+  lista_de_vetores_base = [[1,5],[5,7],[2,2],[6,4]]
+  lista_de_vetores_adc = []
+
+  for i,r in enumerate(resultado[1:]):
+    if i ==0:
+      raiox = 1-r[1] + 0.25
+      raioy = 1-r[1] + 0.25
+    elif i ==1:
+      raiox = 1-r[1] -0.75
+      raioy = 1-r[1] -0.5
+    elif i ==2:
+      raiox = 0
+      raioy = 0.87
+    elif i ==3:
+      raiox = 1-r[1] + 0.5
+      raioy = 1-r[1] -0.87
+    elif i ==4:
+      raiox = 1-r[1] +0.6
+      raioy = 1-r[1] +0.5
+    elif i ==5:
+      raiox = 1-r[1] -0.9
+      raioy = 1-r[1] +0.7
+    elif i ==6:
+      raiox = 1-r[1] + - 1
+      raioy = 1-r[1] - 0
+    elif i ==7:
+      raiox = 1-r[1] +1.1
+      raioy = 1-r[1] -0
+    elif i ==8:
+      raiox = 1-r[1] +1.2
+      raioy = 1-r[1] -0.25
+    lista_de_vetores_adc.append([6+raiox,4+raioy])
+
+
+  lista_de_vetores_2D = lista_de_vetores_base
+  lista_de_vetores_2D.extend(lista_de_vetores_adc)
+
+
+  limite_pos_x = 0
+  limite_neg_x = 0
+  limite_pos_y = 0
+  limite_neg_y = 0
+  x = []
+  y = []
+
+  for coords in lista_de_vetores_2D:
+    x.append(coords[0])
+    if coords[0] > limite_pos_x:
+      limite_pos_x = coords[0]
+    elif coords[0] < limite_neg_x:
+      limite_neg_x = coords[0]
+
+    y.append(coords[1])
+    if coords[1] > limite_pos_y:
+      limite_pos_y = coords[1]
+    elif coords[1] < limite_neg_y:
+      limite_neg_y = coords[1]
+
+
+  fig, ax = plt.subplots(1, 2,figsize=(12, 5),gridspec_kw={'width_ratios': [4, 1]})
+
+  ax[0].grid('on')
+  ax[0].axis('on')
+  ax[1].axis('off')
+
+  for i, palavra in zip(range(0,3),lista_de_palavras[0:3]):
+    ax[0].scatter(x[i], y[i],color='b')
+    ax[0].text(x[i], y[i]+0.25, palavra, fontsize=11, ha='center', va='center', color='black')
+  for i, palavra in zip(range(3,len(lista_de_palavras)),lista_de_palavras[3:]):
+    if i == 3:
+      ax[0].scatter(x[i], y[i]-0.15,color='b')
+      ax[0].text(x[i], y[i]-0.15+0.25, palavra, fontsize=10, ha='center', va='center', color='black')
+    else:
+      ax[0].scatter(x[i], y[i],color='g')
+      ax[0].text(x[i], y[i]+0.25, palavra, fontsize=10, ha='center', va='center', color='black')
+
+  ax[0].arrow(x[0],y[0],x[1]-x[0],y[1]-y[0],head_width=0.1, head_length=0.1, fc='red', ec='red')
+  ax[0].arrow(x[2],y[2],x[3]-x[2],y[3]-y[2],head_width=0.1, head_length=0.1, fc='red', ec='red')
+
+
+  ax[0].set_xlim(limite_neg_x-1, limite_pos_x+1)
+  ax[0].set_ylim(limite_neg_y-1, limite_pos_y+1)
+
+
+  ax[0].set_title(f'Vetores representados em 2D com {nome_modelo_escolhido}')
+  ax[0].set_xlabel('Dimensão 1')
+  ax[0].set_ylabel('Dimensão 2')
+
+  texto = "Resultado:\n('palavra', similaridade)"
+  for elemento_vet in lista_de_palavras_e_suas_similaridades:
+    texto += '\n\n'+str(elemento_vet)
+
+  ax[1].text(1, 0.5,texto, fontsize=11, ha='center', va='center')
+
+  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Comparação Entre Palavras',', '.join(tupla_comparacao)+', X')
+
+  if not os.path.exists(pasta_para_salvar_palavra_central):
+    os.makedirs(pasta_para_salvar_palavra_central)
+    
+  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Comparação Entre Palavras para {nome_modelo_escolhido}.png')
+
+  while os.path.exists(caminho_save_fig):  
+    caminho_save_fig = caminho_save_fig.replace('.png',' copia.png')
+
+  plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
+
+  limparConsole()
+  print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Comparação Entre Palavras','\n\n')
+  plt.clf()

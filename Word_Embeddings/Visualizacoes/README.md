@@ -57,7 +57,7 @@ Agora você finalmente está apto para explorar nosso modelo, escolha qual visua
 
 ![imgestrtmp](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Estratos_do_Tempo_para_racismo.png?raw=true)
 
-- **Vetores de Palavras:**
+- **Vetores de Palavras ao decorrer do tempo:**
 
 ![imgvetplvs](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Vetores_de_palavras_para_WOKE_4_UFSC_2003_2006_w2v.png?raw=true)
 

@@ -31,20 +31,23 @@ def main():
 
     while acao != 'Sair':
         limparConsole()
-        if acao == 'Gráfico das similaridades ao decorrer do tempo':
-            SimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-        elif acao == 'Vizinhos mais próximos ao decorrer do tempo':
-            VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-        elif acao == 'Mapa de calor das similaridades ao decorrer do tempo':
-            MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-        elif acao == 'Estratos do Tempo':
-            EstratosDoTempo(modelos_treinados=modelos_carregados)
-        elif acao == 'Frequência de Palavras ao decorrer do tempo':
-            FrequenciaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-        elif acao == 'Vetores de Palavras':
-            VetoresDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-        else:
-            break
+        if os.path.basename(tipo_treinamento) == 'com_series_temporais':
+            if acao == 'Gráfico das similaridades ao decorrer do tempo':
+                SimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+            elif acao == 'Vizinhos mais próximos ao decorrer do tempo':
+                VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+            elif acao == 'Mapa de calor das similaridades ao decorrer do tempo':
+                MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+            elif acao == 'Estratos do Tempo':
+                EstratosDoTempo(modelos_treinados=modelos_carregados)
+            elif acao == 'Frequência de Palavras ao decorrer do tempo':
+                FrequenciaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+            elif acao == 'Vetores de Palavras':
+                VetoresDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+            elif acao == 'Comparação entre Palavras':
+                ComparacaoEntrePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+            else:
+                break
         acao = escolherAcao(os.path.basename(tipo_treinamento))
 
     limparConsole()

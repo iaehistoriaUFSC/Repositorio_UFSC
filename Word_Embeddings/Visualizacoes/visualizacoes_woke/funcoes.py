@@ -228,6 +228,7 @@ lista_de_acoes_com_series_temporais = ['Gráfico das similaridades ao decorrer d
                                        'Mapa de calor das similaridades ao decorrer do tempo',
                                        'Estratos do Tempo',
                                        'Vetores de Palavras',
+                                       'Comparação entre Palavras',
                                        'Frequência de Palavras ao decorrer do tempo']
 
 def escolherAcao(tipo_treinamento):
