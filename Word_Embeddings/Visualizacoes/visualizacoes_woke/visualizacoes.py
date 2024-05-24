@@ -93,8 +93,8 @@ def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple],pasta_para_sa
   if not os.path.exists(pasta_para_salvar_palavra_central):
     os.makedirs(pasta_para_salvar_palavra_central)
 
-  ano_inicial = re.search(r'(\d{4})\_',modelos_treinados[0][0]).group(1)
-  ano_final = re.search(r'\_(\d{4})',modelos_treinados[-1][0]).group(1)
+  ano_inicial = re.search(r'(\d{4})\_\d{4}',modelos_treinados[0][0]).group(1)
+  ano_final = re.search(r'\d{4}\_(\d{4})',modelos_treinados[-1][0]).group(1)
 
   caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Similaridades para modelos de {ano_inicial} até {ano_final}.png')
 
@@ -478,7 +478,6 @@ def vetoresDePalavras(tupla_modelo_escolhido,
   limparConsole()
   print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Vetores de palavras','\n\n')
   plt.clf()
-
 
 
 def ComparacaoEntrePalavrasAoDecorrerDoTempo(modelos_treinados, pasta_para_salvar=PASTA_SAVE_IMAGENS):

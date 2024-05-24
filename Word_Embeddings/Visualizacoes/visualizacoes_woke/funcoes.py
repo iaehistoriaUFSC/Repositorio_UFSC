@@ -20,7 +20,7 @@ DIC_INFO = {'RI_todo_2003_2006':{'Quantidade de intervalos':10,
                                                'Modelo_2':'1QtiaU5rWTkLTwGUDRgHN4m1kC5d-c4UB',
                                                'Modelo_3':'1UYrnDwemzjmGKApe1ssYJkvXvyF7aW9s',
                                                'Modelo_4':'1L8P58GRb9BQB5s1YQKY_jAeSxoDY-zsI'},
-                                'Temporal':{'Modelo_1':'',
+                                'Temporal':{'Modelo_1':'1ERK_pMbB9mvVr5NibjdhdUJ7H6l5_BR_',
                                             'Modelo_2':'',
                                             'Modelo_3':'',
                                             'Modelo_4':''}}}
@@ -271,3 +271,9 @@ def organizarAmbiente():
         os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_3'))
     if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_4')):
         os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_4'))
+
+
+    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Temporal')):
+        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Temporal'))
+    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Temporal','Modelo_1')):
+        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Temporal','Modelo_1'))
