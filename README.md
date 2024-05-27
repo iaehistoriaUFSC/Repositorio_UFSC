@@ -50,8 +50,11 @@ Bolsista de iniciação científica do projeto voltada para o processamento de l
 ### Mateus Borsatti
 ### Carlos
 ### Eric
-### Sarah
+### Almir
+### Sara
 ### Jader
 
 ## Integrantes inativos
 ### Ana
+### Ícaro
+### Matheus
