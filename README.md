@@ -43,18 +43,28 @@ Programador que contribuiu na abertura deste GitHub.
 
 ## Integrantes ativos
 
-### [Rodrigo Bragio Bonaldo](https://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4209056A4&tokenCaptchar=03AFcWeA5mNySD1bB8-44suhAf6wXHaeJkZLMV9JEps8ckh-kMlHjaVCr9ZYjv8TvcZoYQS2ABv5aUfJuSXOeQ3PEC2JBuId5Lc6t273aYrHUV2huTHma6J8ggAlRP0skhZUVjc0x_zcS0aFxWDE5LUPrEh9jj6soDobbKK3EzICpMNoeBnG2PqyKDeY1O4WxcBW847pwZtjftElwnoIDtR-r8lP_AoskjyGjcC7BWckaGqhqi3wiBeQZTP0TiBqCaSe2sQyLo0gW0mzUldZ521R6liuHe1BhcjcYVnNeewyPRNXI1RfoQmvDvM69HjI6lf9RJxPNLsjwUuE1zlxwk68fs-_Vn3RMZ8yn4qSBqx6ZNvHd-J1cnaSQOP4nvWJmXP-FDfbwj2x01KZBL8tF1pOFnze8XgZjoe6BD0OyHVtxw8mfVbOt8mdiybYwLh5D-mQBPoB1zDWTcAQfHRzj08DxwA0ABgh59pbBzFC0gEJdPRG9Fsz43oDpvbQdsQDeLrrQt87na0Q2VHEHc-2zqYzLS8QdolZ20MyVXezQSFe9sn3rr6R6nMCCpoJ3GQoEbRasG8VHlMBn6NYllesESWCWivLNL-C6NxbJCv9BXOjSJ7yXSZB5f375iPgpjLJC4bU8nLPOEtlPb_qG4FTByU37P-PH_u_AmpWgdyAdUA0nHJWC5v6yTcnpgTtE9MJ6rmYAlkyds31ECdh2Ls9t4l4M0c947Tb-YJbwaOP74OxTX-BaMHs1vafI)
+### [Rodrigo Bragio Bonaldo](http://lattes.cnpq.br/2967207698672476)
 Coordenador e fundador do Grupo de Estudos e Pesquisa em IA e História da UFSC
-### [Franciele Dias da Silva](https://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K1168805H4&tokenCaptchar=03AFcWeA5PIVEVcrplocdHcP5Il2xMEv-IW0yrvQfttwawBmiFRUjEhpsycGqQok3VU7egWtXpWX-i1cdxKz41gNtTZcq3Sb6_L_ZXzoIfPxH4BJ5VzgFAUIIyUvZqehmbqLXt_7yfrboIJR1FpP6qi2KFLuHJz_X0zj7pOnU5AEL3WIeoKayoMcgl7QRi0_93b92bksPOGrE-cczFjmfoOj3fB7ng3bO5IqJQOSN7V5iKjA1pSLnhJ49eGBXx4HXPaEl2kRTYc-_VTCqy4a2mRG_qimEbPv7-EXb9KXNMBEqFq9xAOw1nrRKPliKXu0WPW6141GITIiZw7sREjquDiYb8MPEma_0_JHxP9cfgqyBQjekgSxSWC5j3jtDFYF0f5XIZMpD1iCx0FcjapZ8iONysOxrhxI_BA2W0JMPI_RbqnDiX1DGyZ99B2sC6WUUAIITcqpvKPOJBidA9I2qjiG9l9wsNxbT-3x7iWtM2I5PSqIs5nJDaPqZVKcIatROltmn-nP2EpPfK5eTh0zieEuTMYjM8_IC9jpvcb564jT3bRMHSnpCWVKlKMd28tJrhssQgO6ELMG-Rp2qfcJ7XGB7Arqo2NLdyYSF-C9jB5P6sPeWR8VRIWUiGIjjYhoEeok8xsJ-a0v2jbLEYnUEy_znMAhnQ17VHu10DWSVmyDeHDNc_hNi3oOKhC-Oa0mTqfNBIQF6i92I15CFlR23aYO2ipEk3HhGXh9G6y4jjBr9D-rnog8xNtTYSzhJj_hSEZ7bqxUaZT6kp)
+
+### [Franciele Dias da Silva](http://lattes.cnpq.br/8272002719032465)
 Bolsista de iniciação científica do projeto voltada para o processamento de linguagem natural aplicado à história
+
 ### Mateus Borsatti
+
+### [Éric Gabriel Kundlatsch](http://lattes.cnpq.br/3926071140042328)
+
 ### Carlos
-### Eric
+
 ### Almir
+
 ### Sara
+
 ### Jader
 
 ## Integrantes inativos
 ### Ana
+
 ### Ícaro
+
 ### Matheus
+
