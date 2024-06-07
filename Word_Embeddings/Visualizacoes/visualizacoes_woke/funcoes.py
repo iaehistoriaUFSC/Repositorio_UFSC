@@ -15,15 +15,47 @@ else:
 CAMINHO_GERAL = r'modelos_treinados'
 OS_ATUAL = platform.system()
 
-DIC_INFO = {'RI_todo_2003_2006':{'Quantidade de intervalos':10,
-                                'Incremental':{'Modelo_1':'1mibDVSGMQMvmhkQYs95SX1QrYtu_dGuW',
-                                               'Modelo_2':'1QtiaU5rWTkLTwGUDRgHN4m1kC5d-c4UB',
-                                               'Modelo_3':'1UYrnDwemzjmGKApe1ssYJkvXvyF7aW9s',
-                                               'Modelo_4':'1L8P58GRb9BQB5s1YQKY_jAeSxoDY-zsI'},
-                                'Temporal':{'Modelo_1':'1ERK_pMbB9mvVr5NibjdhdUJ7H6l5_BR_',
-                                            'Modelo_2':'',
-                                            'Modelo_3':'',
-                                            'Modelo_4':''}}}
+DIC_INFO = {'Com séries temporais':{'RI todo início 2003 2006':{'Quantidade de intervalos':10,
+                                                                'Incremental':{'Modelo 1':'1-p6Fik36eDbx1ezQs3dkrQop1_Hj-4qP',
+                                                                            'Modelo 2':'1wWkdQunoiOKl86UzIpdhpoFF4J9gbsxd',
+                                                                            'Modelo 3':'1MOxnajuVYYRPOgK90bTX6ZwcKbe7f6gi',
+                                                                            'Modelo 4':'1NBl-sCj5CQuG90zAGGYjcaJfRT8gJceq'},
+                                                                'Temporal':{'Modelo 1':'1domJgAtj-dNbIfUfi81Fimj8T9Zpc-RD',
+                                                                            }},
+                                    'HST-03-10':{'Quantidade de intervalos':5,
+                                                 'Incremental':{'Modelo 1':'1Ibrq32sqOUut2mfOeOVGIdKbObKDKspw',
+                                                                'Modelo 2':'1YnOjx_pKMa09S9djlne3JLp1X2kgbTGc',
+                                                                'Modelo 3':'19yCXMIHOqe7Jtv3IlR5GuLBdGfM1BkTM',
+                                                                'Modelo 4':'1Z2RtOf_IZmti0oUk2xND9wpVf169o2rC'},
+                                                 'Temporal':{'Modelo 1':'1h7a3ninDhiawiXkH-u0mwi0V8ZHpAmvt',
+                                                            'Modelo 2':'18vg6fthnz60_wDWKaXhENDwfQdIAjvLN',
+                                                            'Modelo 3':'15TmEFkaRDh7IGQxG3CXMFYUklUKxTc4Y',
+                                                            'Modelo 4':'16iuvHPaK2OgLnSTw37rhQo3ASgozPVS5'}},
+                                    'CFH-03-10':{'Quantidade de intervalos':5,
+                                                 'Incremental':{'Modelo 1':'1E_Nif-V1msn_AocFPUC4HJGgwd0PUuI3',
+                                                                'Modelo 2':'1RjXLPyq5jVnkQu33-CHa6qz3oTSA8-pu',
+                                                                'Modelo 3':'1jCMGOK4tTHawZA6cWo0EJw1rsjWfy1mZ'},
+                                                 'Temporal':{'Modelo 1':'10ndoZXudtCpgkc8-HKAF8O2xLNcIX09R',
+                                                             'Modelo 2':'1ltkkII36Jwadgp2BR_cLyMXhqe7XLDGv',
+                                                             'Modelo 3':'1jhLe-J01zPy5S8-hKx_oGyhoOrkQH6wz'}},
+                                    'Saude-Corpo-03-10':{'Quantidade de intervalos':5,
+                                                         'Incremental':{'Modelo 1':'1KXs7joyjFaQzPEkCaQu65yWliWv1yiCg',
+                                                                        'Modelo 2':'1XNnWIUTll1Uh1nvt6YqkZ7uLMrr0lmhT',
+                                                                        'Modelo 3':'1wakjnFppGqVrqlyBPKaYbsd4KPhIvJhD'},
+                                                         'Temporal':{'Modelo 1':'1S3ksdP5BQNM7uOkyhA-8Y1ctBW5HNZtw',
+                                                                     'Modelo 2':'1SFq8fKmSVf9BZsvRHn5NQqP7YeCeXeRA',
+                                                                     'Modelo 3':'1wlqfHW6gAci0tTF30S1qEF-izHfLQhgW'}}}}
+
+
+
+lista_de_acoes_com_series_temporais = ['Gráfico das similaridades ao decorrer do tempo',
+                                       'Vizinhos mais próximos ao decorrer do tempo',
+                                       'Mapa de calor das similaridades ao decorrer do tempo',
+                                       'Estratos do Tempo',
+                                       'Vetores de Palavras',
+                                       'Comparação entre Palavras',
+                                       'Frequência de Palavras ao decorrer do tempo',
+                                       'Mudança de Palavras ao decorrer do tempo']
 
 
 def limparConsole():
@@ -62,7 +94,7 @@ def obterResposta(resposta : str,
                 while r not in range(qtd_respostas):
                     print('Você digitou',r+1)
                     r = input('\nPor favor, digite um número entre as opções listadas (0 para excluir): ')
-                    while not r.isdigit():
+                    while not r.isdigit() or r not in range(qtd_respostas):
                         r = input('\nPor favor, digite um NÚMERO válido: ')
                     r = int(r) - 1
                     if r < 0:
@@ -92,15 +124,19 @@ def escolherTipoTreinamento():
     print('Escolha o tipo de treinamento:\n')
     for i,pasta in enumerate(lista_pastas_tipos_treinamentos):
         print(f'{i+1} - {pasta}')
+    print('\n0 - Encerrar programa.')
     
     resposta = input('\nDigite o número correspondente: ').strip()
 
-    resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
-    
-    pasta_tipo_treinamento_escolhida = lista_pastas_tipos_treinamentos[resposta]
-    
-    caminho_pasta_tipo_treinamento_escolhida = os.path.join(CAMINHO_GERAL,pasta_tipo_treinamento_escolhida)
-    return caminho_pasta_tipo_treinamento_escolhida
+    if resposta != '0':
+        resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
+        
+        pasta_tipo_treinamento_escolhida = lista_pastas_tipos_treinamentos[resposta]
+        
+        caminho_pasta_tipo_treinamento_escolhida = os.path.join(CAMINHO_GERAL,pasta_tipo_treinamento_escolhida)
+        return caminho_pasta_tipo_treinamento_escolhida
+    else:
+        return resposta
 
 def escolherTreinamento(pasta_tipo_treinamento : str):
 
@@ -110,17 +146,21 @@ def escolherTreinamento(pasta_tipo_treinamento : str):
     print('Escolha a pasta de treinamento:\n')
     for i,pasta in enumerate(lista_pastas_treinamentos):
         print(f'{i+1} - {pasta}')
-    
+    print('\n-1 - Voltar')
+
     resposta = input('\nDigite o número correspondente: ').strip()
 
     # while resposta not in [str(n) for n in range(1,qtd_pastas+1)]:
     #    resposta = input('\nDigite o número correspondente (entre as opções a cima): ')
-    resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
-    
-    pasta_treinamento_escolhida = lista_pastas_treinamentos[resposta]
-    
-    caminho_pasta_treinamento_escolhida = os.path.join(pasta_tipo_treinamento,pasta_treinamento_escolhida)
-    return caminho_pasta_treinamento_escolhida
+    if resposta not in ['-1']:
+        resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
+        
+        pasta_treinamento_escolhida = lista_pastas_treinamentos[resposta]
+        
+        caminho_pasta_treinamento_escolhida = os.path.join(pasta_tipo_treinamento,pasta_treinamento_escolhida)
+        return caminho_pasta_treinamento_escolhida
+    else:
+        return resposta
 
 def escolherModoTreinado(caminho_pasta_treino : str):
     lista_pastas_modos_treinados = [t for t in os.listdir(caminho_pasta_treino) if '.' not in t]
@@ -129,24 +169,29 @@ def escolherModoTreinado(caminho_pasta_treino : str):
     print('Escolha o modo treinado:\n')
     for i,pasta in enumerate(lista_pastas_modos_treinados):
         print(f'{i+1} - {pasta}')
-    
+    print('\n-1 - Voltar')
+
     resposta = input('\nDigite o número correspondente: ').strip()
 
-    resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
-    
-    pasta_tipo_treinamento_escolhida = lista_pastas_modos_treinados[resposta]
-    
-    caminho_pasta_tipo_treinamento_escolhida = os.path.join(caminho_pasta_treino,pasta_tipo_treinamento_escolhida)
-    return caminho_pasta_tipo_treinamento_escolhida
+    if resposta not in ['-1']:
+        resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
+        
+        pasta_tipo_treinamento_escolhida = lista_pastas_modos_treinados[resposta]
+        
+        caminho_pasta_tipo_treinamento_escolhida = os.path.join(caminho_pasta_treino,pasta_tipo_treinamento_escolhida)
+        return caminho_pasta_tipo_treinamento_escolhida
+    else:
+        return resposta
 
 
-def baixarModelos(escopo_treino : str,
+def baixarModelos(tipo_treino : str,
+                  escopo_treino : str,
                   modo_treinado : str,
                   nome_modelo: str,
                   pasta_destino : str):
 
     try:
-        file_id = DIC_INFO[escopo_treino][modo_treinado][nome_modelo]
+        file_id = DIC_INFO[tipo_treino][escopo_treino][modo_treinado][nome_modelo]
     except Exception:
         return False
     else:
@@ -164,36 +209,43 @@ def escolherModelos(caminho_pasta_modo_treino : str):
     print('Escolha a pasta do modelo:\n')
     for i,pasta in enumerate(lista_pastas_modelos):
         print(f'{i+1} - {pasta}')
-    
+    print('\n-1 - Voltar')
+
     resposta = input('\nDigite o número correspondente: ').strip()
-    resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
-    # while resposta not in [str(n) for n in range(1,qtd_pastas+1)]:
-    #    resposta = input('\nDigite o número correspondente (entre as opções a cima): ')
 
-    pasta_modelo_escolhido = lista_pastas_modelos[resposta]
+    if resposta not in ['-1']:
+        resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
+        # while resposta not in [str(n) for n in range(1,qtd_pastas+1)]:
+        #    resposta = input('\nDigite o número correspondente (entre as opções a cima): ')
 
-    caminho_pasta_modelo_escolhido = os.path.join(caminho_pasta_modo_treino,pasta_modelo_escolhido)
+        pasta_modelo_escolhido = lista_pastas_modelos[resposta]
 
-    limparConsole()
+        caminho_pasta_modelo_escolhido = os.path.join(caminho_pasta_modo_treino,pasta_modelo_escolhido)
 
-    escopo_treino = os.path.basename(os.path.dirname(caminho_pasta_modo_treino))
-    modo_treinado = os.path.basename(caminho_pasta_modo_treino)
-    nome_modelo = os.path.basename(caminho_pasta_modelo_escolhido)
+        limparConsole()
 
-    if len([modelo for modelo in os.listdir(caminho_pasta_modelo_escolhido) if modelo.endswith('.wordvectors')]) != DIC_INFO[escopo_treino]['Quantidade de intervalos']:
-        print('Parece que a pasta do modelo escolhido está vazia ou incompleta, vamos fazer o donwload adequadamente de todos os nossos arquivos para este modelo!')
+        tipo_treino = os.path.basename(os.path.dirname(os.path.dirname(caminho_pasta_modo_treino)))
+        escopo_treino = os.path.basename(os.path.dirname(caminho_pasta_modo_treino))
+        modo_treinado = os.path.basename(caminho_pasta_modo_treino)
+        nome_modelo = os.path.basename(caminho_pasta_modelo_escolhido)
+        
+        if len([modelo for modelo in os.listdir(caminho_pasta_modelo_escolhido) if modelo.endswith('.wordvectors')]) != DIC_INFO[tipo_treino][escopo_treino]['Quantidade de intervalos']:
+            print('Parece que a pasta do modelo escolhido está vazia ou incompleta, vamos fazer o download adequadamente de todos os nossos arquivos para este modelo!')
 
-        for arquivo in [os.path.join(caminho_pasta_modelo_escolhido,arq) for arq in os.listdir(caminho_pasta_modelo_escolhido)]:
-            os.remove(arquivo)
+            for arquivo in [os.path.join(caminho_pasta_modelo_escolhido,arq) for arq in os.listdir(caminho_pasta_modelo_escolhido)]:
+                os.remove(arquivo)
 
-        print('\n\n\t Estamos baixando os arquivos referentes ao modelo escolhido!\n\n\t--> Por favor, aguarde...\n\n')
+            print('\n\n\t Estamos baixando os arquivos referentes ao modelo escolhido!\n\n\t--> Por favor, aguarde...\n\n')
 
-        baixarModelos(escopo_treino=escopo_treino,
-                      modo_treinado=modo_treinado,
-                        nome_modelo=nome_modelo,
-                        pasta_destino=caminho_pasta_modelo_escolhido)
+            baixarModelos(tipo_treino=tipo_treino,
+                          escopo_treino=escopo_treino,
+                          modo_treinado=modo_treinado,
+                          nome_modelo=nome_modelo,
+                          pasta_destino=caminho_pasta_modelo_escolhido)
 
-    return caminho_pasta_modelo_escolhido
+        return caminho_pasta_modelo_escolhido
+    else:
+        return resposta
 
 def escolherModelosTemporais(caminho_pasta_modelo : str):
     lista_modelos_temporais = sorted([m for m in os.listdir(caminho_pasta_modelo) if m.endswith('.wordvectors')])
@@ -203,19 +255,32 @@ def escolherModelosTemporais(caminho_pasta_modelo : str):
     for i,pasta in enumerate(lista_modelos_temporais):
         print(f'{i+1} - {pasta}')
     print(f'{qtd_modelos+1} - Todos')
+    print('\n-1 - Voltar')    
+
     resposta = input('\nDigite os números correspondentes separados por "," (vírgula)\nou o número correspondente a todos:\n').strip()
-    if resposta == str(qtd_modelos+1):
-        respostas = [i for i in range(qtd_modelos)]
+    if resposta not in ['-1']:
+        if ',' in resposta:
+            while len([r for r in resposta.split(',') if not r.isdigit()])>0:
+                resposta = input('Por favor, digite uma resposta válida: ')
+        if resposta == str(qtd_modelos+1):
+            respostas = [i for i in range(qtd_modelos)]
+        else:
+            respostas = obterResposta(resposta=resposta,qtd_respostas=qtd_modelos)
+        
+
+        # while resposta not in [str(n) for n in range(1,qtd_pastas+1)]:
+        #    resposta = input('\nDigite o número correspondente (entre as opções a cima): ')
+        
+        caminho_modelos_escolhidos = []
+        if isinstance(respostas,int):
+            respostas = [respostas]
+        
+        for index in sorted(respostas):
+            caminho_modelos_escolhidos.append(os.path.join(caminho_pasta_modelo,lista_modelos_temporais[index]))
+
+        return caminho_modelos_escolhidos
     else:
-        respostas = obterResposta(resposta=resposta,qtd_respostas=qtd_modelos)
-    # while resposta not in [str(n) for n in range(1,qtd_pastas+1)]:
-    #    resposta = input('\nDigite o número correspondente (entre as opções a cima): ')
-
-    caminho_modelos_escolhidos = []
-    for index in sorted(respostas):
-        caminho_modelos_escolhidos.append(os.path.join(caminho_pasta_modelo,lista_modelos_temporais[index]))
-
-    return caminho_modelos_escolhidos
+        return resposta
 
 def carregarModelos(lista_caminhos_modelos_temporais : list[str]):
     modelos_carregados = []
@@ -223,57 +288,49 @@ def carregarModelos(lista_caminhos_modelos_temporais : list[str]):
         modelos_carregados.append((os.path.basename(caminho_modelo).replace('.wordvectors',''),KeyedVectors.load(caminho_modelo,mmap='r')))
     return modelos_carregados
 
-lista_de_acoes_com_series_temporais = ['Gráfico das similaridades ao decorrer do tempo',
-                                       'Vizinhos mais próximos ao decorrer do tempo',
-                                       'Mapa de calor das similaridades ao decorrer do tempo',
-                                       'Estratos do Tempo',
-                                       'Vetores de Palavras',
-                                       'Comparação entre Palavras',
-                                       'Frequência de Palavras ao decorrer do tempo']
 
 def escolherAcao(tipo_treinamento):
     print('Escolha uma das visualizações abaixo:\n\n')
-    if tipo_treinamento == 'com_series_temporais':
+    if tipo_treinamento == 'Com séries temporais':
         for i,acao in enumerate(lista_de_acoes_com_series_temporais):
             print(f'{i+1} - {acao}')
+        print('\n-1 - Voltar')
+        print('0 - Finalizar programa')
 
     resposta = input('\nDigite o número referente à sua escolha: ').strip()
-    if resposta != '0':
-        index_acao = obterResposta(resposta=resposta,qtd_respostas=len(lista_de_acoes_com_series_temporais))    
+    if resposta not in ['-1','0']:    
+        index_acao = obterResposta(resposta=resposta,qtd_respostas=len(lista_de_acoes_com_series_temporais))
         return lista_de_acoes_com_series_temporais[index_acao]
     else:
-        return 'Sair'
+        return resposta
             
 
 def organizarAmbiente():
+    global DIC_INFO
+
     if not os.path.exists(r'imagens_geradas'):
         os.makedirs(r'imagens_geradas')
 
     if not os.path.exists(r'modelos_treinados'):
         os.makedirs(r'modelos_treinados')
 
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais'))
-    if not os.path.exists(os.path.join('modelos_treinados','sem_series_temporais')):
-        os.makedirs(os.path.join('modelos_treinados','sem_series_temporais'))
+    # print('Pastas de tipo de treinamento',[p for p in DIC_INFO.keys() if isinstance(p,str)])
+    for pasta_tipo_treinamento in [p for p in DIC_INFO.keys() if isinstance(p,str)]:        
+        if not os.path.exists(os.path.join('modelos_treinados',pasta_tipo_treinamento)):
+            os.makedirs(os.path.join('modelos_treinados',pasta_tipo_treinamento))
+        # print('Pastas de treinamento',[p for p in DIC_INFO[pasta_tipo_treinamento].keys() if isinstance(p,str)])
+        for pasta_treinamento in [p for p in DIC_INFO[pasta_tipo_treinamento].keys() if isinstance(p,str)]:            
+            if not os.path.exists(os.path.join('modelos_treinados',pasta_tipo_treinamento,pasta_treinamento)):
+                os.makedirs(os.path.join('modelos_treinados',pasta_tipo_treinamento,pasta_treinamento))
+            # print('Pastas modo de treinamento',[p for p in DIC_INFO[pasta_tipo_treinamento][pasta_treinamento].keys() if not isinstance(DIC_INFO[pasta_tipo_treinamento][pasta_treinamento][p],int)])
+            # print(DIC_INFO[pasta_tipo_treinamento][pasta_treinamento].keys())
+            # for p in DIC_INFO[pasta_tipo_treinamento][pasta_treinamento].keys():
+                # print(DIC_INFO[pasta_tipo_treinamento][pasta_treinamento][p],type(DIC_INFO[pasta_tipo_treinamento][pasta_treinamento][p]))            
+            for pasta_modo_treinamento in [p for p in DIC_INFO[pasta_tipo_treinamento][pasta_treinamento].keys() if not isinstance(DIC_INFO[pasta_tipo_treinamento][pasta_treinamento][p],int)]:
+                if not os.path.exists(os.path.join('modelos_treinados',pasta_tipo_treinamento,pasta_treinamento,pasta_modo_treinamento)):
+                    os.makedirs(os.path.join('modelos_treinados',pasta_tipo_treinamento,pasta_treinamento,pasta_modo_treinamento))
+                # print('Pastas modelo',[p for p in DIC_INFO[pasta_tipo_treinamento][pasta_treinamento][pasta_modo_treinamento].keys() if isinstance(p,str)])
+                for pasta_modelo in [p for p in DIC_INFO[pasta_tipo_treinamento][pasta_treinamento][pasta_modo_treinamento].keys() if isinstance(p,str)]:                    
+                    if not os.path.exists(os.path.join('modelos_treinados',pasta_tipo_treinamento,pasta_treinamento,pasta_modo_treinamento,pasta_modelo)):
+                        os.makedirs(os.path.join('modelos_treinados',pasta_tipo_treinamento,pasta_treinamento,pasta_modo_treinamento,pasta_modelo))
 
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006'))
-
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental'))
-
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_1')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_1'))
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_2')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_2'))
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_3')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_3'))
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_4')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Incremental','Modelo_4'))
-
-
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Temporal')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Temporal'))
-    if not os.path.exists(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Temporal','Modelo_1')):
-        os.makedirs(os.path.join('modelos_treinados','com_series_temporais','RI_todo_2003_2006','Temporal','Modelo_1'))
