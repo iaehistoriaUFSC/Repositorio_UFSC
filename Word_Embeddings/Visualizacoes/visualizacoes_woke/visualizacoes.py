@@ -28,22 +28,6 @@ PONTUACOES = string.punctuation
 
 PASTA_SAVE_IMAGENS = r'imagens_geradas'
 
-def obterListaStopWords(caminho_arquivo_lista_stopwords : str = r'.\visualizacoes_woke\lista_stopwords.txt'):
-  lista_stopwords = []
-  if caminho_arquivo_lista_stopwords.endswith('.txt'):
-    with open(caminho_arquivo_lista_stopwords,'r',encoding='utf-8') as f:
-      stopwords = f.read()
-
-    lista_stopwords = [palavra.strip() for palavra in stopwords.split('\n') if not (palavra.startswith('#') or palavra.startswith('-'))]  
-    lista_stopwords = sorted(set([palavra.strip() for palavra in stopwords.split('\n') if not (palavra.startswith('#') or palavra.startswith('-'))]),key=len)
-    return lista_stopwords
-  else:    
-    print('\n\n\t! Lista de stopwords deve estar no formato ".txt"!\n\t! Além disso deve-se seguir o padrão de separar as palavras por quebra de linha.\n\n')
-    print('Aguardando 5s...\n')
-    time.sleep(5)
-    return []
-
-LISTA_STOP_WORDS = obterListaStopWords()
 
 
 def verificaExistenciaNosModelos(modelos_treinados : list[tuple], palavra_central : str):
@@ -1086,4 +1070,295 @@ def TaxaSimilaridadeCosseno(modelo_inicial,
 
 
 # def DistanciaEntrePalavras():
+
+def obterListaStopWords(caminho_arquivo_lista_stopwords : str = r'visualizacoes_woke\lista_stopwords.txt'):
+  try:
+    lista_stopwords = []
+    if caminho_arquivo_lista_stopwords.endswith('.txt'):
+      with open(caminho_arquivo_lista_stopwords,'r',encoding='utf-8') as f:
+        stopwords = f.read()
+
+      lista_stopwords = [palavra.strip() for palavra in stopwords.split('\n') if not (palavra.startswith('#') or palavra.startswith('-'))]  
+      lista_stopwords = sorted(set([palavra.strip() for palavra in stopwords.split('\n') if not (palavra.startswith('#') or palavra.startswith('-'))]),key=len)
+      return lista_stopwords
+    else:    
+      print('\n\n\t! Lista de stopwords deve estar no formato ".txt"!\n\t! Além disso deve-se seguir o padrão de separar as palavras por quebra de linha.\n\n')
+      print('Aguardando 5s...\n')
+      time.sleep(5)
+      return []
+  except Exception:
+    return '''#Artigos
+o
+os
+a
+as
+ao
+aos
+uns
+umas
+#Preposições
+à
+às
+aos
+da
+das
+do
+dos
+no
+nos
+na
+nas
+numa
+numas
+num
+nuns
+dessa
+dessas
+desse
+desses
+desta
+destas
+deste
+destes
+ante
+até
+após
+com
+contra
+de
+desde
+em
+entre
+para
+perante
+por
+sem
+sob
+sobre
+trás
+conforme
+consoante
+mediante
+tirante
+senão
+#Pronomes
+eu
+tu
+ele
+eles
+ela
+elas
+nós
+vós
+me
+te
+lhe
+lhes
+se
+nos
+vos
+mim
+comigo
+ti
+contigo
+si
+consigo
+nós
+conosco
+vós
+convosco
+você
+meu
+minha
+meus
+minhas
+teu
+tua
+teus
+tuas
+seu
+sua
+seus
+suas
+nosso
+nossa
+nossos
+nossas
+vosso
+vossa
+vossos
+vossas
+este
+isto
+esse
+isso
+aquele
+aquilo
+algum
+alguma
+alguns
+algumas
+nenhum
+nenhuma
+nenhuns
+nenhumas
+outro
+outra
+outros
+outras
+todo
+toda
+todos
+todas
+vário
+vária
+vários
+várias
+muito
+muita
+muitos
+muitas
+pouco
+pouca
+poucos
+poucas
+qualquer
+quaisquer
+qual
+quais
+quanto
+quanta
+quantos
+quantas
+alguém
+ninguém
+outrem
+quem
+algo
+tudo
+nada
+cada
+que
+qual
+quais
+quanto
+quanta
+quantos
+quantas
+cujo
+cuja
+cujos
+cujas
+onde
+esse
+esses
+essa
+essas
+esta
+estas
+este
+estes
+#Conjunções
+mas
+e
+também
+só
+todavia
+ou
+-seja
+portanto
+logo
+porque
+que
+assim
+já
+embora
+ainda
+conforme
+depois
+antes
+afim
+quanto
+quantos
+quanta
+quantas
+porém
+contudo
+entretanto
+outrossim
+#Extras
+mesmo
+mesmos
+mesma
+mesmas
+como
+tal
+aqui
+pois
+pela
+pelas
+pelo
+pelos
+parte
+além
+mais
+menos
+qual
+quais
+quando
+quem
+aquele
+àquele
+aqueles
+àqueles
+aquela
+àquela
+aquelas
+àquelas
+aquilo
+àquilo
+naquele
+naqueles
+naquela
+naquelas
+naquilo
+nesse
+nesses
+nessa
+nessas
+apenas
+tipo
+sim
+não
+aí
+meio
+maior
+menor
+igual
+forma
+primeiro
+segundo
+terceiro
+quarto
+quinto
+#Numerais
+um
+uma
+dois
+duas
+três
+quatro
+cinco
+seis
+sete
+oito
+nove
+dez
+onze
+doze
+treze
+quatorze
+quinze'''
+
+LISTA_STOP_WORDS = obterListaStopWords()
 
