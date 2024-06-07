@@ -493,7 +493,7 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
   if not os.path.exists(pasta_para_salvar_palavra_central):
     os.makedirs(pasta_para_salvar_palavra_central)
 
-  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Frequência de palavras selecionadas para {nome_modelo} - {', '.join(lista_palavras[:3])}, etc.png')
+  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Frequência de palavras selecionadas para {nome_modelo} - {", ".join(lista_palavras[:3])}, etc.png')
 
   while os.path.exists(caminho_save_fig):  
     caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
@@ -536,7 +536,7 @@ def FrequenciaDePalavrasTop20(tupla_modelo_escolhido,
     os.makedirs(pasta_para_salvar_palavra_central)
     
   if condicoes_filtro:
-    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Frequência de palavras para {nome_modelo_escolhido} filtro de {', '.join(condicoes_filtro)}.png')  
+    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Frequência de palavras para {nome_modelo_escolhido} filtro de {", ".join(condicoes_filtro)}.png')  
   else:
     caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Frequência de palavras para {nome_modelo_escolhido} sem filtro.png')
 
@@ -1059,7 +1059,7 @@ def TaxaSimilaridadeCosseno(modelo_inicial,
     os.makedirs(pasta_para_salvar_palavra_central)
       
   if condicoes_filtro:
-    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Mudança todas as palavras para {primeiro_ano_inicial} e {ultimo_ano_final} filtro de {' e '.join(condicoes_filtro)}.png')  
+    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Mudança todas as palavras para {primeiro_ano_inicial} e {ultimo_ano_final} filtro de {" e ".join(condicoes_filtro)}.png')  
   else:
     if taxa_global:
       caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Mudança todas as palavras para {primeiro_ano_inicial} e {ultimo_ano_final} sem filtro.png')
