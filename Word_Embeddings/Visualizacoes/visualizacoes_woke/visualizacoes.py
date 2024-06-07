@@ -28,7 +28,7 @@ PONTUACOES = string.punctuation
 
 PASTA_SAVE_IMAGENS = r'imagens_geradas'
 
-def obterListaStopWords(caminho_arquivo_lista_stopwords : str = r'visualizacoes_woke\lista_stopwords.txt'):
+def obterListaStopWords(caminho_arquivo_lista_stopwords : str = r'.\visualizacoes_woke\lista_stopwords.txt'):
   lista_stopwords = []
   if caminho_arquivo_lista_stopwords.endswith('.txt'):
     with open(caminho_arquivo_lista_stopwords,'r',encoding='utf-8') as f:
