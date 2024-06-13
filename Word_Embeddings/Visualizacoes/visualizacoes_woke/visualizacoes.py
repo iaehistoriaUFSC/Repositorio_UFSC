@@ -304,7 +304,7 @@ def VizinhosMaisProximosTxt(tupla_modelo_escolhido : tuple[str,KeyedVectors],
   if conjunto_dentro:
     palavras_vizinhas_com_similaridade = [(r[0],r[1]) for r in modelo_escolhido.most_similar(positive=palavra_central,topn=topn)]
 
-    txt = f'Lista dos TOP {str(topn)} vizinhos mais próximos de {', '.join(palavra_central)}:\n\n'
+    txt = f'Lista dos TOP {str(topn)} vizinhos mais próximos de {", ".join(palavra_central)}:\n\n'
 
     for i, resultado in enumerate(palavras_vizinhas_com_similaridade):
       txt += f'{str(i+1)}. {resultado[0]}: {str(resultado[1])}\n'
