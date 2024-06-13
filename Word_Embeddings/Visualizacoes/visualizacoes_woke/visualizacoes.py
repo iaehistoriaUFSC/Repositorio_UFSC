@@ -8,6 +8,7 @@ from sklearn.decomposition import PCA
 from sklearn.metrics.pairwise import cosine_similarity
 import seaborn as sns
 import pandas as pd
+import networkx as nx
 import re
 import string
 try:
@@ -30,13 +31,42 @@ PASTA_SAVE_IMAGENS = r'imagens_geradas'
 
 
 
-def verificaExistenciaNosModelos(modelos_treinados : list[tuple], palavra_central : str):
-  try:
-    for modelo in [modelo[1] for modelo in modelos_treinados]:
-      modelo[palavra_central]
-    return True
-  except Exception:
-    return False
+def verificaExistenciaNosModelos(modelos_treinados : list[tuple], palavra_central : str | list[str], checagem_unica : bool = False):
+  if not checagem_unica:
+    try:
+      if isinstance(palavra_central,str):
+        for modelo in [modelo[1] for modelo in modelos_treinados]:
+          modelo[palavra_central]
+        return True
+      else:        
+        for modelo in [modelo[1] for modelo in modelos_treinados]:
+          for palavra in palavra_central:
+            modelo[palavra]
+        return True
+    except Exception:
+      return False
+  else:
+    existencia_em_pelo_menos_um = False
+
+    if isinstance(palavra_central,str):      
+      for modelo in [modelo[1] for modelo in modelos_treinados]:
+        if palavra_central in modelo.index_to_key:
+          existencia_em_pelo_menos_um = True
+          break
+    else:      
+      qtd = len(palavra_central)
+      for modelo in [modelo[1] for modelo in modelos_treinados]:
+        qtd_modelo = 0
+        for palavra in palavra_central:
+          if palavra in modelo.index_to_key:
+            qtd_modelo += 1
+        if qtd_modelo == qtd:
+          existencia_em_pelo_menos_um = True
+          break
+    if existencia_em_pelo_menos_um:
+      return True
+    else:
+      return False
 
 def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple],pasta_para_salvar=PASTA_SAVE_IMAGENS):
   
@@ -127,92 +157,132 @@ def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple],pasta_para_sa
   plt.clf()
   # plt.show()
   print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Gráfico Similaridades','-->',palavra_central,'\n\n')
-  
 
-def VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
+
+def VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados, pasta_para_salvar=PASTA_SAVE_IMAGENS, modo : int = 1):
+  
+  limparConsole()
   print('\n\n\tVocê está montando uma visualização para Vizinhos mais Próximos ao decorrer do tempo.\n\n')
-  palavra_central = input('Digite uma palavra: ').lower().strip()
+
+  print('Como você gostaria de visualizar os resultados?\n\n')
+  print('1 - Apenas com visualização')
+  print('2 - Apenas arquivo de texto detalhado (possível analisar mais de uma palavra)')
+
+  modo = input('\nDigite o número correspondente: ')
+  modo = obterResposta(resposta=modo,qtd_respostas=2,contagem_normal=True)
   
-  while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central):
-    palavra_central = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra palavra: ').lower().strip()
+  limparConsole()
+  print('\n\n\tVocê está montando uma visualização para Vizinhos mais Próximos ao decorrer do tempo.\n\n')
 
-  if not os.path.exists(pasta_para_salvar):
-    os.makedirs(pasta_para_salvar)
+  if modo == 1:
+    palavra_central = input('Digite uma palavra: ').lower().strip()
+    while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central,checagem_unica=True):
+      palavra_central = input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: ').lower().strip()
 
-  for modelo in modelos_treinados:
-    VizinhosMaisProximos(tupla_modelo_escolhido=modelo,
-                        palavra_central=palavra_central,
-                        pasta_para_salvar=pasta_para_salvar)
+
+  if modo == 2:
+    while True:
+      lista_palavras = []
+      palavra = input('\nDigite uma palavra: ').lower().strip()
+      while palavra != '0':
+        lista_palavras.append(palavra)
+        palavra = input('\nDigite mais uma palavra (0 para parar): ').lower().strip()
+
+      if verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=lista_palavras,checagem_unica=True):
+        break
+      else:
+        print('Esse conjunto de palavras não está presente em nenhum dos modelos.\nPor favor digite outro...')
+    limparConsole()
+    topn = input('\nQuantos vizinhos mais próximos você gostaria de coletar?\n')
+    while not topn.isdigit():
+      topn = input('\nDigite um NÚMERO, por favor: ')
+    topn = int(topn)
+      
+  
+  os.makedirs(pasta_para_salvar,exist_ok=True)
+
+  if modo == 1:
+    for modelo in modelos_treinados:
+      VizinhosMaisProximos(tupla_modelo_escolhido=modelo,
+                          palavra_central=palavra_central,
+                          pasta_para_salvar=pasta_para_salvar)
+  elif modo == 2:
+    for modelo in modelos_treinados:
+      VizinhosMaisProximosTxt(tupla_modelo_escolhido=modelo,
+                              palavra_central=lista_palavras,
+                              pasta_para_salvar=pasta_para_salvar,
+                              topn=topn)
         
 def VizinhosMaisProximos(tupla_modelo_escolhido : tuple[str,KeyedVectors],
                         palavra_central : str,
                         pasta_para_salvar : str):
   
   try:
-    nome_modelo_escolhido = tupla_modelo_escolhido[0]
-    modelo_escolhido = tupla_modelo_escolhido[1]
+    nome_modelo_escolhido, modelo_escolhido = tupla_modelo_escolhido
     
-    palavras_vizinhas = modelo_escolhido.most_similar(palavra_central)
+    if palavra_central in modelo_escolhido.index_to_key:
+      palavras_vizinhas = modelo_escolhido.most_similar(palavra_central)
 
-    palavras_vizinhas = []
-    palavras_vizinhas_com_similaridade= []
+      palavras_vizinhas = []
+      palavras_vizinhas_com_similaridade= []
 
-    for palavra in modelo_escolhido.most_similar(palavra_central):
-      palavras_vizinhas.append(palavra[0])
-      palavras_vizinhas_com_similaridade.append((palavra[0],palavra[1]))
+      for palavra,similaridade in modelo_escolhido.most_similar(palavra_central):
+        palavras_vizinhas.append(palavra)
+        palavras_vizinhas_com_similaridade.append((palavra,similaridade))
 
 
-    fig, ax = plt.subplots(1, 2,figsize=(12, 5),gridspec_kw={'width_ratios': [4, 1]})
+      fig, ax = plt.subplots(1, 2,figsize=(12, 5),gridspec_kw={'width_ratios': [4, 1]})
 
-    ax[0].axis('off')
-    ax[1].axis('off')
+      ax[0].axis('off')
+      ax[1].axis('off')
 
-    ax[0].text(0.5, 0.5, palavra_central, ha='center', va='center', fontsize=14, fontweight='bold')
+      ax[0].text(0.5, 0.5, palavra_central, ha='center', va='center', fontsize=14, fontweight='bold')
 
-    num_vizinhas = len(palavras_vizinhas)
+      num_vizinhas = len(palavras_vizinhas)
 
-    theta = np.linspace(0, 2 * np.pi, num_vizinhas, endpoint=False)
-    raio = 0.1
+      theta = np.linspace(0, 2 * np.pi, num_vizinhas, endpoint=False)
+      raio = 0.1
 
-    x_vizinhas = 0.5 + raio * np.cos(theta)
-    y_vizinhas = 0.5 + raio * np.sin(theta)
+      x_vizinhas = 0.5 + raio * np.cos(theta)
+      y_vizinhas = 0.5 + raio * np.sin(theta)
 
-    distancia_raio = 0.7
+      distancia_raio = 0.7
 
-    for i, palavra in enumerate(palavras_vizinhas):
-        ax[0].text(x_vizinhas[i], y_vizinhas[i], palavra, ha='center', va='center', fontsize=12, fontweight='bold')
+      for i, palavra in enumerate(palavras_vizinhas):
+          ax[0].text(x_vizinhas[i], y_vizinhas[i], palavra, ha='center', va='center', fontsize=12, fontweight='bold')
 
-        x_inicio = x_vizinhas[i] + (0.5 - x_vizinhas[i]) * distancia_raio
-        y_inicio = y_vizinhas[i] + (0.5 - y_vizinhas[i]) * distancia_raio
-        x_fim = x_vizinhas[i]
-        y_fim = y_vizinhas[i]
+          x_inicio = x_vizinhas[i] + (0.5 - x_vizinhas[i]) * distancia_raio
+          y_inicio = y_vizinhas[i] + (0.5 - y_vizinhas[i]) * distancia_raio
+          x_fim = x_vizinhas[i]
+          y_fim = y_vizinhas[i]
 
-        ax[0].plot([x_inicio, x_fim], [y_inicio, y_fim], color='gray')
+          ax[0].plot([x_inicio, x_fim], [y_inicio, y_fim], color='gray')
 
-    ax[0].set_title(f'TOP 10 Vizinhos mais próximos de {palavra_central}\n{nome_modelo_escolhido}')
+      ax[0].set_title(f'TOP 10 Vizinhos mais próximos de {palavra_central}\n{nome_modelo_escolhido}')
 
-    texto = "Resultado:\n('palavra', similaridade)"
-    for i in range(len(palavras_vizinhas_com_similaridade)):
-      texto += '\n\n'+str(palavras_vizinhas_com_similaridade[i])
+      texto = "Resultado:\n('palavra', similaridade)"
+      for i in range(len(palavras_vizinhas_com_similaridade)):
+        texto += '\n\n'+str(palavras_vizinhas_com_similaridade[i])
 
-    ax[1].text(1, 0.5,texto, fontsize=11, ha='center', va='center')
+      ax[1].text(1, 0.5,texto, fontsize=11, ha='center', va='center')
 
-    
-    pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Vizinhos mais próximos',palavra_central)
+      
+      pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Vizinhos mais próximos',palavra_central)
 
-    if not os.path.exists(pasta_para_salvar_palavra_central):
-      os.makedirs(pasta_para_salvar_palavra_central)
-    
-    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Vizinhos mais próximos - {nome_modelo_escolhido} - {palavra_central}.png')
+      if not os.path.exists(pasta_para_salvar_palavra_central):
+        os.makedirs(pasta_para_salvar_palavra_central)
+      
+      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Vizinhos mais próximos - {nome_modelo_escolhido} - {palavra_central}.png')
 
-    while os.path.exists(caminho_save_fig):  
-      caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+      while os.path.exists(caminho_save_fig):  
+        caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
 
-    plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
+      plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
   except:
-    limparConsole()
-    print(f'Ocorreu um erro com a palavra {palavra}...')
+    pass
+    # limparConsole()
+    # print(f'Ocorreu um erro com a palavra {palavra}...')
     # erro = f'Na função: campoSemantico, usando {nome_modelo_escolhido}.\nDescrição do erro --> '+str(sys.exc_info()[0].__name__)+": "+str(sys.exc_info()[1])+'.'
     # with open('Problemas durante execução.txt','a',encoding='utf-8') as f:
     #   f.write(erro+'\n\n')
@@ -220,6 +290,40 @@ def VizinhosMaisProximos(tupla_modelo_escolhido : tuple[str,KeyedVectors],
     limparConsole()
     print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Vizinhos mais próximos','-->',palavra_central,'\n\n')
     plt.clf()
+
+def VizinhosMaisProximosTxt(tupla_modelo_escolhido : tuple[str,KeyedVectors],
+                            palavra_central : str,
+                            pasta_para_salvar : str,
+                            topn : int):
+  nome_modelo_escolhido, modelo_escolhido = tupla_modelo_escolhido
+  conjunto_dentro = True
+  for palavra in palavra_central:
+    if palavra not in modelo_escolhido.index_to_key:
+      conjunto_dentro = False
+      break
+  if conjunto_dentro:
+    palavras_vizinhas_com_similaridade = [(r[0],r[1]) for r in modelo_escolhido.most_similar(positive=palavra_central,topn=topn)]
+
+    txt = f'Lista dos TOP {str(topn)} vizinhos mais próximos de {', '.join(palavra_central)}:\n\n'
+
+    for i, resultado in enumerate(palavras_vizinhas_com_similaridade):
+      txt += f'{str(i+1)}. {resultado[0]}: {str(resultado[1])}\n'
+
+    nome_pasta = '_'.join(palavra_central[:5])
+    pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Vizinhos mais próximos',nome_pasta)
+
+    os.makedirs(pasta_para_salvar_palavra_central,exist_ok=True)
+    
+    caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'VP_{nome_modelo_escolhido}.txt')
+
+    while os.path.exists(caminho_save_txt):
+      caminho_save_txt = caminho_save_txt.replace('.txt','_copia.txt')
+    
+    with open(caminho_save_txt,'w',encoding='utf-8') as f:
+      f.write(txt)
+    
+    limparConsole()
+    print(f'Arquivo de texto gerado e salvo em "Vizinhos mais próximos" --> "{nome_pasta}"')
 
 
 def MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
@@ -413,26 +517,52 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
   
   limparConsole()
   print('\n\n\tVocê está montando uma visualização para Frequência de Palavras Selecionadas ao decorrer do tempo.\n\n')
-  
+    
+  print('Qual tipo de frequência você quer visualizar?\n\n')
+  print('1 - Frequência completa durante dos treinamentos')
+  print('2 - Frequência entre os diferentes períodos de treinamento')
+  print('(Ñ DISPONÍVEL) 3 - Frequência de palavras no corpus todo')
+
+  resposta_tipo_freq = input('\n\nDigite o número correspondente à sua escolha: ').strip()
+  resposta_tipo_freq = obterResposta(resposta=resposta_tipo_freq,qtd_respostas=3,contagem_normal=True)
+
+  limparConsole()
+  print('\n\n\tVocê está montando uma visualização para Frequência de Palavras Selecionadas ao decorrer do tempo.\n\n')
   lista_palavras = []
 
   cores = ['green','red','cyan','violet','blue','gold','orange','c','black','purple','lime','tomato','magenta','lightslategrey','lightgreen','paleturquoise','aquamarine','moccasin','lightcoral','chocolate','sandybrown','rosybrown']
 
-  palavra_freq = input('Digite a primeira palavra: ').lower().strip()
-  while True:
-    while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_freq) and palavra_freq != '0':
-      palavra_freq = input('\n! Esta palavra não está presente em todos os modelos.\n! Por favor, digite outra palavra: ').lower().strip()
-    if palavra_freq != '0':
-      if palavra_freq not in lista_palavras:
-        lista_palavras.append(palavra_freq)
-    else:
-      break
-    if len(lista_palavras) == len(cores):
-      break
-    else:
-      palavra_freq = input('\nDigite mais uma palavra (0 para parar): ').lower().strip()     
-  
-  nomes = [re.search(r'(\d{4})\_\d{4}',modelo[0]).group(1) + '\n-\n' + re.search(r'\d{4}\_(\d{4})',modelo[0]).group(1) for modelo in modelos_treinados]
+  if resposta_tipo_freq in [1,2]:
+    palavra_freq = input('Digite a primeira palavra: ').lower().strip()
+    while True:
+      while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_freq,checagem_unica=True) and palavra_freq != '0':
+        palavra_freq = input('\n! Esta palavra não está presente em nenhum dos modelos.\n! Por favor, digite outra palavra: ').lower().strip()
+      if palavra_freq != '0':
+        if palavra_freq not in lista_palavras:
+          lista_palavras.append(palavra_freq)
+      else:
+        break
+      if len(lista_palavras) == len(cores):
+        break
+      else:
+        palavra_freq = input('\nDigite mais uma palavra (0 para parar): ').lower().strip()     
+  elif resposta_tipo_freq == 3:
+    pass
+
+  if resposta_tipo_freq == 1:
+    nomes = [re.search(r'(\d{4})\_\d{4}',modelo[0]).group(1) + '\n-\n' + re.search(r'\d{4}\_(\d{4})',modelo[0]).group(1) for modelo in modelos_treinados]
+  elif resposta_tipo_freq == 2:
+    # nomes = [re.search(r'\d{4}\_(\d{4})',modelo[0]).group(1) for modelo in modelos_treinados]
+    nomes = []
+    for i in range(len(modelos_treinados)):
+      modelo_atual = modelos_treinados[i][0]
+      if i == 0:
+        nomes.append(re.search(r'(\d{4})\_\d{4}',modelo_atual).group(1) + '\n-\n' + re.search(r'\d{4}\_(\d{4})',modelo_atual).group(1))
+      else:
+        nomes.append(str(int(re.search(r'\d{4}\_(\d{4})',modelos_treinados[i-1][0]).group(1))+1) + '\n-\n' + re.search(r'\d{4}\_(\d{4})',modelo_atual).group(1))
+    
+  elif resposta_tipo_freq == 3:
+    pass
 
   fig, ax = plt.subplots(figsize=(16, 8))
 
@@ -447,8 +577,27 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
       i += 1
     cores_usadas.append(cor)
     y = []
-    for modelo in [modelo[1] for modelo in modelos_treinados]:
-      y.append(modelo.get_vecattr(palavra,'count'))
+    if resposta_tipo_freq == 1:
+      for modelo in [modelo[1] for modelo in modelos_treinados]:
+        if palavra in modelo.index_to_key:
+          y.append(modelo.get_vecattr(palavra,'count'))
+        else:
+          y.append(0)
+    elif resposta_tipo_freq == 2:
+      for i in range(len(modelos_treinados)):
+        modelo_atual = modelos_treinados[i][1]
+        if palavra in modelo_atual.index_to_key:
+          if i == 0: # primeiro
+            y.append(modelo_atual.get_vecattr(palavra,'count'))
+          elif palavra in modelos_treinados[i-1][1].index_to_key:        
+            y.append(modelo_atual.get_vecattr(palavra,'count')-modelos_treinados[i-1][1].get_vecattr(palavra,'count'))
+          else:
+            y.append(modelo_atual.get_vecattr(palavra,'count'))
+        else:
+          y.append(0)
+    elif resposta_tipo_freq == 3:
+      pass
+
 
     ax.scatter(x, y, color='black', s=10)
     line_x = [x[0]] + x[1:-1] + [x[-1]]
@@ -457,36 +606,50 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
     for i in range(len((y))):
       ax.text(x[i], y[i]+0.01, str(round(y[i],2)), fontsize=6, ha='center', va='bottom')
 
-  nome_modelo = re.sub(r'\_\d{4}\_\d{4}', '', modelos_treinados[0][0])
+  
+  nome_modelo = re.sub(r'\_\d{4}\_\d{4}', '', modelos_treinados[0][0])  
 
-  ax.set_title(f'Frequência das palavras selecionadas\n{nome_modelo}', fontsize=20, pad= 25)
-  ax.set_xlabel('Intervalos de tempo', fontsize=15, labelpad=20)
-  ax.set_ylabel('Frequência', fontsize=15, labelpad=20)
+  if y:
+    if resposta_tipo_freq == 1:
+      ax.set_title(f'Frequência completa nos treinamentos das palavras selecionadas\n{nome_modelo}', fontsize=20, pad= 25)
+    elif resposta_tipo_freq == 2:
+      ax.set_title(f'Frequência no corpus das palavras selecionadas\n{nome_modelo}', fontsize=20, pad= 25)
+    elif resposta_tipo_freq == 3:
+      pass
+    ax.set_xlabel('Intervalos de tempo', fontsize=15, labelpad=20)
+    ax.set_ylabel('Frequência', fontsize=15, labelpad=20)
 
-  ax.set_xticks(x)
-  ax.set_xticklabels(nomes,fontsize=11)
+    ax.set_xticks(x)
+    ax.set_xticklabels(nomes,fontsize=11)
 
-  ax.grid('on')
-  ax.legend(fontsize = 11,loc='center left', bbox_to_anchor=(1, 0.5))
-  plt.tight_layout(rect=[0, 0, 0.85, 1])
+    ax.grid('on')
+    ax.legend(fontsize = 11,loc='center left', bbox_to_anchor=(1, 0.5))
+    plt.tight_layout(rect=[0, 0, 0.85, 1])
 
-  limparConsole()
+    limparConsole()
 
-  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Frequências de Palavras Selecionadas')
+    pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Frequências de Palavras Selecionadas')
 
-  if not os.path.exists(pasta_para_salvar_palavra_central):
-    os.makedirs(pasta_para_salvar_palavra_central)
+    if not os.path.exists(pasta_para_salvar_palavra_central):
+      os.makedirs(pasta_para_salvar_palavra_central)
 
-  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Freq_selecionadas_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png')
+    if resposta_tipo_freq == 1:
+      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Freq_treinos_selecionadas_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png')
+    elif resposta_tipo_freq == 2:
+      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Freq_corpus_selecionadas_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png')
+    elif resposta_tipo_freq == 3:
+      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Freq_corpus_skinner_selecionadas_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png')
 
-  while os.path.exists(caminho_save_fig):  
-    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+    while os.path.exists(caminho_save_fig):  
+      caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
 
-  plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
+    plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
-  plt.clf()
-  # plt.show()
-  print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Frequências de Palavras Selecionadas','\n\n')
+    # plt.show()
+
+    plt.clf()
+    
+    print('\n\n\tImagem salva em',pasta_para_salvar,'-->','Frequências de Palavras Selecionadas','\n\n')
  
     
 def FrequenciaDePalavrasTop20(tupla_modelo_escolhido,
@@ -547,11 +710,13 @@ def EstratosDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
       lista_nova = [(lista[i], lista[i + 1], lista[i + 2]) for i in range(0, len(lista), 3)]
       return lista_nova
   
+  limparConsole()
+
   print('\n\n\tVocê está montando uma visualização para Estratos do Tempo.\n\n')
   palavra_central = input('Digite a palavra central: ').lower().strip()
 
-  while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central):
-    palavra_central = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra palavra: ').lower().strip()
+  while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central,checagem_unica=True):
+    palavra_central = input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: ').lower().strip()
 
   data = {}
 
@@ -562,9 +727,10 @@ def EstratosDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
 
     chave = ano_inicial + ' - ' + ano_final
 
-    lista_valores = [{r[0]:r[1]} for r in modelo.most_similar(palavra_central)]
-
-    data[chave] = lista_valores
+    if palavra_central in modelo.index_to_key:
+      lista_valores = [{r[0]:r[1]} for r in modelo.most_similar(palavra_central)]
+      data[chave] = lista_valores    
+    
 
 
   lista_de_tuplas = list(data.items())
@@ -579,7 +745,7 @@ def EstratosDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
   df = pd.DataFrame(heatmap_values, index=index)
 
   plt.figure(figsize=(8, 8))
-  heatmap = sns.heatmap(df, annot=False, fmt="", cmap='coolwarm', cbar=True, cbar_kws={'shrink': 0.8})
+  heatmap = sns.heatmap(df, annot=False, fmt="", cmap='coolwarm', cbar=True, cbar_kws={'shrink': 0.8}) #,vmin=0, vmax=1, center=0.5
   # heatmap = sns.heatmap(df, annot=False, fmt="", cmap='coolwarm', cbar=True, cbar_kws={'shrink': 0.8}, linewidths=1, linecolor='black')
 
   nome_modelo_atual = re.sub(r'\_\d{4}\_\d{4}','',modelos_treinados[0][0])
@@ -619,8 +785,8 @@ def EstratosDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
 
   plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
   
-  print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Estratos do Tempo','-->',palavra_central,'\n\n')
-  
+  print('\n\n\tImagem salva em',pasta_para_salvar,'-->','Estratos do Tempo','-->',palavra_central,'\n\n')
+  # plt.show()
   plt.clf()
 
 
@@ -874,6 +1040,46 @@ def ComparacaoEntrePalavras(tupla_modelo_escolhido,
   plt.clf()
 
 
+def ElementoQueNaoCombina(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
+  limparConsole()
+  print('\n\n\tVocê está gerando resultado para Análise de elemento que menos combina\n\n')
+
+  while True:
+    lista_palavras = []
+    palavra = input('\nDigite uma palavra: ').lower().strip()
+    while palavra != '0':
+      lista_palavras.append(palavra)
+      palavra = input('\nDigite mais uma palavra (0 para parar): ').lower().strip()
+
+    if verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=lista_palavras,checagem_unica=True):
+      break
+    else:
+      print('Esse conjunto de palavras não está presente em nenhum dos modelos.\nPor favor digite outro...')
+    limparConsole()
+
+  txt = f'Analisando qual elemento combina menos com os demais\nlista: {", ".join(lista_palavras)}\n\n\n'
+  for nome_modelo, modelo in modelos_treinados:  
+    resultado = modelo.doesnt_match(lista_palavras)
+    txt += f'{nome_modelo}: {resultado}\n\n'
+
+  nome_pasta = '_'.join(lista_palavras[:5])
+  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Elemento que menos combina',nome_pasta)
+
+  nome_modelo_escolhido = re.sub(r'\_\d{4}\_\d{4}','',modelos_treinados[0][0])
+
+  os.makedirs(pasta_para_salvar_palavra_central,exist_ok=True)
+
+  caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'Elemento que menos Combina para {nome_modelo_escolhido}.txt')
+
+  while os.path.exists(caminho_save_txt):
+    caminho_save_txt = caminho_save_txt.replace('.txt','_copia.txt')
+  
+  with open(caminho_save_txt,'w',encoding='utf-8') as f:
+    f.write(txt)
+    
+  limparConsole()
+  print(f'Arquivo de texto gerado e salvo em "Elemento que menos combina" --> "{nome_pasta}"')
+
 
 def DistanciaEntreVetores(a,b):
   A = np.array([a])
@@ -1071,6 +1277,70 @@ def TaxaSimilaridadeCosseno(modelo_inicial,
 
 
 # def DistanciaEntrePalavras():
+
+
+def RedeDinamicaCampoSemantico(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
+
+  limparConsole()
+
+  print('\n\n\tVocê está montando uma visualização para Rede Dinâmica do Campo Semântico.\n\n')
+  palavra_central = input('Digite a palavra central: ').lower().strip()
+
+  while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central,checagem_unica=True):
+    palavra_central = input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: ').lower().strip()
+
+  G = nx.Graph()
+
+  def add_nodes_edges(data, year):
+      G.add_node(f"{palavra_central}_{year}")
+
+      for word, score in data.most_similar(palavra_central, topn=10):
+          G.add_node(f"{word}_{year}")
+          G.add_edge(f"{palavra_central}_{year}", f"{word}_{year}", weight=score)
+
+  for modelo in modelos_treinados:
+    add_nodes_edges(modelo[1], re.search(r'(\d{4})\_\d{4}',modelo[0]).group(1) + ' - ' + re.search(r'\d{4}\_(\d{4})',modelo[0]).group(1))
+
+  pos = nx.spring_layout(G, seed=42, scale=1, k=0.21, weight=1000)#
+
+  plt.figure(figsize=(12, 12))
+
+  nx.draw_networkx_nodes(G, pos, node_color="skyblue", node_size=300)
+
+  weights = [G[u][v]['weight'] for u, v in G.edges()]
+  nx.draw_networkx_edges(G, pos, width=weights, edge_color="grey")
+
+  labels = {}
+  for node in G.nodes():
+      labels[node] = node.split("_")[0]
+  nx.draw_networkx_labels(G, pos, labels, font_size=10)
+
+  for year in [re.search(r'(\d{4})\_\d{4}',modelo[0]).group(1) + ' - ' + re.search(r'\d{4}\_(\d{4})',modelo[0]).group(1) for modelo in modelos_treinados]:
+      plt.text(pos[f"{palavra_central}_{year}"][0], pos[f"{palavra_central}_{year}"][1] + 0.25, year, fontsize=14, ha='center',fontweight='bold')
+
+  nome_modelo = re.sub(r'\_\d{4}\_\d{4}','',modelos_treinados[0][0])
+
+  plt.title(f'Rede dinâmica de campos semânticos ao decorrer do tempo\npara "{palavra_central}"\n{nome_modelo}',fontsize=16)
+  
+  limparConsole()
+
+  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Rede Dinâmica',palavra_central)
+
+  if not os.path.exists(pasta_para_salvar_palavra_central):
+    os.makedirs(pasta_para_salvar_palavra_central)
+  
+  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'RD_CS_{palavra_central}_{nome_modelo}.png')
+
+  while os.path.exists(caminho_save_fig):  
+    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+
+  plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
+  
+  print('\n\n\tImagem salva em',pasta_para_salvar,'-->','Rede Dinâmica','-->',palavra_central,'\n\n')
+  # plt.show()
+  plt.clf()
+
+
 
 def obterListaStopWords(caminho_arquivo_lista_stopwords : str = r'visualizacoes_woke\lista_stopwords.txt'):
   try:

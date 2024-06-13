@@ -4,6 +4,7 @@ def main():
     organizarAmbiente()
     parar_programa = False
 
+    limparConsole()
     tipo_treinamento = escolherTipoTreinamento()
     while tipo_treinamento != '0' and not parar_programa:
         limparConsole()
@@ -64,6 +65,10 @@ def main():
                                     ComparacaoEntrePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
                                 elif acao == 'Mudança de Palavras ao decorrer do tempo':
                                     MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+                                elif acao == 'Rede dinâmica dos campos semânticos ao decorrer do tempo':
+                                    RedeDinamicaCampoSemantico(modelos_treinados=modelos_carregados)
+                                elif acao == 'Elemento que não combina dentre os demais':
+                                    ElementoQueNaoCombina(modelos_treinados=modelos_carregados)
                                 else:
                                     break                                
                             acao = escolherAcao(os.path.basename(tipo_treinamento))
@@ -94,8 +99,8 @@ def main():
             limparConsole()
             tipo_treinamento = escolherTipoTreinamento()
         else:
-            break
-    
+            break       
+
     limparConsole()
 
     print('\n\n\tPrograma finalizado!\n\n')

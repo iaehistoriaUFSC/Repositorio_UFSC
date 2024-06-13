@@ -46,13 +46,14 @@ DIC_INFO = {'Com séries temporais':{'RI todo início 2003 2006':{'Quantidade de
                                                                      'Modelo 3':'1GTXirosiGq7A0cYMXAZtU6u7pZD-JsAj'}}}}
 
 
-
 lista_de_acoes_com_series_temporais = ['Gráfico das similaridades ao decorrer do tempo',
-                                       'Vizinhos mais próximos ao decorrer do tempo',
+                                       'Vizinhos mais próximos ao decorrer do tempo (.png e .txt)',
+                                       'Rede dinâmica dos campos semânticos ao decorrer do tempo',
                                        'Mapa de calor das similaridades ao decorrer do tempo',
                                        'Estratos do Tempo',
                                        'Vetores de Palavras',
                                        'Comparação entre Palavras',
+                                       'Elemento que não combina dentre os demais (só .txt)',
                                        'Frequência de Palavras ao decorrer do tempo',
                                        'Mudança de Palavras ao decorrer do tempo']
 
@@ -65,15 +66,15 @@ def limparConsole():
     else:
         os.system('clear')
 
-def descompactarPastaModelos(campinho_pasta_modelo : str, excluir_zip : bool = True):
-    lista_arquivos_zipados = [os.path.join(campinho_pasta_modelo,arq) for arq in os.listdir(campinho_pasta_modelo) if arq.endswith('.zip')]
+def descompactarPastaModelos(caminho_pasta_modelo : str, excluir_zip : bool = True):
+    lista_arquivos_zipados = [os.path.join(caminho_pasta_modelo,arq) for arq in os.listdir(caminho_pasta_modelo) if arq.endswith('.zip')]
     qtd_zips = len(lista_arquivos_zipados)
     if qtd_zips > 0:
-        print('Hmmm... Parece que temos arquivos compactados.\nEstamos descompactando, aguarde alguns instântes!')
+        print('Descompactando arquivos! Por favor, aguarde alguns instântes!')
         for i,arquivo in enumerate(lista_arquivos_zipados):
             print(f'Descompactando {i+1} de {qtd_zips}')
             with zipfile.ZipFile(arquivo, 'r') as zip_ref:
-                zip_ref.extractall(campinho_pasta_modelo)
+                zip_ref.extractall(caminho_pasta_modelo)
             if excluir_zip:
                 os.remove(arquivo)
 
@@ -116,6 +117,7 @@ def obterResposta(resposta : str,
             resposta += 1
         return resposta
 
+
 def escolherTipoTreinamento():
     lista_pastas_tipos_treinamentos = [t for t in os.listdir(CAMINHO_GERAL) if '.' not in t]
     qtd_pastas = len(lista_pastas_tipos_treinamentos)
@@ -123,11 +125,11 @@ def escolherTipoTreinamento():
     print('Escolha o tipo de treinamento:\n')
     for i,pasta in enumerate(lista_pastas_tipos_treinamentos):
         print(f'{i+1} - {pasta}')
-    print('\n0 - Encerrar programa.')
+    print('\n0 - Encerrar programa')
     
     resposta = input('\nDigite o número correspondente: ').strip()
 
-    if resposta != '0':
+    if resposta not in ['-1','0']:
         resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
         
         pasta_tipo_treinamento_escolhida = lista_pastas_tipos_treinamentos[resposta]
@@ -182,7 +184,6 @@ def escolherModoTreinado(caminho_pasta_treino : str):
     else:
         return resposta
 
-
 def baixarModelos(tipo_treino : str,
                   escopo_treino : str,
                   modo_treinado : str,
@@ -199,7 +200,6 @@ def baixarModelos(tipo_treino : str,
         url = f'https://drive.google.com/uc?export=download&id={file_id}'
         output = os.path.join(pasta_destino, f'{nome_modelo}.zip')
         gdown.download(url, output, quiet=False)
-
 
 def escolherModelos(caminho_pasta_modo_treino : str):
     lista_pastas_modelos = sorted([m for m in os.listdir(caminho_pasta_modo_treino) if '.' not in m])
@@ -287,7 +287,6 @@ def carregarModelos(lista_caminhos_modelos_temporais : list[str]):
         modelos_carregados.append((os.path.basename(caminho_modelo).replace('.wordvectors',''),KeyedVectors.load(caminho_modelo,mmap='r')))
     return modelos_carregados
 
-
 def escolherAcao(tipo_treinamento):
     print('Escolha uma das visualizações abaixo:\n\n')
     if tipo_treinamento == 'Com séries temporais':
@@ -303,7 +302,6 @@ def escolherAcao(tipo_treinamento):
     else:
         return resposta
             
-
 def organizarAmbiente():
     global DIC_INFO
 
