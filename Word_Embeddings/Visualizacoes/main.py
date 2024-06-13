@@ -51,7 +51,7 @@ def main():
                             if os.path.basename(tipo_treinamento) == 'Com séries temporais':
                                 if acao == 'Gráfico das similaridades ao decorrer do tempo':
                                     SimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-                                elif acao == 'Vizinhos mais próximos ao decorrer do tempo':
+                                elif acao == 'Vizinhos mais próximos ao decorrer do tempo (.png e .txt)':
                                     VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
                                 elif acao == 'Mapa de calor das similaridades ao decorrer do tempo':
                                     MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
@@ -67,7 +67,7 @@ def main():
                                     MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
                                 elif acao == 'Rede dinâmica dos campos semânticos ao decorrer do tempo':
                                     RedeDinamicaCampoSemantico(modelos_treinados=modelos_carregados)
-                                elif acao == 'Elemento que não combina dentre os demais':
+                                elif acao == 'Elemento que não combina dentre os demais (só .txt)':
                                     ElementoQueNaoCombina(modelos_treinados=modelos_carregados)
                                 else:
                                     break                                
