@@ -338,11 +338,13 @@ def MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados,pasta_para_salva
 
   while True:
     palavra_digitada = input('Digite a palavra para ser comparada com a palavra central (0 para parar): ').lower().strip()
-    if palavra_digitada != '0':
-      palavras_selecionadas.append(palavra_digitada)
-    else:
+    if palavra_digitada == '0':
       break
-
+    else:
+      while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_digitada,checagem_unica=True):
+        palavra_digitada = input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: ').lower().strip()  
+      palavras_selecionadas.append(palavra_digitada)
+    
 
   data = {}
 
@@ -519,7 +521,7 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
   print('\n\n\tVocê está montando uma visualização para Frequência de Palavras Selecionadas ao decorrer do tempo.\n\n')
     
   print('Qual tipo de frequência você quer visualizar?\n\n')
-  print('1 - Frequência completa durante dos treinamentos')
+  print('1 - Frequência completa durante os treinamentos')
   print('2 - Frequência entre os diferentes períodos de treinamento')
   print('(Ñ DISPONÍVEL) 3 - Frequência de palavras no corpus todo')
 
@@ -1150,8 +1152,8 @@ def MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados : list[tuple], pasta_pa
 
   limparConsole()
   print('Escolha que tipo de taxa de mudança que você quer usar:\n')
-  print('1 - Taxa percentual usando apenas da similaridade de cosseno entre dois períodos')
-  print('(Ñ DISPONÍVEL) 2 - Taxa percentual usando da Similaridade acumulada entre dois períodos (considera os períodos do meio)')
+  print('1 - Taxa percentual usando apenas a Similaridade de cosseno entre dois períodos')
+  print('(Ñ DISPONÍVEL) 2 - Taxa percentual usando a Similaridade acumulada entre dois períodos (considera os períodos do meio)')
   print('(Ñ DISPONÍVEL) 3 - Taxa percentual usando índice de Jaccard')
   print('(Ñ DISPONÍVEL) 4 - Distância entre dois períodos')
 
@@ -1286,20 +1288,20 @@ def RedeDinamicaCampoSemantico(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IM
   print('\n\n\tVocê está montando uma visualização para Rede Dinâmica do Campo Semântico.\n\n')
   palavra_central = input('Digite a palavra central: ').lower().strip()
 
-  while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central,checagem_unica=True):
-    palavra_central = input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: ').lower().strip()
+  while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central):
+    palavra_central = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra palavra: ').lower().strip()
 
   G = nx.Graph()
 
-  def add_nodes_edges(data, year):
+  def add_nodes_edges(data, year,palavra_central):
       G.add_node(f"{palavra_central}_{year}")
-
-      for word, score in data.most_similar(palavra_central, topn=10):
-          G.add_node(f"{word}_{year}")
-          G.add_edge(f"{palavra_central}_{year}", f"{word}_{year}", weight=score)
+      if palavra_central in data.index_to_key:
+          for word, score in data.most_similar(palavra_central, topn=10):
+              G.add_node(f"{word}_{year}")
+              G.add_edge(f"{palavra_central}_{year}", f"{word}_{year}", weight=score)
 
   for modelo in modelos_treinados:
-    add_nodes_edges(modelo[1], re.search(r'(\d{4})\_\d{4}',modelo[0]).group(1) + ' - ' + re.search(r'\d{4}\_(\d{4})',modelo[0]).group(1))
+    add_nodes_edges(modelo[1], re.search(r'(\d{4})\_\d{4}',modelo[0]).group(1) + ' - ' + re.search(r'\d{4}\_(\d{4})',modelo[0]).group(1),palavra_central=palavra_central)
 
   pos = nx.spring_layout(G, seed=42, scale=1, k=0.21, weight=1000)#
 
