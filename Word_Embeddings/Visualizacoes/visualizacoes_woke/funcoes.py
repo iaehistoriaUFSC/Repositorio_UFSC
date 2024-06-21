@@ -66,6 +66,9 @@ def limparConsole():
     else:
         os.system('clear')
 
+def formatarEntrada(entrada : str) -> str:
+  return entrada.strip().lower()
+
 def descompactarPastaModelos(caminho_pasta_modelo : str, excluir_zip : bool = True):
     lista_arquivos_zipados = [os.path.join(caminho_pasta_modelo,arq) for arq in os.listdir(caminho_pasta_modelo) if arq.endswith('.zip')]
     qtd_zips = len(lista_arquivos_zipados)
@@ -149,13 +152,15 @@ def escolherTreinamento(pasta_tipo_treinamento : str):
         print(f'{i+1} - {pasta}')
     print('\n-1 - Voltar')
 
-    resposta = input('\nDigite o número correspondente: ').strip()
+    resposta = formatarEntrada(input('\nDigite o número correspondente: '))
 
+    while not resposta.isdigit():
+        resposta = formatarEntrada(input('\nPor favor, digite o NÚMERO correspondente: '))
     # while resposta not in [str(n) for n in range(1,qtd_pastas+1)]:
     #    resposta = input('\nDigite o número correspondente (entre as opções a cima): ')
     if resposta not in ['-1']:
         resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
-        
+
         pasta_treinamento_escolhida = lista_pastas_treinamentos[resposta]
         
         caminho_pasta_treinamento_escolhida = os.path.join(pasta_tipo_treinamento,pasta_treinamento_escolhida)
@@ -305,8 +310,8 @@ def escolherAcao(tipo_treinamento):
 def organizarAmbiente():
     global DIC_INFO
 
-    if not os.path.exists(r'imagens_geradas'):
-        os.makedirs(r'imagens_geradas')
+    if not os.path.exists(r'resultados_gerados'):
+        os.makedirs(r'resultados_gerados')
 
     if not os.path.exists(r'modelos_treinados'):
         os.makedirs(r'modelos_treinados')

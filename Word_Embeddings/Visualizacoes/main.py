@@ -102,5 +102,5 @@ def main():
             break       
 
     limparConsole()
-
+    
     print('\n\n\tPrograma finalizado!\n\n')

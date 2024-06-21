@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from .funcoes import limparConsole, obterResposta
+from .funcoes import limparConsole, obterResposta, formatarEntrada
 from gensim.models import KeyedVectors
 import time
 import os
@@ -27,7 +27,8 @@ except Exception:
 
 PONTUACOES = string.punctuation
 
-PASTA_SAVE_IMAGENS = r'imagens_geradas'
+PASTA_SAVE_IMAGENS = r'resultados_gerados'
+
 
 
 
@@ -68,13 +69,14 @@ def verificaExistenciaNosModelos(modelos_treinados : list[tuple], palavra_centra
     else:
       return False
 
+
 def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple],pasta_para_salvar=PASTA_SAVE_IMAGENS):
   
-  print('\n\n\tVocê está montando uma visualização para Vizinhos mais próximos ao decorrer do tempo.\n\n')
-  palavra_central = input('Digite a palavra central: ').lower().strip()
+  print('\n\n\tVocê está montando uma visualização para Similaridades ao decorrer do tempo.\n\n')
+  palavra_central = formatarEntrada(input('Digite a palavra central: '))
   
   while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central):
-    palavra_central = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra palavra: ').lower().strip()
+    palavra_central = formatarEntrada(input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra palavra: '))
     
   cores = ['green','red','cyan','violet','blue','gold','orange','c','black','purple','lime','tomato','magenta','lightslategrey','lightgreen','paleturquoise','aquamarine','moccasin','lightcoral','chocolate','sandybrown','rosybrown']
 
@@ -83,13 +85,13 @@ def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple],pasta_para_sa
   while True:
 
     if len(lista_palavras_comparacao) < len(cores):
-      palavra_digitada = input(f'\nDigite uma palavra para ser comparada (no máximo {len(cores)} e 0 para parar):  ').lower().strip()
+      palavra_digitada = formatarEntrada(input(f'\nDigite uma palavra para ser comparada (no máximo {len(cores)} e 0 para parar):  '))
 
       if (palavra_digitada != '0') and verificaExistenciaNosModelos(modelos_treinados,palavra_digitada):
         lista_palavras_comparacao.append(palavra_digitada)
       elif (verificaExistenciaNosModelos(modelos_treinados,palavra_digitada) == False) and (palavra_digitada != '0'):
         while (verificaExistenciaNosModelos(modelos_treinados,palavra_digitada) == False) and (palavra_digitada != '0'):
-          palavra_digitada = input(f'O token "{palavra_digitada}" não está presente em todos os modelos.\nPor favor, digite outro token:  ').lower().strip()
+          palavra_digitada = formatarEntrada(input(f'O token "{palavra_digitada}" não está presente em todos os modelos.\nPor favor, digite outro token:  '))
         if palavra_digitada != '0':
           lista_palavras_comparacao.append(palavra_digitada)
       else:
@@ -147,7 +149,7 @@ def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple],pasta_para_sa
   ano_inicial = re.search(r'(\d{4})\_\d{4}',modelos_treinados[0][0]).group(1)
   ano_final = re.search(r'\d{4}\_(\d{4})',modelos_treinados[-1][0]).group(1)
 
-  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Similaridades para modelos de {ano_inicial} até {ano_final}.png')
+  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Sim_{ano_inicial}_{ano_final}.png')
 
   while os.path.exists(caminho_save_fig):  
     caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
@@ -175,27 +177,27 @@ def VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados, pasta_para_salvar=P
   print('\n\n\tVocê está montando uma visualização para Vizinhos mais Próximos ao decorrer do tempo.\n\n')
 
   if modo == 1:
-    palavra_central = input('Digite uma palavra: ').lower().strip()
+    palavra_central = formatarEntrada(input('Digite uma palavra: '))
     while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central,checagem_unica=True):
-      palavra_central = input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: ').lower().strip()
+      palavra_central = formatarEntrada(input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: '))
 
 
   if modo == 2:
     while True:
       lista_palavras = []
-      palavra = input('\nDigite uma palavra: ').lower().strip()
+      palavra = formatarEntrada(input('\nDigite uma palavra: '))
       while palavra != '0':
         lista_palavras.append(palavra)
-        palavra = input('\nDigite mais uma palavra (0 para parar): ').lower().strip()
+        palavra = formatarEntrada(input('\nDigite mais uma palavra (0 para parar): '))
 
       if verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=lista_palavras,checagem_unica=True):
         break
       else:
         print('Esse conjunto de palavras não está presente em nenhum dos modelos.\nPor favor digite outro...')
     limparConsole()
-    topn = input('\nQuantos vizinhos mais próximos você gostaria de coletar?\n')
+    topn = formatarEntrada(input('\nQuantos vizinhos mais próximos você gostaria de coletar?\n'))
     while not topn.isdigit():
-      topn = input('\nDigite um NÚMERO, por favor: ')
+      topn = formatarEntrada(input('\nDigite um NÚMERO, por favor: '))
     topn = int(topn)
       
   
@@ -272,7 +274,7 @@ def VizinhosMaisProximos(tupla_modelo_escolhido : tuple[str,KeyedVectors],
       if not os.path.exists(pasta_para_salvar_palavra_central):
         os.makedirs(pasta_para_salvar_palavra_central)
       
-      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Vizinhos mais próximos - {nome_modelo_escolhido} - {palavra_central}.png')
+      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'VP_{nome_modelo_escolhido}_{palavra_central}.png')
 
       while os.path.exists(caminho_save_fig):  
         caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
@@ -329,66 +331,69 @@ def VizinhosMaisProximosTxt(tupla_modelo_escolhido : tuple[str,KeyedVectors],
 def MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
   
   print('\n\n\tVocê está montando uma visualização para Mapa de Calor ao decorrer do tempo.\n\n')
-  palavra_central = input('Digite a palavra central: ').lower().strip()
+  palavra_central = formatarEntrada(input('Digite a palavra central: '))
 
   while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central):
-    palavra_central = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra palavra: ').lower().strip()
+    palavra_central = formatarEntrada(input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra palavra: '))
 
   palavras_selecionadas = []
 
   while True:
-    palavra_digitada = input('Digite a palavra para ser comparada com a palavra central (0 para parar): ').lower().strip()
+    palavra_digitada = formatarEntrada(input('Digite uma palavra para ser comparada com a palavra central (0 para parar): '))
+    while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_digitada,checagem_unica=True) and palavra_digitada != '0':
+      palavra_digitada = formatarEntrada(input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: '))    
     if palavra_digitada == '0':
       break
-    else:
-      while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_digitada,checagem_unica=True):
-        palavra_digitada = input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: ').lower().strip()  
+    else:    
       palavras_selecionadas.append(palavra_digitada)
     
+  if palavras_selecionadas:
+    data = {}
 
-  data = {}
-
-  for nome_modelo_escolhido,modelo in modelos_treinados:
-    dic_comparativo = {}
-    for palavra_selecionada in palavras_selecionadas:
-      try:
-        dic_comparativo[palavra_selecionada] = modelo.similarity(palavra_central,palavra_selecionada)
-      except:
-        dic_comparativo[palavra_selecionada] = 0
-    data[re.search(r'(\d{4})\_\d{4}',nome_modelo_escolhido).group(1) + '\n-\n' + re.search(r'\d{4}\_(\d{4})',nome_modelo_escolhido).group(1)] = dic_comparativo
-
-
+    for nome_modelo_escolhido,modelo in modelos_treinados:
+      dic_comparativo = {}
+      for palavra_selecionada in palavras_selecionadas:
+        try:
+          dic_comparativo[palavra_selecionada] = modelo.similarity(palavra_central,palavra_selecionada)
+        except:
+          dic_comparativo[palavra_selecionada] = 0
+      data[re.search(r'(\d{4})\_\d{4}',nome_modelo_escolhido).group(1) + '\n-\n' + re.search(r'\d{4}\_(\d{4})',nome_modelo_escolhido).group(1)] = dic_comparativo
 
 
-  df = pd.DataFrame(data)
 
-  plt.figure(figsize=(16, 8))
-  heatmap = sns.heatmap(df, annot=True, cmap='coolwarm')
 
-  heatmap.set_xticklabels(heatmap.get_xticklabels(), rotation=0)
-  heatmap.set_yticklabels(heatmap.get_yticklabels(), rotation=0,fontsize=11)
+    df = pd.DataFrame(data)
 
-  plt.title(f'Mapa de calor da similaridade para palavra "{palavra_central}"',fontsize=20)
-  
-  limparConsole()
+    plt.figure(figsize=(16, 8))
+    heatmap = sns.heatmap(df, annot=True, cmap='coolwarm')
 
-  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Mapas de Calor',palavra_central)
+    heatmap.set_xticklabels(heatmap.get_xticklabels(), rotation=0)
+    heatmap.set_yticklabels(heatmap.get_yticklabels(), rotation=0,fontsize=11)
 
-  if not os.path.exists(pasta_para_salvar_palavra_central):
-    os.makedirs(pasta_para_salvar_palavra_central)
-  
-  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Mapa de Calor para {palavra_central}.png')
+    nome_modelo_atual = re.sub(r'\_\d{4}\_\d{4}','',modelos_treinados[0][0])
 
-  while os.path.exists(caminho_save_fig):  
-    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+    plt.title(f'Mapa de calor da similaridade para palavra "{palavra_central}"\n{nome_modelo_atual}',fontsize=20)
+    
+    limparConsole()
 
-  plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
-  
-  print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Mapas de Calor','-->',palavra_central,'\n\n')
-  
-  plt.clf()
-  # plt.show()
+    pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Mapas de Calor',palavra_central)
 
+    if not os.path.exists(pasta_para_salvar_palavra_central):
+      os.makedirs(pasta_para_salvar_palavra_central)
+    
+    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'MC_{palavra_central}.png')
+
+    while os.path.exists(caminho_save_fig):  
+      caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+
+    plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
+    
+    print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Mapas de Calor','-->',palavra_central,'\n\n')
+    
+    plt.clf()
+    # plt.show()
+  else:
+    limparConsole()
 
 
 def Filtro(palavras : list,
@@ -468,7 +473,7 @@ def FrequenciaDePalavrasAoDecorrerDoTempo(modelos_treinados, pasta_para_salvar=P
   print('1 - Top 20 palavras mais frequentes')
   print('2 - Frequência de palavras específicas')
 
-  resposta = input('\nDigite o número referente à sua escolha: ').strip()
+  resposta = formatarEntrada(input('\nDigite o número referente à sua escolha: '))
   resposta = obterResposta(resposta=resposta,qtd_respostas=2,contagem_normal=True)
   
 
@@ -482,10 +487,10 @@ def FrequenciaDePalavrasAoDecorrerDoTempo(modelos_treinados, pasta_para_salvar=P
     print('4 - Mostrar somente os verbos')
     print('5 - Não quero aplicar nenhum filtro, quero a resposta nua e crua!')
     
-    resposta_filtro = input('\nDigite os números correspondentes separados por "," (vírgula) em caso de mais de uma resposta:\n').strip()
+    resposta_filtro = formatarEntrada(input('\nDigite os números correspondentes separados por "," (vírgula) em caso de mais de uma resposta:\n'))
     if ',' in resposta_filtro:
       while len([r for r in resposta_filtro.split(',') if not r.isdigit()])>0:
-          resposta_filtro = input('Por favor, reescreva uma resposta válida (só números): ')
+          resposta_filtro = formatarEntrada(input('Por favor, reescreva uma resposta válida (só números): '))
       resposta_filtro = obterResposta(resposta=resposta_filtro,qtd_respostas=5,contagem_normal=True)
     else:
       if resposta_filtro != '5':
@@ -525,7 +530,7 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
   print('2 - Frequência entre os diferentes períodos de treinamento')
   print('(Ñ DISPONÍVEL) 3 - Frequência de palavras no corpus todo')
 
-  resposta_tipo_freq = input('\n\nDigite o número correspondente à sua escolha: ').strip()
+  resposta_tipo_freq = formatarEntrada(input('\n\nDigite o número correspondente à sua escolha: '))
   resposta_tipo_freq = obterResposta(resposta=resposta_tipo_freq,qtd_respostas=3,contagem_normal=True)
 
   limparConsole()
@@ -535,10 +540,10 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
   cores = ['green','red','cyan','violet','blue','gold','orange','c','black','purple','lime','tomato','magenta','lightslategrey','lightgreen','paleturquoise','aquamarine','moccasin','lightcoral','chocolate','sandybrown','rosybrown']
 
   if resposta_tipo_freq in [1,2]:
-    palavra_freq = input('Digite a primeira palavra: ').lower().strip()
+    palavra_freq = formatarEntrada(input('Digite a primeira palavra: '))
     while True:
       while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_freq,checagem_unica=True) and palavra_freq != '0':
-        palavra_freq = input('\n! Esta palavra não está presente em nenhum dos modelos.\n! Por favor, digite outra palavra: ').lower().strip()
+        palavra_freq = formatarEntrada(input('\n! Esta palavra não está presente em nenhum dos modelos.\n! Por favor, digite outra palavra: '))
       if palavra_freq != '0':
         if palavra_freq not in lista_palavras:
           lista_palavras.append(palavra_freq)
@@ -547,7 +552,7 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
       if len(lista_palavras) == len(cores):
         break
       else:
-        palavra_freq = input('\nDigite mais uma palavra (0 para parar): ').lower().strip()     
+        palavra_freq = formatarEntrada(input('\nDigite mais uma palavra (0 para parar): '))
   elif resposta_tipo_freq == 3:
     pass
 
@@ -592,7 +597,7 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
           if i == 0: # primeiro
             y.append(modelo_atual.get_vecattr(palavra,'count'))
           elif palavra in modelos_treinados[i-1][1].index_to_key:        
-            y.append(modelo_atual.get_vecattr(palavra,'count')-modelos_treinados[i-1][1].get_vecattr(palavra,'count'))
+            y.append(abs(modelo_atual.get_vecattr(palavra,'count')-modelos_treinados[i-1][1].get_vecattr(palavra,'count')))
           else:
             y.append(modelo_atual.get_vecattr(palavra,'count'))
         else:
@@ -636,11 +641,11 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
       os.makedirs(pasta_para_salvar_palavra_central)
 
     if resposta_tipo_freq == 1:
-      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Freq_treinos_selecionadas_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png')
+      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'FTS_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png') # Freq_treinos_selecionadas
     elif resposta_tipo_freq == 2:
-      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Freq_corpus_selecionadas_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png')
+      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'FCS_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png') # Freq_corpus_selecionadas
     elif resposta_tipo_freq == 3:
-      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Freq_corpus_skinner_selecionadas_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png')
+      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'FCSS{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png') # Freq_corpus_selecionadas_skinner
 
     while os.path.exists(caminho_save_fig):  
       caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
@@ -671,7 +676,9 @@ def FrequenciaDePalavrasTop20(tupla_modelo_escolhido,
   # palavras_filtradas,str_palavras_removidas = Filtro(palavras=list(dic_vocab_freq_ordenado.keys()),condicoes=condicoes_filtro)
   palavras_filtradas = list(dic_vocab_freq_ordenado.keys())
 
-  lista_palavras = [palavra for palavra in palavras_filtradas][:20]
+  lista_palavras = palavras_filtradas[:20]
+
+  
 
   plt.bar([palavra for palavra in lista_palavras],[modelo.get_vecattr(palavra,'count') for palavra in lista_palavras])
   
@@ -679,25 +686,42 @@ def FrequenciaDePalavrasTop20(tupla_modelo_escolhido,
 
   plt.title(f"Frequência de palavras treinamento {nome_modelo_escolhido}",fontsize=20)
 
-  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Frequência de Palavras')
+
+
+  if condicoes_filtro:      
+    pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Frequência de Palavras','Filtrado')
+    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Freq_{nome_modelo_escolhido}.png')    
+    cond_filtro = ', '.join(condicoes_filtro)
+    txt = f'Frequência das TOP 300 palavras com filtro(s) de {cond_filtro}:\n\n'
+    caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'Freq_{nome_modelo_escolhido}.txt')
+  else:    
+    pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Frequência de Palavras','Sem filtro')
+    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Freq_{nome_modelo_escolhido}.png')
+    txt = f'Frequência das TOP 300 palavras sem filtro:\n\n'
+    caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'Freq_{nome_modelo_escolhido}.txt')
 
   if not os.path.exists(pasta_para_salvar_palavra_central):
     os.makedirs(pasta_para_salvar_palavra_central)
-    
-  if condicoes_filtro:
-    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Freq_{nome_modelo_escolhido}_filtrado.png')  
-  else:
-    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Freq_{nome_modelo_escolhido}_sem_filtro.png')
 
   while os.path.exists(caminho_save_fig):  
     caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+
+  for i,palavra in enumerate(palavras_filtradas[:300]):
+    txt += f'{str(i+1)}. {palavra}: {"{0:,}".format(modelo.get_vecattr(palavra,"count")).replace(",",".")}\n'
+
+
+  while os.path.exists(caminho_save_txt):  
+    caminho_save_txt = caminho_save_txt.replace('.txt','_copia.txt')
+
+  with open(caminho_save_txt,'w',encoding='utf-8') as f:
+    f.write(txt)
 
   plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
   limparConsole()
   print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Frequência de Palavras','\n\n')
-  if str_palavras_removidas != '':
-    print('Os seguintes tokens foram removidos das visualizações:',str_palavras_removidas)
+  # if str_palavras_removidas != '':
+  #   print('Os seguintes tokens foram removidos das visualizações:',str_palavras_removidas)
 
   plt.clf()
 
@@ -715,81 +739,96 @@ def EstratosDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
   limparConsole()
 
   print('\n\n\tVocê está montando uma visualização para Estratos do Tempo.\n\n')
-  palavra_central = input('Digite a palavra central: ').lower().strip()
+  palavra_central = formatarEntrada(input('Digite uma palavra: '))
 
   while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central,checagem_unica=True):
-    palavra_central = input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: ').lower().strip()
+    palavra_central = formatarEntrada(input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: '))
 
-  data = {}
+  palavras_selecionadas = [palavra_central]
 
-  for nome_modelo, modelo in modelos_treinados:
+  while True:
+    palavra_digitada = formatarEntrada(input('Se quiser, digite mais uma palavra (0 para parar): '))
+    while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_digitada,checagem_unica=True) and palavra_digitada != '0':
+      palavra_digitada = formatarEntrada(input('Esta palavra não está presente em nenhum dos modelos.\nPor favor, digite outra palavra: '))    
+    if palavra_digitada == '0':
+      break
+    else:    
+      palavras_selecionadas.append(palavra_digitada)
 
-    ano_inicial = re.search(r'(\d{4})\_\d{4}',nome_modelo).group(1)
-    ano_final = re.search(r'\d{4}\_(\d{4})',nome_modelo).group(1)
+  if palavras_selecionadas:
+    data = {}
 
-    chave = ano_inicial + ' - ' + ano_final
+    for nome_modelo, modelo in modelos_treinados:
 
-    if palavra_central in modelo.index_to_key:
-      lista_valores = [{r[0]:r[1]} for r in modelo.most_similar(palavra_central)]
-      data[chave] = lista_valores    
-    
+      ano_inicial = re.search(r'(\d{4})\_\d{4}',nome_modelo).group(1)
+      ano_final = re.search(r'\d{4}\_(\d{4})',nome_modelo).group(1)
 
+      chave = ano_inicial + ' - ' + ano_final
 
-  lista_de_tuplas = list(data.items())
-  lista_de_tuplas_invertida = lista_de_tuplas[::-1]
-  data = dict(lista_de_tuplas_invertida)
-
-
-  index = list(data.keys())
-  values = [[list(d.values())[0] for d in data[key]] for key in data]
-
-  heatmap_values = [[list(data[key][0].values())[0]] for key in data]
-  df = pd.DataFrame(heatmap_values, index=index)
-
-  plt.figure(figsize=(8, 8))
-  heatmap = sns.heatmap(df, annot=False, fmt="", cmap='coolwarm', cbar=True, cbar_kws={'shrink': 0.8}) #,vmin=0, vmax=1, center=0.5
-  # heatmap = sns.heatmap(df, annot=False, fmt="", cmap='coolwarm', cbar=True, cbar_kws={'shrink': 0.8}, linewidths=1, linecolor='black')
-
-  nome_modelo_atual = re.sub(r'\_\d{4}\_\d{4}','',modelos_treinados[0][0])
-
-  for i in range(len(df.index)):
-      key = df.index[i]
-      principal_key = list(data[key][0].keys())[0]
-      principal_value = round(list(data[key][0].values())[0],4)
+      if palavra_central in modelo.index_to_key:
+        lista_valores = [{r[0]:r[1]} for r in modelo.most_similar(positive=palavras_selecionadas)]
+        data[chave] = lista_valores
       
-      lista_nova = agrupar_em_trios(data[key][1:])
-      other_keys_values = [f"{list(c.keys())[0]}: {round(list(c.values())[0],4)} / {list(d.keys())[0]}: {round(list(d.values())[0],4)} / {list(b.keys())[0]}: {round(list(b.values())[0],4)}" for c,d,b in lista_nova]
-      bg_color = heatmap.get_children()[0].get_facecolor()[i][:3]
-      text_color = pega_cor(bg_color)
 
-      plt.text(0.5, i + 0.2, f"{principal_key}: {principal_value}", ha='center', va='center', fontsize=12, weight='bold',
-              color=text_color)
-      for j, line in enumerate(other_keys_values):
-          plt.text(0.5, i + 0.45 + j * 0.15, line, ha='center', va='center', fontsize=8, color=text_color)
 
-  plt.xticks([])
-  heatmap.set_yticklabels(sorted(list(df.index[::-1]),reverse=True), fontsize=12, rotation=0, weight='bold')
+    lista_de_tuplas = list(data.items())
+    lista_de_tuplas_invertida = lista_de_tuplas[::-1]
+    data = dict(lista_de_tuplas_invertida)
 
-  plt.title(f'Estratos do Tempo\npara "{palavra_central}"\nusando {nome_modelo_atual}', fontsize=20, pad=30)
-  plt.tight_layout()
 
-  limparConsole()
+    index = list(data.keys())
+    values = [[list(d.values())[0] for d in data[key]] for key in data]
 
-  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Estratos do Tempo',palavra_central)
+    heatmap_values = [[list(data[key][0].values())[0]] for key in data]
+    df = pd.DataFrame(heatmap_values, index=index)
 
-  if not os.path.exists(pasta_para_salvar_palavra_central):
-    os.makedirs(pasta_para_salvar_palavra_central)
-  
-  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Estratos do Tempo para {palavra_central}.png')
+    plt.figure(figsize=(8, 8))
+    heatmap = sns.heatmap(df, annot=False, fmt="", cmap='coolwarm', cbar=True, cbar_kws={'shrink': 0.8}) #,vmin=0, vmax=1, center=0.5
+    # heatmap = sns.heatmap(df, annot=False, fmt="", cmap='coolwarm', cbar=True, cbar_kws={'shrink': 0.8}, linewidths=1, linecolor='black')
 
-  while os.path.exists(caminho_save_fig):  
-    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+    nome_modelo_atual = re.sub(r'\_\d{4}\_\d{4}','',modelos_treinados[0][0])
 
-  plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
-  
-  print('\n\n\tImagem salva em',pasta_para_salvar,'-->','Estratos do Tempo','-->',palavra_central,'\n\n')
-  # plt.show()
-  plt.clf()
+    for i in range(len(df.index)):
+        key = df.index[i]
+        principal_key = list(data[key][0].keys())[0]
+        principal_value = round(list(data[key][0].values())[0],4)
+        
+        lista_nova = agrupar_em_trios(data[key][1:])
+        other_keys_values = [f"{list(c.keys())[0]}: {round(list(c.values())[0],4)} / {list(d.keys())[0]}: {round(list(d.values())[0],4)} / {list(b.keys())[0]}: {round(list(b.values())[0],4)}" for c,d,b in lista_nova]
+        bg_color = heatmap.get_children()[0].get_facecolor()[i][:3]
+        text_color = pega_cor(bg_color)
+
+        plt.text(0.5, i + 0.2, f"{principal_key}: {principal_value}", ha='center', va='center', fontsize=12, weight='bold',
+                color=text_color)
+        for j, line in enumerate(other_keys_values):
+            plt.text(0.5, i + 0.45 + j * 0.15, line, ha='center', va='center', fontsize=8, color=text_color)
+
+    plt.xticks([])
+    heatmap.set_yticklabels(sorted(list(df.index[::-1]),reverse=True), fontsize=12, rotation=0, weight='bold')
+
+    palavra_alvo = ', '.join(palavras_selecionadas)
+    plt.title(f'Estratos do Tempo para\n"{palavra_alvo}"\nusando {nome_modelo_atual}', fontsize=20, pad=30)
+    plt.tight_layout()
+
+    limparConsole()
+
+    pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Estratos do Tempo',palavra_central)
+
+    if not os.path.exists(pasta_para_salvar_palavra_central):
+      os.makedirs(pasta_para_salvar_palavra_central)
+    
+    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Estratos do Tempo para {palavra_central}.png')
+
+    while os.path.exists(caminho_save_fig):  
+      caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+
+    plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
+    
+    print('\n\n\tImagem salva em',pasta_para_salvar,'-->','Estratos do Tempo','-->',palavra_central,'\n\n')
+    # plt.show()
+    plt.clf()
+  else:
+    limparConsole()
 
 
 
@@ -797,20 +836,13 @@ def VetoresDePalavrasAoDecorrerDoTempo(modelos_treinados, pasta_para_salvar=PAST
   print('\n\n\tVocê está montando uma visualização para Vetores de Palavras ao decorrer do tempo.\n\n')
 
   lista_de_palavras = []
-  palavra = input('Digite a primeira palavra: ').lower().strip()
+  palavra = formatarEntrada(input('Digite a primeira palavra: '))
   while palavra != '0':
-    # while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra):
-    #   print(f'A palavra "{palavra}" não está presente em todos os modelos, em algumas imagens ela não aparecerá.')      
-    #   print('Caso queira substituí-la por outra, digite abaixo qual palavra a substituirá.')
-    #   print('Se não quiser substituir, basta pressionar Enter')      
-    #   resposta = input('\nResposta: ').lower().strip()
-    #   if not resposta == '':
-    #     palavra = resposta
         
     if palavra not in lista_de_palavras:
       lista_de_palavras.append(palavra)
 
-    palavra = input('\nDigite mais uma palavra (0 para parar): ').lower().strip()
+    palavra = formatarEntrada(input('\nDigite mais uma palavra (0 para parar): '))
 
   for modelo in modelos_treinados:
     vetoresDePalavras(tupla_modelo_escolhido=modelo,
@@ -876,7 +908,7 @@ def vetoresDePalavras(tupla_modelo_escolhido,
   if not os.path.exists(pasta_para_salvar_palavra_central):
     os.makedirs(pasta_para_salvar_palavra_central)
     
-  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Vetores de palavras para {nome_modelo_escolhido} - {", ".join(lista_de_palavras[:3])+" etc"}.png')
+  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'VP_{nome_modelo_escolhido}.png')
 
   while os.path.exists(caminho_save_fig):  
     caminho_save_fig = caminho_save_fig.replace('.png',' copia.png')
@@ -894,17 +926,17 @@ def ComparacaoEntrePalavrasAoDecorrerDoTempo(modelos_treinados, pasta_para_salva
 
   print('\n\nHomem --> Rei\n\nMulher --> X\n\n')
 
-  homem = input('O que deseja substituir por "homem"? ').lower().strip()
+  homem = formatarEntrada(input('O que deseja substituir por "homem"? '))
   while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=homem):
-    homem = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra: ').lower().strip()
+    homem = formatarEntrada(input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra: '))
 
-  rei = input('O que deseja substituir por "rei"? ')
+  rei = formatarEntrada(input('O que deseja substituir por "rei"? '))
   while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=rei):
-    rei = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra: ').lower().strip()
+    rei = formatarEntrada(input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra: '))
   
-  mulher = input('O que deseja substituir por "mulher"? ')
+  mulher = formatarEntrada(input('O que deseja substituir por "mulher"? '))
   while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=mulher):
-    mulher = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra: ').lower().strip()      
+    mulher = formatarEntrada(input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra: '))
 
   tupla_comparacao = (homem,rei,mulher)
 
@@ -931,38 +963,39 @@ def ComparacaoEntrePalavras(tupla_modelo_escolhido,
 
   lista_de_palavras_e_suas_similaridades = [(r[0],r[1]) for r in resultado]
 
-  lista_de_vetores_base = [[1,5],[5,7],[2,2],[6,4]]
+  pto_resultado = [6,4]
+  lista_de_vetores_base = [[0,6],[5,9],[1,1],pto_resultado]
   lista_de_vetores_adc = []
 
   for i,r in enumerate(resultado[1:]):
-    if i ==0:
-      raiox = 1-r[1] + 0.25
-      raioy = 1-r[1] + 0.25
-    elif i ==1:
-      raiox = 1-r[1] -0.75
-      raioy = 1-r[1] -0.5
-    elif i ==2:
-      raiox = 0
-      raioy = 0.87
-    elif i ==3:
-      raiox = 1-r[1] + 0.5
-      raioy = 1-r[1] -0.87
-    elif i ==4:
-      raiox = 1-r[1] +0.6
-      raioy = 1-r[1] +0.5
-    elif i ==5:
-      raiox = 1-r[1] -0.9
-      raioy = 1-r[1] +0.7
-    elif i ==6:
-      raiox = 1-r[1] + - 1
-      raioy = 1-r[1] - 0
-    elif i ==7:
-      raiox = 1-r[1] +1.1
-      raioy = 1-r[1] -0
-    elif i ==8:
-      raiox = 1-r[1] +1.2
-      raioy = 1-r[1] -0.25
-    lista_de_vetores_adc.append([6+raiox,4+raioy])
+    if i ==0: # 4
+      h_x = -0.35
+      h_y = 0.6
+    elif i ==1: # 5
+      h_x = 0.3
+      h_y = -0.85
+    elif i ==2: # 6
+      h_x = 0.55
+      h_y = 1.25
+    elif i ==3: # 7
+      h_x = 0.8
+      h_y = -1.9
+    elif i ==4: # 8
+      h_x = 0.2
+      h_y = 2
+    elif i ==5: # 9
+      h_x = -1.5
+      h_y = 1.65
+    elif i ==6: # 10
+      h_x = -1.6
+      h_y = -1.75
+    elif i ==7: # 11
+      h_x = 2
+      h_y = 0.2
+    elif i ==8: # 12
+      h_x = 2.2
+      h_y = -1.3
+    lista_de_vetores_adc.append([pto_resultado[0]+h_x,pto_resultado[1]+h_y])
 
 
   lista_de_vetores_2D = lista_de_vetores_base
@@ -1048,39 +1081,105 @@ def ElementoQueNaoCombina(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS
 
   while True:
     lista_palavras = []
-    palavra = input('\nDigite uma palavra: ').lower().strip()
+    palavra = formatarEntrada(input('\nDigite uma palavra: '))
     while palavra != '0':
       lista_palavras.append(palavra)
-      palavra = input('\nDigite mais uma palavra (0 para parar): ').lower().strip()
+      palavra = formatarEntrada(input('\nDigite mais uma palavra (0 para parar): '))
 
     if verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=lista_palavras,checagem_unica=True):
       break
     else:
       print('Esse conjunto de palavras não está presente em nenhum dos modelos.\nPor favor digite outro...')
-    limparConsole()
+  limparConsole()
 
-  txt = f'Analisando qual elemento combina menos com os demais\nlista: {", ".join(lista_palavras)}\n\n\n'
-  for nome_modelo, modelo in modelos_treinados:  
-    resultado = modelo.doesnt_match(lista_palavras)
-    txt += f'{nome_modelo}: {resultado}\n\n'
+  def ajustar_tamanho_fonte(palavra, max_tam_fonte, ax, tam_max=18, min_tam_fonte=8):
+    if len(palavra) <= tam_max:
+        return max_tam_fonte
+    
+    max_width = 0.9  # largura máxima permitida dentro do retângulo
+    font_size = max_tam_fonte
+    while font_size >= min_tam_fonte:
+        test_text = ax.text(0.5, 0.5, palavra, ha='center', va='center', fontsize=font_size)
+        renderer = ax.figure.canvas.get_renderer()
+        bbox = test_text.get_window_extent(renderer=renderer)
+        text_width = bbox.width / ax.figure.dpi  # conversão de pixels para polegadas
+        test_text.remove()
+        if text_width <= max_width:
+            return font_size
+        font_size -= 1
+    return min_tam_fonte
 
-  nome_pasta = '_'.join(lista_palavras[:5])
-  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Elemento que menos combina',nome_pasta)
+  # txt = f'Analisando qual elemento combina menos com os demais\n\n\n'
 
-  nome_modelo_escolhido = re.sub(r'\_\d{4}\_\d{4}','',modelos_treinados[0][0])
+  num_series = len(modelos_treinados)
+  num_cols = 4
+  num_rows = (num_series + num_cols - 1) // num_cols  # Calcula o número de linhas necessárias
+
+  fig, axes = plt.subplots(nrows=num_rows, ncols=num_cols, figsize=(num_cols * 3, num_rows * 3))
+
+  axes = axes.flatten()
+  
+  for ax in axes[num_series:]:
+      ax.axis('off')
+
+  for (ax, tupla_modelo) in zip(axes, modelos_treinados):
+      nome_modelo, modelo = tupla_modelo
+      lista_palavras_modelo = [palavra for palavra in lista_palavras if palavra in modelo.index_to_key]
+      resultado = modelo.doesnt_match(lista_palavras_modelo)        
+      # txt += f'{nome_modelo}: {", ".join(lista_palavras_modelo)}\nElemento que menos combina: {resultado}\n\n'
+
+      for j, palavra in enumerate(lista_palavras_modelo):
+          color = 'red' if palavra == resultado else 'green'
+          ax.add_patch(plt.Rectangle((0, len(lista_palavras_modelo) - j - 1), 1, 1, color=color))
+          
+          # Ajusta dinamicamente o tamanho da fonte se a palavra for muito longa
+          font_size = ajustar_tamanho_fonte(palavra, 14, ax)
+          ax.text(0.5, len(lista_palavras_modelo) - j - 0.5, palavra, ha='center', va='center', color='white', fontsize=font_size)
+      
+      ax.set_xlim(0, 1)
+      ax.set_ylim(0, len(lista_palavras_modelo))
+      ax.axis('off')
+      nome_modelo = re.search(r'(\d{4}\_\d{4})',nome_modelo).group(1)
+      ax.set_title(f'{nome_modelo}', fontsize=14)
+
+  
+  limparConsole()
+
+  palavras_usadas = ', '.join(lista_palavras[:3])+' etc'
+
+  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Elemento que menos combina',palavras_usadas)
 
   os.makedirs(pasta_para_salvar_palavra_central,exist_ok=True)
 
-  caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'Elemento que menos Combina para {nome_modelo_escolhido}.txt')
+  nome_modelo_escolhido = re.sub(r'\_\d{4}\_\d{4}','',modelos_treinados[0][0])
 
-  while os.path.exists(caminho_save_txt):
-    caminho_save_txt = caminho_save_txt.replace('.txt','_copia.txt')
+  fig.suptitle(f'Elemento que menos combina dentre os demais\nusando {nome_modelo_escolhido}', fontsize=16)
+
+  plt.tight_layout(rect=[0, 0, 1, 0.9])  # Ajusta o layout para não sobrepor o título e deixar espaço em branco
+  plt.subplots_adjust(top=0.85)  # Adiciona espaço extra entre o título e os subplots
+
+
+  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'EQMC_{nome_modelo_escolhido}.png')
+
+  while os.path.exists(caminho_save_fig):
+    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+
+  plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
+
+  plt.clf()
+  # plt.show()
+  print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Elemento que menos combina','-->',palavras_usadas,'\n\n')
+
+  # caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'EQMC_{nome_modelo_escolhido}.txt')
+
+  # while os.path.exists(caminho_save_txt):
+  #   caminho_save_txt = caminho_save_txt.replace('.txt','_copia.txt')
   
-  with open(caminho_save_txt,'w',encoding='utf-8') as f:
-    f.write(txt)
+  # with open(caminho_save_txt,'w',encoding='utf-8') as f:
+  #   f.write(txt)
     
   limparConsole()
-  print(f'Arquivo de texto gerado e salvo em "Elemento que menos combina" --> "{nome_pasta}"')
+  print(f'Arquivo de texto gerado e salvo em "Elemento que menos combina" --> "{palavras_usadas}"')
 
 
 def DistanciaEntreVetores(a,b):
@@ -1099,7 +1198,7 @@ def MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados : list[tuple], pasta_pa
   print('1 - Quero visualizar um apanhado geral de todas as palavras')
   print('2 - Quero visualizar para palavras específicas')
 
-  resposta_1 = input('\nDigite o número referente à sua escolha: ').strip()
+  resposta_1 = formatarEntrada(input('\nDigite o número referente à sua escolha: '))
   resposta_1 = obterResposta(resposta=resposta_1,qtd_respostas=2,contagem_normal=True)
 
   condicoes_filtro = []
@@ -1115,10 +1214,10 @@ def MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados : list[tuple], pasta_pa
     print('4 - Mostrar somente os verbos')
     print('5 - Não quero aplicar nenhum filtro, quero a resposta nua e crua!')
     
-    resposta_filtro = input('\nDigite os números correspondentes separados por "," (vírgula) em caso de mais de uma resposta:\n').strip()
+    resposta_filtro = formatarEntrada(input('\nDigite os números correspondentes separados por "," (vírgula) em caso de mais de uma resposta:\n'))
     if ',' in resposta_filtro:
       while len([r for r in resposta_filtro.split(',') if not r.isdigit()])>0:
-          resposta_filtro = input('Por favor, reescreva uma resposta válida (só números): ')
+          resposta_filtro = formatarEntrada(input('Por favor, reescreva uma resposta válida (só números): '))
       resposta_filtro = obterResposta(resposta=resposta_filtro,qtd_respostas=5,contagem_normal=True)
     else:
       if resposta_filtro != '5':
@@ -1139,25 +1238,27 @@ def MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados : list[tuple], pasta_pa
 
   elif resposta_1 == 2:
     limparConsole()
-    palavra = input('Digite a primeira palavra: ').lower().strip()
+    palavra = formatarEntrada(input('Digite a primeira palavra: '))
     while True:
       while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra) and palavra != '0':
-        palavra = input('\n! Esta palavra não está presente em todos os modelos.\n! Por favor, digite outra palavra: ').lower().strip()
+        palavra = formatarEntrada(input('\n! Esta palavra não está presente em todos os modelos.\n! Por favor, digite outra palavra: '))
       if palavra != '0':
         if palavra not in lista_palavras:
           lista_palavras.append(palavra)
       else:
         break      
-      palavra = input('\nDigite mais uma palavra (0 para parar): ').lower().strip()
+      palavra = formatarEntrada(input('\nDigite mais uma palavra (0 para parar): '))
 
   limparConsole()
   print('Escolha que tipo de taxa de mudança que você quer usar:\n')
   print('1 - Taxa percentual usando apenas a Similaridade de cosseno entre dois períodos')
-  print('(Ñ DISPONÍVEL) 2 - Taxa percentual usando a Similaridade acumulada entre dois períodos (considera os períodos do meio)')
-  print('(Ñ DISPONÍVEL) 3 - Taxa percentual usando índice de Jaccard')
-  print('(Ñ DISPONÍVEL) 4 - Distância entre dois períodos')
+  print('2 - Taxa percentual usando índice de Jaccard (.png e .txt)')
 
-  resposta_2 = input('\nDigite o número referente à sua escolha: ').strip()
+  resposta_2 = formatarEntrada(input('\nDigite o número referente à sua escolha: '))
+  
+  while not resposta_2.isdigit():
+    resposta_2 = formatarEntrada(input('Por favor, digite o NÚMERO correspondente: '))
+
   resposta_2 = obterResposta(resposta=resposta_2,qtd_respostas=4,contagem_normal=True)
   
   limparConsole()
@@ -1165,13 +1266,15 @@ def MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados : list[tuple], pasta_pa
   for i, modelo in enumerate([m[0] for m in modelos_treinados]):
     print(f'{i+1} - {modelo}')
 
-  resposta_3 = input('\nDigite o número referente os números referentes à sua escolha, separados por vírgula e seguindo a ordem "primeiro, último":\n').strip()
+  resposta_3 = formatarEntrada(input('\nDigite os números referentes à sua escolha, separados por vírgula e seguindo a ordem "primeiro, último":\n'))
+  while len(resposta_3.split(',')) != 2:
+    resposta_3 = formatarEntrada(input('\nEsperamos DOIS valores separados por vírgula.\nPor favor, digite os números referentes à sua escolha, separados por vírgula e seguindo a ordem "primeiro, último":\n'))
   while ',' not in resposta_3:
-    resposta_3 = input('\nPor favor, digite os números referente os números referentes à sua escolha, SEPARADOS POR VÍRGULA e seguindo a ordem "PRIMEIRO MODELO, ÚLTIMO MODELO":\n').strip()
+    resposta_3 = formatarEntrada(input('\nPor favor, digite os números referente os números referentes à sua escolha, SEPARADOS POR VÍRGULA e seguindo a ordem "PRIMEIRO MODELO, ÚLTIMO MODELO":\n'))
   while len([r for r in resposta_3.split(',') if not r.isdigit()])>0:
-    resposta_3 = input('\nPor favor, digite OS NÚMEROS referente os números referentes à sua escolha, SEPARADOS POR VÍRGULA e seguindo a ordem "PRIMEIRO MODELO, ÚLTIMO MODELO":\n').strip()
+    resposta_3 = formatarEntrada(input('\nPor favor, digite OS NÚMEROS referente os números referentes à sua escolha, SEPARADOS POR VÍRGULA e seguindo a ordem "PRIMEIRO MODELO, ÚLTIMO MODELO":\n'))
     while ',' not in resposta_3:
-      resposta_3 = input('\nPor favor, digite os números referente os números referentes à sua escolha, SEPARADOS POR VÍRGULA e seguindo a ordem "PRIMEIRO MODELO, ÚLTIMO MODELO":\n').strip()
+      resposta_3 = formatarEntrada(input('\nPor favor, digite os números referente os números referentes à sua escolha, SEPARADOS POR VÍRGULA e seguindo a ordem "PRIMEIRO MODELO, ÚLTIMO MODELO":\n'))
 
   resposta_3 = obterResposta(resposta=resposta_3,qtd_respostas=len(modelos_treinados),contagem_normal=False)
 
@@ -1184,7 +1287,20 @@ def MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados : list[tuple], pasta_pa
                             modelo_final=ultimo_modelo,
                             lista_de_palavras=lista_palavras,
                             condicoes_filtro=condicoes_filtro)
+  elif resposta_2 == 2:
+    limparConsole()
+    print('\n\n\tVocê está criando uma visualização de Taxa de Mudança Semântica usando Índice de Jaccard.\n\n')
+    qtd_vizinhos = formatarEntrada(input('\nDigite a quantidade de vizinhos mais próximos a ser considerada: '))
+    while not qtd_vizinhos.isdigit():
+      qtd_vizinhos = formatarEntrada(input('\nPor favor, digite um número para representar a quantidade: '))
 
+    qtd_vizinhos = int(qtd_vizinhos)
+
+    TaxaIndiceJaccard(modelo_inicial=primeiro_modelo,
+                      modelo_final=ultimo_modelo,
+                      lista_de_palavras=lista_palavras,
+                      quantidade_de_vizinhos_mais_proximos=qtd_vizinhos)
+    
 
 def CalcularTaxaMudancaPelaSimilaridade(similaridade):
     # if similaridade < -1 or similaridade > 1:
@@ -1245,7 +1361,7 @@ def TaxaSimilaridadeCosseno(modelo_inicial,
   primeiro_ano_inicial = re.search(r'(\d{4})\_\d{4}',nome_primeiro_modelo).group(1)
   ultimo_ano_final = re.search(r'\d{4}\_(\d{4})',nome_ultimo_modelo).group(1)
 
-  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Taxa Percentual Mudança pela Similaridade por Cosseno')
+  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Mudança pela Similaridade por Cosseno')
 
   if not os.path.exists(pasta_para_salvar_palavra_central):
     os.makedirs(pasta_para_salvar_palavra_central)
@@ -1265,7 +1381,7 @@ def TaxaSimilaridadeCosseno(modelo_inicial,
   plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
   limparConsole()
-  print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Taxa Percentual Mudança pela Similaridade por Cosseno','\n\n')
+  print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Mudança pela Similaridade por Cosseno','\n\n')
   if str_palavras_removidas != '':
     print('Os seguintes tokens foram removidos das visualizações:',str_palavras_removidas)
 
@@ -1275,21 +1391,135 @@ def TaxaSimilaridadeCosseno(modelo_inicial,
 # def TaxaSimilaridadeCossenoAcumulada():
 
 
-# def TaxaIndiceJaccard():
+def TaxaIndiceJaccard(modelo_inicial,modelo_final,lista_de_palavras,quantidade_de_vizinhos_mais_proximos,pasta_para_salvar=PASTA_SAVE_IMAGENS):
+
+  def indiceJaccard(conjunto_A : list[str],conjunto_B : list[str], detalhes : bool = False):
+    uniao = len(set(conjunto_A+conjunto_B))
+    interseccao = len([elemento for elemento in conjunto_A if elemento in conjunto_B])
+    if not detalhes:
+      return interseccao/uniao
+    else:
+      return {'União':(uniao,set(conjunto_A+conjunto_B)),'Interseção':(interseccao,[elemento for elemento in conjunto_A if elemento in conjunto_B])},interseccao/uniao
+
+  def TaxaDeMudancaUsandoIndiceJaccard(token : str, modelo_t1, modelo_t2, qtd_vizinhos : int = 10, detalhes : bool = False):
+    campo_semantico_antes = [resultado[0] for resultado in modelo_t1.most_similar(token,topn=qtd_vizinhos)]
+    campo_semantico_depois = [resultado[0] for resultado in modelo_t2.most_similar(token,topn=qtd_vizinhos)]
+    if not detalhes:
+      taxa_mudanca = 1 - indiceJaccard(conjunto_A=campo_semantico_antes,conjunto_B=campo_semantico_depois,detalhes=detalhes)
+      return round(taxa_mudanca*100,2)
+    else:
+      dic_mudancas, indice = indiceJaccard(conjunto_A=campo_semantico_antes,conjunto_B=campo_semantico_depois,detalhes=detalhes)
+      taxa_mudanca = 1 - indice
+      return dic_mudancas,round(taxa_mudanca*100,2)
+
+  mudanca_do_campo_semantico = {}
+
+  nome_modelo_inical,modelo_inicial = modelo_inicial
+  nome_modelo_final,modelo_final = modelo_final
+
+  txt = 'Detalhes sobre mudança semântica\n\n'
+  for palavra in lista_de_palavras:
+    txt += f'\nPalavra: "{palavra}"'+'\n'+'='*100+'\n'
+    dic_mudancas, taxa_mudanca = TaxaDeMudancaUsandoIndiceJaccard(token=palavra,
+                                                                  modelo_t1=modelo_inicial,
+                                                                  modelo_t2=modelo_final,
+                                                                  qtd_vizinhos=quantidade_de_vizinhos_mais_proximos,
+                                                                  detalhes=True)
+
+    mudanca_do_campo_semantico[palavra] = str(taxa_mudanca).replace('.',',')+'%'
+
+    txt+= f'Vizinhos mais próximos com o modelo inicial ({nome_modelo_inical}):\n'
+    for i,r in enumerate(modelo_inicial.most_similar(palavra,topn=quantidade_de_vizinhos_mais_proximos)):
+      txt+=str(i+1)+' '+str(r)+'\n'
+    txt+='-'*100+'\n'
+    txt+= f'Vizinhos mais próximos com o modelo final ({nome_modelo_final}):\n'
+    for i,r in enumerate(modelo_final.most_similar(palavra,topn=quantidade_de_vizinhos_mais_proximos)):
+      txt+=str(i+1)+' '+str(r)+'\n'
+
+    for chave in dic_mudancas:
+      txt+= f'\nQuantidade {chave} = {dic_mudancas[chave][0]}: '
+      txt += ', '.join(dic_mudancas[chave][1])+'\n'
+    taxa_mudanca = str(taxa_mudanca).replace('.',',')+'%'
+    txt += f'\nTaxa da Mudança Semântica de {palavra}: {taxa_mudanca}\n\n\n'
+
+  dicionario_ordenado = dict(sorted(mudanca_do_campo_semantico.items(), key=lambda item: item[1],reverse=True))
+
+  print(f'Taxa percentual de mudança semântica com base no\níndice de Jaccard nos top {quantidade_de_vizinhos_mais_proximos} vizinhos mais próximos:\n')
+  for chave in dicionario_ordenado:
+    print(chave+':',dicionario_ordenado[chave])
+  
+  palavras = list(dicionario_ordenado.keys())
+  numeros = [float(valor.replace('%','').replace(',','.')) for valor in dicionario_ordenado.values()]
+
+  # Criando o gráfico de barras
+  plt.figure(figsize=(10, 6))
+
+  # Definindo a cor de fundo do gráfico
+  plt.gca().set_facecolor('ivory')
+
+  # Criando as barras com uma paleta de cores diferente
+  bars = plt.bar(palavras, numeros, color='darkorchid') #['#ff9999','#66b3ff','#99ff99','#ffcc99', '#c2c2f0']
+
+  plt.ylim(0, 100)
+
+  # Adicionando títulos e rótulos
+  plt.title('Mudança acumulada dos vetores ao decorrer dos treinamentos X até Y', fontsize=18, fontweight='bold',pad =30)
+  plt.xlabel('Vetores de palavras', fontsize=14)
+  plt.ylabel('Porcentagem de mudança/diferença entre si [%]', fontsize=14)
+
+  # Inclinar as palavras no eixo x
+  plt.xticks(rotation=45, fontsize=12)
+
+  # Adicionar uma grade
+  plt.grid(axis='y', linestyle='--', linewidth=0.7, alpha=0.7)
+
+  # Adicionando bordas às barras
+  for bar in bars:
+      bar.set_edgecolor('black')
+      bar.set_linewidth(1)
+
+  for bar, valor in zip(bars, numeros):
+    plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 2, f'{valor}%', ha='center', va='bottom', fontsize=10)
 
 
-# def DistanciaEntrePalavras():
+  palavras_usadas = ', '.join(lista_de_palavras[:3])+' etc'
+  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Mudança pelo índice de Jaccard',palavras_usadas)
 
+  os.makedirs(pasta_para_salvar_palavra_central,exist_ok=True)
+    
+  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'MdcIndJcd.png')
+  caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'MdcIndJcd.txt')
+
+  while os.path.exists(caminho_save_fig):  
+    caminho_save_fig = caminho_save_fig.replace('.png',' copia.png')
+
+  while os.path.exists(caminho_save_txt):  
+    caminho_save_txt = caminho_save_txt.replace('.png',' copia.png')
+
+  plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
+
+  limparConsole()
+  print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Mudança pelo índice de Jaccard','-->',palavras_usadas,'\n\n')
+  plt.clf()
+
+  with open(caminho_save_txt,'w',encoding='utf-8') as f:
+    f.write(txt)
+
+
+
+  
+
+  
 
 def RedeDinamicaCampoSemantico(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
 
   limparConsole()
 
   print('\n\n\tVocê está montando uma visualização para Rede Dinâmica do Campo Semântico.\n\n')
-  palavra_central = input('Digite a palavra central: ').lower().strip()
+  palavra_central = formatarEntrada(input('Digite a palavra central: '))
 
   while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_central):
-    palavra_central = input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra palavra: ').lower().strip()
+    palavra_central = formatarEntrada(input('Esta palavra não está presente em todos os modelos.\nPor favor, digite outra palavra: '))
 
   G = nx.Graph()
 
@@ -1344,294 +1574,13 @@ def RedeDinamicaCampoSemantico(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IM
 
 
 
-def obterListaStopWords(caminho_arquivo_lista_stopwords : str = r'visualizacoes_woke\lista_stopwords.txt'):
-  try:
-    lista_stopwords = []
-    if caminho_arquivo_lista_stopwords.endswith('.txt'):
-      with open(caminho_arquivo_lista_stopwords,'r',encoding='utf-8') as f:
-        stopwords = f.read()
-
-      lista_stopwords = [palavra.strip() for palavra in stopwords.split('\n') if not (palavra.startswith('#') or palavra.startswith('-'))]  
-      lista_stopwords = sorted(set([palavra.strip() for palavra in stopwords.split('\n') if not (palavra.startswith('#') or palavra.startswith('-'))]),key=len)
-      return lista_stopwords
-    else:    
-      print('\n\n\t! Lista de stopwords deve estar no formato ".txt"!\n\t! Além disso deve-se seguir o padrão de separar as palavras por quebra de linha.\n\n')
-      print('Aguardando 5s...\n')
-      time.sleep(5)
-      return []
-  except Exception:
-    return '''#Artigos
-o
-os
-a
-as
-ao
-aos
-uns
-umas
-#Preposições
-à
-às
-aos
-da
-das
-do
-dos
-no
-nos
-na
-nas
-numa
-numas
-num
-nuns
-dessa
-dessas
-desse
-desses
-desta
-destas
-deste
-destes
-ante
-até
-após
-com
-contra
-de
-desde
-em
-entre
-para
-perante
-por
-sem
-sob
-sobre
-trás
-conforme
-consoante
-mediante
-tirante
-senão
-#Pronomes
-eu
-tu
-ele
-eles
-ela
-elas
-nós
-vós
-me
-te
-lhe
-lhes
-se
-nos
-vos
-mim
-comigo
-ti
-contigo
-si
-consigo
-nós
-conosco
-vós
-convosco
-você
-meu
-minha
-meus
-minhas
-teu
-tua
-teus
-tuas
-seu
-sua
-seus
-suas
-nosso
-nossa
-nossos
-nossas
-vosso
-vossa
-vossos
-vossas
-este
-isto
-esse
-isso
-aquele
-aquilo
-algum
-alguma
-alguns
-algumas
-nenhum
-nenhuma
-nenhuns
-nenhumas
-outro
-outra
-outros
-outras
-todo
-toda
-todos
-todas
-vário
-vária
-vários
-várias
-muito
-muita
-muitos
-muitas
-pouco
-pouca
-poucos
-poucas
-qualquer
-quaisquer
-qual
-quais
-quanto
-quanta
-quantos
-quantas
-alguém
-ninguém
-outrem
-quem
-algo
-tudo
-nada
-cada
-que
-qual
-quais
-quanto
-quanta
-quantos
-quantas
-cujo
-cuja
-cujos
-cujas
-onde
-esse
-esses
-essa
-essas
-esta
-estas
-este
-estes
-#Conjunções
-mas
-e
-também
-só
-todavia
-ou
--seja
-portanto
-logo
-porque
-que
-assim
-já
-embora
-ainda
-conforme
-depois
-antes
-afim
-quanto
-quantos
-quanta
-quantas
-porém
-contudo
-entretanto
-outrossim
-#Extras
-mesmo
-mesmos
-mesma
-mesmas
-como
-tal
-aqui
-pois
-pela
-pelas
-pelo
-pelos
-parte
-além
-mais
-menos
-qual
-quais
-quando
-quem
-aquele
-àquele
-aqueles
-àqueles
-aquela
-àquela
-aquelas
-àquelas
-aquilo
-àquilo
-naquele
-naqueles
-naquela
-naquelas
-naquilo
-nesse
-nesses
-nessa
-nessas
-apenas
-tipo
-sim
-não
-aí
-meio
-maior
-menor
-igual
-forma
-primeiro
-segundo
-terceiro
-quarto
-quinto
-#Numerais
-um
-uma
-dois
-duas
-três
-quatro
-cinco
-seis
-sete
-oito
-nove
-dez
-onze
-doze
-treze
-quatorze
-quinze'''
+def obterListaStopWords():  
+  return ['esses','essa','essas','esta','estas','estes',
+          'nesse','nesses','nessa','nessas',
+          'apenas','tipo','sim','não','aí',
+          'meio','maior','menor','igual','forma',
+          'primeiro','segundo','terceiro','quarto','quinto','figura','através',
+          'em-que','o-que']
 
 LISTA_STOP_WORDS = obterListaStopWords()
 
