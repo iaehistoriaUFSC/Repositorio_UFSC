@@ -757,15 +757,15 @@ def EstratosDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
 
   if palavras_selecionadas:
     data = {}
-
+    
     for nome_modelo, modelo in modelos_treinados:
 
-      ano_inicial = re.search(r'(\d{4})\_\d{4}',nome_modelo).group(1)
-      ano_final = re.search(r'\d{4}\_(\d{4})',nome_modelo).group(1)
+      if len([p for p in palavras_selecionadas if p in modelo.index_to_key]) == len(palavras_selecionadas):
+        ano_inicial = re.search(r'(\d{4})\_\d{4}',nome_modelo).group(1)
+        ano_final = re.search(r'\d{4}\_(\d{4})',nome_modelo).group(1)
 
-      chave = ano_inicial + ' - ' + ano_final
+        chave = ano_inicial + ' - ' + ano_final
 
-      if palavra_central in modelo.index_to_key:
         lista_valores = [{r[0]:r[1]} for r in modelo.most_similar(positive=palavras_selecionadas)]
         data[chave] = lista_valores
       
