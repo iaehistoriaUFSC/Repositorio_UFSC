@@ -1076,110 +1076,118 @@ def ComparacaoEntrePalavras(tupla_modelo_escolhido,
 
 
 def ElementoQueNaoCombina(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
-  limparConsole()
-  print('\n\n\tVocê está gerando resultado para Análise de elemento que menos combina\n\n')
+  try:
+    limparConsole()
+    print('\n\n\tVocê está gerando resultado para Análise de elemento que menos combina\n\n')
 
-  while True:
-    lista_palavras = []
-    palavra = formatarEntrada(input('\nDigite uma palavra: '))
-    while palavra != '0':
-      lista_palavras.append(palavra)
-      palavra = formatarEntrada(input('\nDigite mais uma palavra (0 para parar): '))
+    while True:
+      lista_palavras = []
+      palavra = formatarEntrada(input('\nDigite uma palavra: '))
+      while palavra != '0':
+        lista_palavras.append(palavra)
+        palavra = formatarEntrada(input('\nDigite mais uma palavra (0 para parar): '))
 
-    if verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=lista_palavras,checagem_unica=True):
-      break
-    else:
-      print('Esse conjunto de palavras não está presente em nenhum dos modelos.\nPor favor digite outro...')
-  limparConsole()
+      if verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=lista_palavras,checagem_unica=True):
+        break
+      else:
+        print('Esse conjunto de palavras não está presente em nenhum dos modelos.\nPor favor digite outro...')
+    limparConsole()
 
-  def ajustar_tamanho_fonte(palavra, max_tam_fonte, ax, tam_max=18, min_tam_fonte=8):
-    if len(palavra) <= tam_max:
-        return max_tam_fonte
-    
-    max_width = 0.9  # largura máxima permitida dentro do retângulo
-    font_size = max_tam_fonte
-    while font_size >= min_tam_fonte:
-        test_text = ax.text(0.5, 0.5, palavra, ha='center', va='center', fontsize=font_size)
-        renderer = ax.figure.canvas.get_renderer()
-        bbox = test_text.get_window_extent(renderer=renderer)
-        text_width = bbox.width / ax.figure.dpi  # conversão de pixels para polegadas
-        test_text.remove()
-        if text_width <= max_width:
-            return font_size
-        font_size -= 1
-    return min_tam_fonte
-
-  # txt = f'Analisando qual elemento combina menos com os demais\n\n\n'
-
-  num_series = len(modelos_treinados)
-  num_cols = 4
-  num_rows = (num_series + num_cols - 1) // num_cols  # Calcula o número de linhas necessárias
-
-  fig, axes = plt.subplots(nrows=num_rows, ncols=num_cols, figsize=(num_cols * 3, num_rows * 3))
-
-  axes = axes.flatten()
-  
-  for ax in axes[num_series:]:
-      ax.axis('off')
-
-  for (ax, tupla_modelo) in zip(axes, modelos_treinados):
-      nome_modelo, modelo = tupla_modelo
-      lista_palavras_modelo = [palavra for palavra in lista_palavras if palavra in modelo.index_to_key]
-      resultado = modelo.doesnt_match(lista_palavras_modelo)        
-      # txt += f'{nome_modelo}: {", ".join(lista_palavras_modelo)}\nElemento que menos combina: {resultado}\n\n'
-
-      for j, palavra in enumerate(lista_palavras_modelo):
-          color = 'red' if palavra == resultado else 'green'
-          ax.add_patch(plt.Rectangle((0, len(lista_palavras_modelo) - j - 1), 1, 1, color=color))
-          
-          # Ajusta dinamicamente o tamanho da fonte se a palavra for muito longa
-          font_size = ajustar_tamanho_fonte(palavra, 14, ax)
-          ax.text(0.5, len(lista_palavras_modelo) - j - 0.5, palavra, ha='center', va='center', color='white', fontsize=font_size)
+    def ajustar_tamanho_fonte(palavra, max_tam_fonte, ax, tam_max=18, min_tam_fonte=8):
+      if len(palavra) <= tam_max:
+          return max_tam_fonte
       
-      ax.set_xlim(0, 1)
-      ax.set_ylim(0, len(lista_palavras_modelo))
-      ax.axis('off')
-      nome_modelo = re.search(r'(\d{4}\_\d{4})',nome_modelo).group(1)
-      ax.set_title(f'{nome_modelo}', fontsize=14)
+      max_width = 0.9  # largura máxima permitida dentro do retângulo
+      font_size = max_tam_fonte
+      while font_size >= min_tam_fonte:
+          test_text = ax.text(0.5, 0.5, palavra, ha='center', va='center', fontsize=font_size)
+          renderer = ax.figure.canvas.get_renderer()
+          bbox = test_text.get_window_extent(renderer=renderer)
+          text_width = bbox.width / ax.figure.dpi  # conversão de pixels para polegadas
+          test_text.remove()
+          if text_width <= max_width:
+              return font_size
+          font_size -= 1
+      return min_tam_fonte
 
-  
-  limparConsole()
+    # txt = f'Analisando qual elemento combina menos com os demais\n\n\n'
 
-  palavras_usadas = ', '.join(lista_palavras[:3])+' etc'
+    num_series = len(modelos_treinados)
+    num_cols = 4
+    num_rows = (num_series + num_cols - 1) // num_cols  # Calcula o número de linhas necessárias
 
-  pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Elemento que menos combina',palavras_usadas)
+    fig, axes = plt.subplots(nrows=num_rows, ncols=num_cols, figsize=(num_cols * 3, num_rows * 3))
 
-  os.makedirs(pasta_para_salvar_palavra_central,exist_ok=True)
-
-  nome_modelo_escolhido = re.sub(r'\_\d{4}\_\d{4}','',modelos_treinados[0][0])
-
-  fig.suptitle(f'Elemento que menos combina dentre os demais\nusando {nome_modelo_escolhido}', fontsize=16)
-
-  plt.tight_layout(rect=[0, 0, 1, 0.9])  # Ajusta o layout para não sobrepor o título e deixar espaço em branco
-  plt.subplots_adjust(top=0.85)  # Adiciona espaço extra entre o título e os subplots
-
-
-  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'EQMC_{nome_modelo_escolhido}.png')
-
-  while os.path.exists(caminho_save_fig):
-    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
-
-  plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
-
-  plt.clf()
-  # plt.show()
-  print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Elemento que menos combina','-->',palavras_usadas,'\n\n')
-
-  # caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'EQMC_{nome_modelo_escolhido}.txt')
-
-  # while os.path.exists(caminho_save_txt):
-  #   caminho_save_txt = caminho_save_txt.replace('.txt','_copia.txt')
-  
-  # with open(caminho_save_txt,'w',encoding='utf-8') as f:
-  #   f.write(txt)
+    axes = axes.flatten()
     
-  limparConsole()
-  print(f'Arquivo de texto gerado e salvo em "Elemento que menos combina" --> "{palavras_usadas}"')
+    for ax in axes[num_series:]:
+        ax.axis('off')
+
+    for (ax, tupla_modelo) in zip(axes, modelos_treinados):
+        nome_modelo, modelo = tupla_modelo
+        lista_palavras_modelo = [palavra for palavra in lista_palavras if palavra in modelo.index_to_key]
+        resultado = modelo.doesnt_match(lista_palavras_modelo)        
+        # txt += f'{nome_modelo}: {", ".join(lista_palavras_modelo)}\nElemento que menos combina: {resultado}\n\n'
+
+        for j, palavra in enumerate(lista_palavras_modelo):
+            color = 'red' if palavra == resultado else 'green'
+            ax.add_patch(plt.Rectangle((0, len(lista_palavras_modelo) - j - 1), 1, 1, color=color))
+            
+            # Ajusta dinamicamente o tamanho da fonte se a palavra for muito longa
+            font_size = ajustar_tamanho_fonte(palavra, 14, ax)
+            ax.text(0.5, len(lista_palavras_modelo) - j - 0.5, palavra, ha='center', va='center', color='white', fontsize=font_size)
+        
+        ax.set_xlim(0, 1)
+        ax.set_ylim(0, len(lista_palavras_modelo))
+        ax.axis('off')
+        nome_modelo = re.search(r'(\d{4}\_\d{4})',nome_modelo).group(1)
+        ax.set_title(f'{nome_modelo}', fontsize=14)
+
+    
+    limparConsole()
+
+    palavras_usadas = ', '.join(lista_palavras[:3])+' etc'
+
+    pasta_para_salvar_palavra_central = os.path.join(pasta_para_salvar,'Elemento que menos combina',palavras_usadas)
+
+    os.makedirs(pasta_para_salvar_palavra_central,exist_ok=True)
+
+    nome_modelo_escolhido = re.sub(r'\_\d{4}\_\d{4}','',modelos_treinados[0][0])
+
+    fig.suptitle(f'Elemento que menos combina dentre os demais\nusando {nome_modelo_escolhido}', fontsize=16)
+ 
+    # ax.set_title(f'Elemento que menos combina dentre os demais\nusando {nome_modelo_escolhido}', fontsize=16,pad=20)
+
+    plt.tight_layout(rect=[0, 0, 1, 0.9])  # Ajusta o layout para não sobrepor o título e deixar espaço em branco
+    if num_series > 4:
+      plt.subplots_adjust(top=0.85)
+    else:
+      plt.subplots_adjust(top=0.5)  # Adiciona espaço extra entre o título e os subplots
+
+
+    caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'EQMC_{nome_modelo_escolhido}.png')
+
+    while os.path.exists(caminho_save_fig):
+      caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+
+    plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
+
+    plt.clf()
+    # plt.show()
+  except Exception as e:
+    limparConsole()
+    print('\n\n\tOcorreu um problema na geração desta imagem. Por favor, contate um programador do grupo de estudos sobre este cenário.\n\n')
+  else:
+    limparConsole()
+    print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Elemento que menos combina','-->',palavras_usadas,'\n\n')
+
+    # caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'EQMC_{nome_modelo_escolhido}.txt')
+
+    # while os.path.exists(caminho_save_txt):
+    #   caminho_save_txt = caminho_save_txt.replace('.txt','_copia.txt')
+    
+    # with open(caminho_save_txt,'w',encoding='utf-8') as f:
+    #   f.write(txt)
 
 
 def DistanciaEntreVetores(a,b):
@@ -1504,10 +1512,6 @@ def TaxaIndiceJaccard(modelo_inicial,modelo_final,lista_de_palavras,quantidade_d
 
   with open(caminho_save_txt,'w',encoding='utf-8') as f:
     f.write(txt)
-
-
-
-  
 
   
 

@@ -46,10 +46,10 @@ def main():
                         if acao == '0':
                             parar_programa = True
                             break
-                        while acao != '-1' and not parar_programa:
-                            limparConsole()
+                        while acao != '-1' and not parar_programa: 
+                            limparConsole()                              
                             if os.path.basename(tipo_treinamento) == 'Com séries temporais':
-                                if acao == 'Gráfico das similaridades ao decorrer do tempo':
+                                if acao == 'Gráfico das similaridades ao decorrer do tempo':        # Os nomes precisam estar iguais os nomes no arquivo de funcoes.py na variável lista_de_acoes_com_series_temporais
                                     SimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
                                 elif acao == 'Vizinhos mais próximos ao decorrer do tempo (.png e .txt)':
                                     VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
@@ -67,7 +67,7 @@ def main():
                                     MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
                                 elif acao == 'Rede dinâmica dos campos semânticos ao decorrer do tempo':
                                     RedeDinamicaCampoSemantico(modelos_treinados=modelos_carregados)
-                                elif acao == 'Elemento que não combina dentre os demais (só .txt)':
+                                elif acao == 'Elemento que não combina dentre os demais':
                                     ElementoQueNaoCombina(modelos_treinados=modelos_carregados)
                                 else:
                                     break                                

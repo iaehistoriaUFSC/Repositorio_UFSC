@@ -53,7 +53,7 @@ lista_de_acoes_com_series_temporais = ['Gráfico das similaridades ao decorrer d
                                        'Estratos do Tempo',
                                        'Vetores de Palavras',
                                        'Comparação entre Palavras',
-                                       'Elemento que não combina dentre os demais (só .txt)',
+                                       'Elemento que não combina dentre os demais',
                                        'Frequência de Palavras ao decorrer do tempo',
                                        'Mudança de Palavras ao decorrer do tempo']
 
