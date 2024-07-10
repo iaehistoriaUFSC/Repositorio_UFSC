@@ -15,12 +15,15 @@ else:
 CAMINHO_GERAL = r'modelos_treinados'
 OS_ATUAL = platform.system()
 
-DIC_INFO = {'Com séries temporais':{'RI todo início 2003 2006':{'Quantidade de intervalos':10,
+DIC_INFO = {'Com séries temporais':{'UFSC 2003-2006':{'Quantidade de intervalos':10,
                                                                 'Incremental':{'Modelo 1':'1-p6Fik36eDbx1ezQs3dkrQop1_Hj-4qP',
                                                                                'Modelo 2':'1wWkdQunoiOKl86UzIpdhpoFF4J9gbsxd',
                                                                                'Modelo 3':'1MOxnajuVYYRPOgK90bTX6ZwcKbe7f6gi',
                                                                                'Modelo 4':'1NBl-sCj5CQuG90zAGGYjcaJfRT8gJceq'},
-                                                                'Temporal':{'Modelo 1':'1domJgAtj-dNbIfUfi81Fimj8T9Zpc-RD'}},
+                                                                'Temporal':{'Modelo 1':'1domJgAtj-dNbIfUfi81Fimj8T9Zpc-RD',
+                                                                            'Modelo 2':'1xqGq9qUduFEkLn5lw_16Q4NpGcGdz22D',
+                                                                            'Modelo 3':'1O-umkGjVr5Bh5y-llNviPec73ZOuNHJM',
+                                                                            'Modelo 4':'1x4OTtLIcdVgfuec1n0yYJm-QMEJ4mvFG'}},
                                     'HST-03-10':{'Quantidade de intervalos':5,
                                                  'Incremental':{'Modelo 1':'1yRnVZJ-n6yl2gxSGGVpa5MmAj7SKMu_Q',
                                                                 'Modelo 2':'1Q_JiD7vga-wziqQ4hIbqJeqUKB54h2aL',
