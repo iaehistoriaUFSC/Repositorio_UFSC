@@ -23,7 +23,7 @@ DIC_INFO = {'Com séries temporais':{'UFSC 2003-2006':{'Quantidade de intervalos
                                                                 'Temporal':{'Modelo 1':'1domJgAtj-dNbIfUfi81Fimj8T9Zpc-RD',
                                                                             'Modelo 2':'1xqGq9qUduFEkLn5lw_16Q4NpGcGdz22D',
                                                                             'Modelo 3':'1O-umkGjVr5Bh5y-llNviPec73ZOuNHJM',
-                                                                            'Modelo 4':'1x4OTtLIcdVgfuec1n0yYJm-QMEJ4mvFG'}},
+                                                                            'Modelo 4':'1lQhwky-z3n2zcx6Neew8vvQXJ6ObM0Co'}},
                                     'HST-03-10':{'Quantidade de intervalos':5,
                                                  'Incremental':{'Modelo 1':'1yRnVZJ-n6yl2gxSGGVpa5MmAj7SKMu_Q',
                                                                 'Modelo 2':'1Q_JiD7vga-wziqQ4hIbqJeqUKB54h2aL',
