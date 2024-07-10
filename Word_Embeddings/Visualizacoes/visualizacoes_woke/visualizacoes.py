@@ -1478,7 +1478,7 @@ def TaxaIndiceJaccard(modelo_inicial,modelo_final,lista_de_palavras,quantidade_d
   # Adicionando títulos e rótulos
   plt.title(f'Mudança dos vetores de palavras com índice de Jaccard\nusando modelo {nome_modelo_escolhido} de {ano_inicial} até {ano_final}', fontsize=18, fontweight='bold',pad =30)
   plt.xlabel('Vetores de palavras', fontsize=14)
-  plt.ylabel('Porcentagem de mudança/diferença entre si [%]', fontsize=14)
+  plt.ylabel('Mudança [%]', fontsize=14)
 
   # Inclinar as palavras no eixo x
   plt.xticks(rotation=45, fontsize=12)
