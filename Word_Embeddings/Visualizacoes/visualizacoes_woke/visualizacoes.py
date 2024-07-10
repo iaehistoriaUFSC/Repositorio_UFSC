@@ -1470,8 +1470,13 @@ def TaxaIndiceJaccard(modelo_inicial,modelo_final,lista_de_palavras,quantidade_d
 
   plt.ylim(0, 100)
 
+  nome_modelo_escolhido = re.sub(r'\_\d{4}\_\d{4}','',nome_modelo_inical)
+  ano_inicial = re.search(r'\_(\d{4})\_\d{4}',nome_modelo_inical).group(1)
+  ano_final = re.search(r'\_\d{4}\_(\d{4})',nome_modelo_final).group(1)
+
+
   # Adicionando títulos e rótulos
-  plt.title('Mudança acumulada dos vetores ao decorrer dos treinamentos X até Y', fontsize=18, fontweight='bold',pad =30)
+  plt.title(f'Mudança dos vetores de palavras com índice de Jaccard\nusando modelo {nome_modelo_escolhido} de {ano_inicial} até {ano_final}', fontsize=18, fontweight='bold',pad =30)
   plt.xlabel('Vetores de palavras', fontsize=14)
   plt.ylabel('Porcentagem de mudança/diferença entre si [%]', fontsize=14)
 
