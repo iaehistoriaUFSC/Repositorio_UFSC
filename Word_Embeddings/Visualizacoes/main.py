@@ -27,7 +27,7 @@ def main():
                 while modelo != '-1' and not parar_programa:                    
                     limparConsole()
 
-                    descompactarPastaModelos(modelo,excluir_zip=True)
+                    descompactarPasta(modelo)
 
                     limparConsole()
 

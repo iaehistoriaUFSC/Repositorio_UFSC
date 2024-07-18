@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from .funcoes import limparConsole, obterResposta, formatarEntrada
+from .funcoes import limparConsole, obterResposta, formatarEntrada, abrirArquivoMsgPack
 from gensim.models import KeyedVectors
 import time
 import os
@@ -520,15 +520,59 @@ def FrequenciaDePalavrasAoDecorrerDoTempo(modelos_treinados, pasta_para_salvar=P
     FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados=modelos_treinados)
 
 
+def coletarFrequenciasNoCorpus(nome_modelo : str,
+                               tokens : list[str],
+                               anos : list[str] = ['2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023'],
+                               caminho_pasta_corpus_freq : str = r'info_corpus'):
+
+  if 'UFSC' in nome_modelo:
+    lista_colecoes = 'todas'
+  elif 'CFH' in nome_modelo:
+    lista_colecoes = ['Filosofia','Geografia','Geologia','Historia','Psicologia','Teses_e_dissertacoes_do_Centro_de_Filosofia_e_Ciencias_Humanas','Programa_de_Pos_Graduacao_Interdisciplinar_em_Ciencias_Humanas','Servico_Social','Sociologia_e_Ciencia_Politica','Sociologia_Politica','Saude_Mental_e_Atencao_Psicossocial_Mestrado_Profissional','Ensino_de_Historia_Mestrado_Profissional']
+  elif 'HST' in nome_modelo:
+    lista_colecoes = ['Historia']
+  elif 'SAUDE-CORPO' in nome_modelo:
+    lista_colecoes = ['Biologia_Celular_e_do_Desenvolvimento','Biotecnologia_e_Biociencias','Ciencias_da_Reabilitacao','Ciencias_Medicas','Cuidados_Intensivos_e_Paliativos_Mestrado_Profissional',
+                     'Educacao_Fisica','Enfermagem','Gestao_do_Cuidado_em_Enfermagem','Gestao_do_Cuidado_em_Enfermagem_Mestrado_Profissional','Medicina_Veterinaria_Convencional_e_Integrativa',
+                     'Neurociencias','Saude_Coletiva','Saude_Mental_e_Atencao_Psicossocial_Mestrado_Profissional','Saude_Publica','Programa_de_Pos_Graduacao_Multidisciplinar_em_Saude_Mestrado_Profissional']
+  else:
+    lista_colecoes = []
+
+  if lista_colecoes == 'todas':
+    colecoes = sorted([colecao for colecao in os.listdir(caminho_pasta_corpus_freq) if '.' not in colecao])
+  else:
+    colecoes = sorted([colecao for colecao in os.listdir(caminho_pasta_corpus_freq) if colecao in lista_colecoes])
+
+  dic_contagens = {ano:{'total_de_palavras':0,'contagens':{token:{'frequencia_normal':0,'frequencia_relativa':0} for token in sorted(tokens)}} for ano in sorted(anos)}
+
+  for ano in dic_contagens.keys():
+    for colecao in colecoes:
+      caminho_colecao = os.path.join(caminho_pasta_corpus_freq,colecao)
+      for caminho_dic in [os.path.join(caminho_colecao,d) for d in os.listdir(caminho_colecao) if d.startswith('dic_') and d.endswith(f'{ano}.msgpack')]:
+        dic_atual = abrirArquivoMsgPack(caminho_dic)
+        for trabalho in dic_atual.keys():
+          l_tokens = dic_atual[trabalho]['contagens'].keys()
+          dic_contagens[ano]['total_de_palavras'] += dic_atual[trabalho]['total_de_palavras']
+          for token in dic_contagens[ano]['contagens'].keys():
+            if token in l_tokens:
+              dic_contagens[ano]['contagens'][token]['frequencia_normal'] += dic_atual[trabalho]['contagens'][token]
+    for token in dic_contagens[ano]['contagens'].keys():
+      if dic_contagens[ano]['total_de_palavras'] != 0:
+        dic_contagens[ano]['contagens'][token]['frequencia_relativa'] = round(dic_contagens[ano]['contagens'][token]['frequencia_normal']/dic_contagens[ano]['total_de_palavras'],8)
+
+  return dic_contagens
+
+
+
 def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[tuple],pasta_para_salvar=PASTA_SAVE_IMAGENS):
-  
+
   limparConsole()
   print('\n\n\tVocê está montando uma visualização para Frequência de Palavras Selecionadas ao decorrer do tempo.\n\n')
-    
+
   print('Qual tipo de frequência você quer visualizar?\n\n')
   print('1 - Frequência completa durante os treinamentos')
   print('2 - Frequência entre os diferentes períodos de treinamento')
-  print('(Ñ DISPONÍVEL) 3 - Frequência de palavras no corpus todo')
+  print('3 - Frequência de palavras no corpus todo')
 
   resposta_tipo_freq = formatarEntrada(input('\n\nDigite o número correspondente à sua escolha: '))
   resposta_tipo_freq = obterResposta(resposta=resposta_tipo_freq,qtd_respostas=3,contagem_normal=True)
@@ -539,22 +583,20 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
 
   cores = ['green','red','cyan','violet','blue','gold','orange','c','black','purple','lime','tomato','magenta','lightslategrey','lightgreen','paleturquoise','aquamarine','moccasin','lightcoral','chocolate','sandybrown','rosybrown']
 
-  if resposta_tipo_freq in [1,2]:
-    palavra_freq = formatarEntrada(input('Digite a primeira palavra: '))
-    while True:
-      while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_freq,checagem_unica=True) and palavra_freq != '0':
-        palavra_freq = formatarEntrada(input('\n! Esta palavra não está presente em nenhum dos modelos.\n! Por favor, digite outra palavra: '))
-      if palavra_freq != '0':
-        if palavra_freq not in lista_palavras:
-          lista_palavras.append(palavra_freq)
-      else:
-        break
-      if len(lista_palavras) == len(cores):
-        break
-      else:
-        palavra_freq = formatarEntrada(input('\nDigite mais uma palavra (0 para parar): '))
-  elif resposta_tipo_freq == 3:
-    pass
+
+  palavra_freq = formatarEntrada(input('Digite a primeira palavra: '))
+  while True:
+    while not verificaExistenciaNosModelos(modelos_treinados=modelos_treinados,palavra_central=palavra_freq,checagem_unica=True) and palavra_freq != '0':
+      palavra_freq = formatarEntrada(input('\n! Esta palavra não está presente em nenhum dos modelos.\n! Por favor, digite outra palavra: '))
+    if palavra_freq != '0':
+      if palavra_freq not in lista_palavras:
+        lista_palavras.append(palavra_freq)
+    else:
+      break
+    if len(lista_palavras) == len(cores):
+      break
+    else:
+      palavra_freq = formatarEntrada(input('\nDigite mais uma palavra (0 para parar): '))
 
   if resposta_tipo_freq == 1:
     nomes = [re.search(r'(\d{4})\_\d{4}',modelo[0]).group(1) + '\n-\n' + re.search(r'\d{4}\_(\d{4})',modelo[0]).group(1) for modelo in modelos_treinados]
@@ -567,13 +609,28 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
         nomes.append(re.search(r'(\d{4})\_\d{4}',modelo_atual).group(1) + '\n-\n' + re.search(r'\d{4}\_(\d{4})',modelo_atual).group(1))
       else:
         nomes.append(str(int(re.search(r'\d{4}\_(\d{4})',modelos_treinados[i-1][0]).group(1))+1) + '\n-\n' + re.search(r'\d{4}\_(\d{4})',modelo_atual).group(1))
-    
+
   elif resposta_tipo_freq == 3:
-    pass
+    limparConsole()
+    print('\n\n\tVocê está montando uma visualização para Frequência de Palavras Selecionadas ao decorrer do tempo.\n\n')
+    print('Qual tipo de contabilização de frequência você gostaria de utilizar?\n\n')
+    print('1 - Frequência Normal (contabilizar as aparições nos textos naquele determinado período de tempo)')
+    print('2 - Frequência Relativa (contabilizar a proporção de aparições pela quantidade de palavras naquele determinado período de tempo)')
+
+    resposta_tipo_freq_corpus = formatarEntrada(input('\n\nDigite o número correspondente à sua escolha: '))
+    resposta_tipo_freq_corpus = obterResposta(resposta=resposta_tipo_freq_corpus,qtd_respostas=2,contagem_normal=True)
+
+    nomes = [str(ano) for ano in range(2003,2024)]
+  
+  limparConsole()
+  print('\n\n\tPor favor, aguarde! A visualização está em construção!\n\n')
 
   fig, ax = plt.subplots(figsize=(16, 8))
 
-  x = [i+1 for i in range(len(modelos_treinados))]
+  if resposta_tipo_freq in [1,2]:
+    x = [i+1 for i in range(len(modelos_treinados))]
+  else:
+    x = [ano for ano in range(2003,2024)]
 
   cores_usadas = []
   for palavra in lista_palavras:
@@ -596,14 +653,20 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
         if palavra in modelo_atual.index_to_key:
           if i == 0: # primeiro
             y.append(modelo_atual.get_vecattr(palavra,'count'))
-          elif palavra in modelos_treinados[i-1][1].index_to_key:        
+          elif palavra in modelos_treinados[i-1][1].index_to_key:
             y.append(abs(modelo_atual.get_vecattr(palavra,'count')-modelos_treinados[i-1][1].get_vecattr(palavra,'count')))
           else:
             y.append(modelo_atual.get_vecattr(palavra,'count'))
         else:
           y.append(0)
     elif resposta_tipo_freq == 3:
-      pass
+      dic_contagens = coletarFrequenciasNoCorpus(nome_modelo=modelos_treinados[0][0],
+                                                 tokens=lista_palavras)
+      for ano in dic_contagens.keys():
+        if resposta_tipo_freq_corpus == 1: # freq. normal
+          y.append(dic_contagens[ano]['contagens'][palavra]['frequencia_normal'])
+        else: # freq. relativa
+          y.append(dic_contagens[ano]['contagens'][palavra]['frequencia_relativa']*10000)
 
 
     ax.scatter(x, y, color='black', s=10)
@@ -611,25 +674,31 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
     line_y = [y[0]] + y[1:-1] + [y[-1]]
     ax.plot(line_x, line_y, label=palavra, color=cor)
     for i in range(len((y))):
-      ax.text(x[i], y[i]+0.01, str(round(y[i],2)), fontsize=6, ha='center', va='bottom')
+      ax.text(x[i], y[i]+y[i]*0.02, str(round(y[i],2)), fontsize=6, ha='center', va='bottom')
 
-  
-  nome_modelo = re.sub(r'\_\d{4}\_\d{4}', '', modelos_treinados[0][0])  
+
+  nome_modelo = re.sub(r'\_\d{4}\_\d{4}', '', modelos_treinados[0][0])
 
   if y:
     if resposta_tipo_freq == 1:
       ax.set_title(f'Frequência completa nos treinamentos das palavras selecionadas\n{nome_modelo}', fontsize=20, pad= 25)
+      ax.set_xlabel('Intervalos de tempo', fontsize=15, labelpad=20)
     elif resposta_tipo_freq == 2:
-      ax.set_title(f'Frequência no corpus das palavras selecionadas\n{nome_modelo}', fontsize=20, pad= 25)
+      ax.set_title(f'Frequência separada nos treinamentos das palavras selecionadas\n{nome_modelo}', fontsize=20, pad= 25)
+      ax.set_xlabel('Intervalos de tempo', fontsize=15, labelpad=20)
     elif resposta_tipo_freq == 3:
-      pass
-    ax.set_xlabel('Intervalos de tempo', fontsize=15, labelpad=20)
-    ax.set_ylabel('Frequência', fontsize=15, labelpad=20)
+      if resposta_tipo_freq_corpus == 1:
+        ax.set_title(f'Frequência normal no corpus das palavras selecionadas\n{nome_modelo}', fontsize=20, pad= 25)
+      else:
+        ax.set_title(f'Frequência relativa no corpus das palavras selecionadas\n{nome_modelo}', fontsize=20, pad= 25)
+      ax.set_xlabel('Anos', fontsize=15, labelpad=20)
+    
+    ax.set_ylabel('Frequências', fontsize=15, labelpad=20)
 
     ax.set_xticks(x)
     ax.set_xticklabels(nomes,fontsize=11)
 
-    ax.grid('on')
+    ax.grid('off')
     ax.legend(fontsize = 11,loc='center left', bbox_to_anchor=(1, 0.5))
     plt.tight_layout(rect=[0, 0, 0.85, 1])
 
@@ -641,13 +710,16 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
       os.makedirs(pasta_para_salvar_palavra_central)
 
     if resposta_tipo_freq == 1:
-      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'FTS_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png') # Freq_treinos_selecionadas
+      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'FTC_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png') # Freq treinos completa
     elif resposta_tipo_freq == 2:
-      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'FCS_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png') # Freq_corpus_selecionadas
+      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'FTS_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png') # Freq treinos separada
     elif resposta_tipo_freq == 3:
-      caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'FCSS{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png') # Freq_corpus_selecionadas_skinner
+      if resposta_tipo_freq_corpus == 1:
+        caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'FNC_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png') # Freq normal corpus
+      else:
+        caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'FRC_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png') # Freq relativa corpus
 
-    while os.path.exists(caminho_save_fig):  
+    while os.path.exists(caminho_save_fig):
       caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
 
     plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
@@ -655,7 +727,7 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
     # plt.show()
 
     plt.clf()
-    
+
     print('\n\n\tImagem salva em',pasta_para_salvar,'-->','Frequências de Palavras Selecionadas','\n\n')
  
     
