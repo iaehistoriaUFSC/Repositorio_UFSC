@@ -14,8 +14,8 @@ Para otimizar o tempo e integrar mais os membros do Grupo de Estudos e Pesquisa 
 - Reconhecimento de entidades na frase: [spaCy](https://spacy.io/models/pt)
 - POS Tag para reconhecer verbos na frase: [spaCy](https://spacy.io/models/pt)
 - Lematizador de verbos: [pt-br-verbs-lemmatizer](https://pypi.org/project/pt-br-verbs-lemmatizer/)
-- Limpeza/padronização/formatação do texto:[ferramentas-basicas-pln](https://pypi.org/project/ferramentas-basicas-pln/)
-- Armazenamento de arquivos pré-processados: MessagePack ([msgpack](https://github.com/msgpack/msgpack-python))
+- Limpeza/padronização/formatação do texto: [ferramentas-basicas-pln](https://pypi.org/project/ferramentas-basicas-pln/)
+- Armazenamento de arquivos pré-processados: [msgpack](https://github.com/msgpack/msgpack-python)
 - Algumas bibliotecas básicas do Python também foram necessárias como: *os*, *string*, *re* e *time*.
 
 ## Desenvolvedor
