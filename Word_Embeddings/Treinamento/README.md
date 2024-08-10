@@ -10,10 +10,10 @@ Sendo assim, realizando diversos treinamentos com os mais variados valores nos p
 
 Para construção das séries temporais necessitamos de um modelo base, que será a primeira série temporal que originará as demais. Nesse sentido para melhorar a acurácia dos múltiplos treinamentos pensamos em botar uma quantidade de textos adequada para este primeiro recorte temporal, da seguinte forma:
 
-- Modelo UFSC: contempla textos escritos de 2003 até 2006.
-- Modelo CFH: contempla textos escritos de 2003 até 2010.
-- Modelo HST: contempla textos escritos de 2003 até 2010.
-- Modelo SAUDE-CORPO: contempla textos escritos de 2003 até 2010.
+- Modelo UFSC: contempla textos escritos de 2003 até 2006 de todas as coleções/cursos da UFSC.
+- Modelo CFH: contempla textos escritos de 2003 até 2010 das coleções/cursos do Centro de Filosofia e Ciências Humanas da UFSC.
+- Modelo HST: contempla textos escritos de 2003 até 2010 da coleções/curso de História da UFSC.
+- Modelo SAUDE-CORPO: contempla textos escritos de 2003 até 2010 das coleções/cursos referentes ao corpo humano e saúde do corpo no geral da UFSC.
 
 Essas informações foram usadas para construir as baterias de treinos nesses diferentes corpus de textos. Depois de executada as baterias, validado os modelos e escolhido os que melhor desempenharam, partimos para continuação dos treinamentos para geração de mais séries temporais. Temos dois modos de construir o restante das séries:
 
