@@ -1,4 +1,4 @@
-# WOKE - CFH
+# 🤖 WOKE - CFH
 
 - **Quantidade de coleções contempladas: 12**
 - **Quantidade de trabalhos contemplados no total: 3.554**

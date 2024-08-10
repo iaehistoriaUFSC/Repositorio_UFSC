@@ -1,4 +1,4 @@
-# WOKE - HST
+# 🤖 WOKE - HST
 
 - **Quantidade de coleções contempladas: 1**
 - **Quantidade de trabalhos contemplados no total: 555**
