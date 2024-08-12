@@ -1261,6 +1261,10 @@ def ElementoQueNaoCombina(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS
     # with open(caminho_save_txt,'w',encoding='utf-8') as f:
     #   f.write(txt)
 
+def validarRespostaEscolhaModelosMudancaSemantica(qtd_modelos : int,resposta) -> tuple[int,int]:
+  while (',' not in resposta) or (len(resposta.split(',')) > 2) or (len([r for r in resposta.split(',') if r.strip() not in [str(n) for n in range(1,qtd_modelos+1)]])>0):
+    resposta = formatarEntrada(input('Por favor, digite os números do primeiro e último modelo separados por ","\n'))
+  return sorted([int(r.strip())-1 for r in resposta.split(',')])
 
 def DistanciaEntreVetores(a,b):
   A = np.array([a])
@@ -1346,17 +1350,7 @@ def MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados : list[tuple], pasta_pa
   for i, modelo in enumerate([m[0] for m in modelos_treinados]):
     print(f'{i+1} - {modelo}')
 
-  resposta_3 = formatarEntrada(input('\nDigite os números referentes à sua escolha, separados por vírgula e seguindo a ordem "primeiro, último":\n'))
-  while len(resposta_3.split(',')) != 2:
-    resposta_3 = formatarEntrada(input('\nEsperamos DOIS valores separados por vírgula.\nPor favor, digite os números referentes à sua escolha, separados por vírgula e seguindo a ordem "primeiro, último":\n'))
-  while ',' not in resposta_3:
-    resposta_3 = formatarEntrada(input('\nPor favor, digite os números referente os números referentes à sua escolha, SEPARADOS POR VÍRGULA e seguindo a ordem "PRIMEIRO MODELO, ÚLTIMO MODELO":\n'))
-  while len([r for r in resposta_3.split(',') if not r.isdigit()])>0:
-    resposta_3 = formatarEntrada(input('\nPor favor, digite OS NÚMEROS referente os números referentes à sua escolha, SEPARADOS POR VÍRGULA e seguindo a ordem "PRIMEIRO MODELO, ÚLTIMO MODELO":\n'))
-    while ',' not in resposta_3:
-      resposta_3 = formatarEntrada(input('\nPor favor, digite os números referente os números referentes à sua escolha, SEPARADOS POR VÍRGULA e seguindo a ordem "PRIMEIRO MODELO, ÚLTIMO MODELO":\n'))
-
-  resposta_3 = obterResposta(resposta=resposta_3,qtd_respostas=len(modelos_treinados),contagem_normal=False)
+  resposta_3 = validarRespostaEscolhaModelosMudancaSemantica(qtd_modelos=len(modelos_treinados),resposta=formatarEntrada(input('\nDigite os números referentes à sua escolha, separados por vírgula e seguindo a ordem "primeiro, último":\n')))
 
   primeiro_modelo = modelos_treinados[resposta_3[0]]
   ultimo_modelo = modelos_treinados[resposta_3[-1]]
