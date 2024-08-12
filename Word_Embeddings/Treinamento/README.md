@@ -27,6 +27,8 @@ Feitas as análises partimos para a continuação dos treinamentos para geraçã
 - **Incremental**: Atualiza o treino anterior com um corpus de textos novo.
 - **Temporal**: Adiciona um novo treino com um corpus de textos estendido.
 
+Este treinamento "temporal" tem como objetivo remover a possibilidade de ocorrer o fenômeno de "esquecimento catastrófico" que acomete atualizações de redes neurais nos treinamentos de inteligências artificiais. Pois, na lógica utilizada no treino "temporal" não ocorre atualização, apenas adição de treinos com um corpus de textos maior a cada série temporal. Ainda, um dos desenvolvedores do gensim-Word2Vec abordou temas relacionados à atualização de treinamentos para modelos Word2Vec e o próprio esquecimento catastrófico em uma de suas respostas em fóruns de dúvidas: [word2vec gensim update learning rate - StackOverflow - Gordon Mohr (aka "gojomo")](https://stackoverflow.com/questions/51133162/word2vec-gensim-update-learning-rate).
+
 Depois de construídas as séries temporais (realizados os treinamentos seguintes), transformamos os arquivos de modelo em arquivos de wordvectors, formatos mais leves e que carregam em si o que de fato usamos na hora de realizar as operações para visualizar os resultados. Esse processo de transformação é importante para baixar os modelos depois no programa de Visualizações de Resultados de forma mais rápida e também não ocupar tanto espaço na RAM do sistema na hora de carregar os modelos para realizar as operações quando for feita a construção de alguma visualização.
 
 Abaixo podemos observar uma imagem que ilustra os processos executados para sair do corpus de textos pré-processados até os modelos em séries temporais:
