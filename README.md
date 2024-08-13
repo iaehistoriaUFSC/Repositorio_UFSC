@@ -44,12 +44,13 @@ Programador que contribuiu na abertura deste GitHub.
 ## Integrantes ativos
 
 ### [Rodrigo Bragio Bonaldo](http://lattes.cnpq.br/2967207698672476)
-Coordenador e fundador do Grupo de Estudos e Pesquisa em IA e História da UFSC
+Coordenador e fundador do Grupo de Estudos e Pesquisa em IA e História da UFSC.
 
 ### [Franciele Dias da Silva](http://lattes.cnpq.br/8272002719032465)
-Bolsista de iniciação científica do projeto voltada para o processamento de linguagem natural aplicado à história
+Bolsista de iniciação científica do projeto voltada para o processamento de linguagem natural aplicado à história. Contribuiu nas discussões e nas validações referentes ao desenvolvimento de todas as etapas dos programas do WOKE.
 
-### Mateus Borsatti
+### [Mateus Freitas Borsatti](https://lattes.cnpq.br/1731957464761445)
+Um dos membros mais ativos desde a criação do grupo, contribuiu na idealização do projeto WOKE, assim como nas discussões e nas validações referentes ao desenvolvimento de todas as etapas. Além disso será o autor do primeiro estudo utilizando o WOKE como ferramenta historiográfica.
 
 ### [Éric Gabriel Kundlatsch](http://lattes.cnpq.br/3926071140042328)
 
