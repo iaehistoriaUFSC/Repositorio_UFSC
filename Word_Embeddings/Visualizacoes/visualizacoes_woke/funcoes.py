@@ -1,10 +1,12 @@
+# Importação dos módeulos/pacotes/bibliotecas que serão utilizadas nas execuções dos processos
 import zipfile
-import os
+import os, shutil
 import platform
 from gensim.models import KeyedVectors
 import gdown
 import msgpack
 
+# Verificação se o ambiente que está executando é o Google Colab ou não (execução local)
 try:
     from google.colab import output
 except Exception:
@@ -13,9 +15,17 @@ except Exception:
 else:
     GOOGLE_COLAB = True
 
+# Definição do caminho geral que será armazenado os modelos
 CAMINHO_GERAL = r'modelos_treinados'
+# Definição do caminho atual como o caminho que está atualmente executando os códigos
 OS_ATUAL = platform.system()
 
+# Dicionário que armazena as informações referentes aos nossos modelos treinados
+# Quantidade de intervalos = quantidade de séries temporais nos modelos daquele corpus
+# O código ao lado do "Modelo X" é o id encontrado no link de compartilhamento de arquivos no Google Drive.
+# Exemplo: 
+# Link de compartilhamento: https://drive.google.com/file/d/1-p6Fik36eDbx1ezQs3dkrQop1_Hj-4qP/view?usp=drive_link
+# Busca-se o código entre o "/d/" e o "/view?", no meio do URL, ou seja, "1-p6Fik36eDbx1ezQs3dkrQop1_Hj-4qP".
 DIC_INFO = {'Com séries temporais':{'UFSC 2003-2006':{'Quantidade de intervalos':10,
                                                                 'Incremental':{'Modelo 1':'1-p6Fik36eDbx1ezQs3dkrQop1_Hj-4qP',
                                                                                'Modelo 2':'1wWkdQunoiOKl86UzIpdhpoFF4J9gbsxd',
@@ -49,7 +59,7 @@ DIC_INFO = {'Com séries temporais':{'UFSC 2003-2006':{'Quantidade de intervalos
                                                                      'Modelo 2':'1ZjolluRy-nw33sYqzrPQrK2ZRCWE-op0',
                                                                      'Modelo 3':'1GTXirosiGq7A0cYMXAZtU6u7pZD-JsAj'}}}}
 
-
+# Lista contendo todas as ações para gerar visualizações que temos atualmente
 lista_de_acoes_com_series_temporais = ['Gráfico das similaridades ao decorrer do tempo',
                                        'Vizinhos mais próximos ao decorrer do tempo (.png e .txt)',
                                        'Rede dinâmica dos campos semânticos ao decorrer do tempo',
@@ -61,21 +71,46 @@ lista_de_acoes_com_series_temporais = ['Gráfico das similaridades ao decorrer d
                                        'Frequência de Palavras ao decorrer do tempo',
                                        'Mudança de Palavras ao decorrer do tempo']
 
-
+# Dicionário que armazena as informações referentes ao arquivo de frequências contabilizadas diretamente pelo corpus
 DIC_INFO_CORPUS = {'frequencias':'1ledVOj02RB9KsV7hDQmkpmkheC3m7dt9'}
 
 def limparConsole():
-    if GOOGLE_COLAB:
+    """
+    Função responsável por limpar a tela de output/console.
+    """
+    if GOOGLE_COLAB: # Se estivermos executando no Colab, melhor utilizar a função própria para limpar o output neste ambiente
         output.clear()        
-    elif OS_ATUAL.lower() == 'windows':
+    elif OS_ATUAL.lower() == 'windows': # Se for Windows
         os.system('cls')
-    else:
+    else:   # Se for MAC/Linux
         os.system('clear')
 
 def formatarEntrada(entrada : str) -> str:
+  """
+  Função responsável por formatar a entrada digitada pelo usuário,
+  removendo espaços em branco nos extremos e deixando tudo em minúscula.
+
+  ### Parâmetros:
+  - entrada: String contendo o conteúdo capturado pela função "input()",
+  que coleta uma entrada digitada pelo usuário.
+  
+  ### Retornos:
+  - String digitada pelo usuário formatada.
+  """
   return entrada.strip().lower()
 
 def descompactarPasta(caminho_pasta : str, excluir_zip : bool = True):
+    """
+    Função responsável por executar a descompactação de uma pasta "zipada" (.zip).
+
+    ### Parâmetros:
+    - caminho_pasta: String contendo o caminho até a pasta que será descompactada.
+    - excluir_zip: Bool que escolherá se a pasta zipada deve ser excluída (True) ou 
+    não (False) após o processo de descompactação.
+
+    ### Retornos:
+    - None: Esta função não tem retornos.
+    """
     lista_arquivos_zipados = [os.path.join(caminho_pasta,arq) for arq in os.listdir(caminho_pasta) if arq.endswith('.zip')]
     qtd_zips = len(lista_arquivos_zipados)
     if qtd_zips > 0:
@@ -91,6 +126,20 @@ def descompactarPasta(caminho_pasta : str, excluir_zip : bool = True):
 def obterResposta(resposta : str,
                   qtd_respostas : int,
                   contagem_normal : bool = False) -> int | list[int]:
+    """
+    Função responsável por obter a resposta esperada pelo usuário com base no cenário
+    que o programa se encontra.
+
+    ### Parâmetros:
+    - resposta: String contendo a resposta digitada pelo usuário numa determinada etapa do programa.
+    - qtd_respostas: Inteiro referente ao valor total de respostas plausíveis (número máximo).
+    - contagem_normal: Bool que escolherá se o retorno dessa função será com as respostas com 
+    seus números reais ou na "contagem da programação" onde a primeira posição, ao invés de ser o 
+    número 1, é o número 0 e assim por diante.
+
+    ### Retornos:
+    - Inteiro ou lista de inteiros referente à resposta digitada pelo usuário.
+    """
     if ',' in resposta:
         respostas = []
         for r in [valor.strip() for valor in resposta.split(',')]:
@@ -127,18 +176,32 @@ def obterResposta(resposta : str,
             resposta += 1
         return resposta
 
-def escolherTipoTreinamento():
+def escolherTipoTreinamento() -> str:
+    """
+    Função responsável por atuar na etapa de escolha do tipo de treinamento.
+    Atualmente tem-se somente o tipo de treinamento "Com séries temporais", mas,
+    futuramente pode-se desenvolver um tipo de treinamento voltado apenas para 
+    modelos "sincrônicos", como por exemplo, UFSC 2003-2024, HST 2003-2024, etc.
+
+    ### Retornos:
+    - String contendo o caminho até a pasta de tipo de treino selecionada ou 
+    contendo o número -1 ou 0 caso o usuário queira voltar ou encerrar o programa.
+    """
+    # Obtenção das pastas de tipos de treinamentos disponíveis
     lista_pastas_tipos_treinamentos = [t for t in os.listdir(CAMINHO_GERAL) if '.' not in t]
     qtd_pastas = len(lista_pastas_tipos_treinamentos)
 
+    # Interação com usuário:
     print('Escolha o tipo de treinamento:\n')
     for i,pasta in enumerate(lista_pastas_tipos_treinamentos):
         print(f'{i+1} - {pasta}')
     print('\n0 - Encerrar programa')
     
-    resposta = input('\nDigite o número correspondente: ').strip()
+    # Formatação básica da resposta
+    resposta = formatarEntrada(input('\nDigite o número correspondente: '))
 
     if resposta not in ['-1','0']:
+        # Tratamento da resposta
         resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
         
         pasta_tipo_treinamento_escolhida = lista_pastas_tipos_treinamentos[resposta]
@@ -148,22 +211,36 @@ def escolherTipoTreinamento():
     else:
         return resposta
 
-def escolherTreinamento(pasta_tipo_treinamento : str):
+def escolherTreinamento(pasta_tipo_treinamento : str) -> str:
+    """
+    Função responsável por atuar na etapa de escolha do treinamento que será 
+    utilizado. Esta etapa é voltada para escolher, basicamente, o corpus 
+    de textos utilizado para treinar os modelos. Atualmente, temos CFH, HST, 
+    SAUDE-CORPO, UFSC (todas as coleções).
 
+    ### Parâmetros:
+    - pasta_tipo_treinamento: String contendo o caminho até a pasta do tipo 
+    de treino selecionado.
+
+    ### Retornos:
+    - String contendo o caminho até a pasta de treino selecionada ou contendo 
+    o número -1 ou 0 caso o usuário queira voltar ou encerrar o programa.
+    """
+    # Obtenção das pastas de (corpus) treinamentos disponíveis
     lista_pastas_treinamentos = [p for p in os.listdir(pasta_tipo_treinamento) if '.' not in p]
     qtd_pastas = len(lista_pastas_treinamentos)
 
+    # Interação com usuário:
     print('Escolha a pasta de treinamento:\n')
     for i,pasta in enumerate(lista_pastas_treinamentos):
         print(f'{i+1} - {pasta}')
     print('\n-1 - Voltar')
-
+    
+    # Formatação básica da resposta
     resposta = formatarEntrada(input('\nDigite o número correspondente: '))
 
     while not resposta.isdigit():
         resposta = formatarEntrada(input('\nPor favor, digite o NÚMERO correspondente: '))
-    # while resposta not in [str(n) for n in range(1,qtd_pastas+1)]:
-    #    resposta = input('\nDigite o número correspondente (entre as opções a cima): ')
     if resposta not in ['-1']:
         resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
 
@@ -174,7 +251,19 @@ def escolherTreinamento(pasta_tipo_treinamento : str):
     else:
         return resposta
 
-def escolherModoTreinado(caminho_pasta_treino : str):
+def escolherModoTreinado(caminho_pasta_treino : str) -> str:
+    """
+    Função responsável por atuar na etapa de escolha do modo de treinamento 
+    utilizado para geração das séries temporais (Incremental ou Temporal).
+
+    ### Parâmetros
+    - caminho_pasta_treino: String contendo o caminho até a pasta de treino selecionada.
+
+    ### Retornos:
+    - String contendo o caminho até a pasta do modo de construção das séries
+    temporais para o treino selecionado ou contendo o número -1 caso o usuário queira
+    voltar uma etapa.
+    """
     lista_pastas_modos_treinados = [t for t in os.listdir(caminho_pasta_treino) if '.' not in t]
     qtd_pastas = len(lista_pastas_modos_treinados)
 
@@ -199,20 +288,57 @@ def baixarModelos(tipo_treino : str,
                   escopo_treino : str,
                   modo_treinado : str,
                   nome_modelo: str,
-                  pasta_destino : str):
+                  pasta_destino : str) -> None:
+    """
+    Função responsável por baixar os modelos das séries temporais para o corpus 
+    escolhido. Essa função usará o dicionário DIC_INFO para buscar o id do 
+    arquivo zip que contém os modelos zipados no Google Drive e realizar o donwload
+    deste arquivo para este ambiente de execução.
 
+    ### Parâmetros:
+    - tipo_treino: String contendo o tipo de treinamento escolhido.
+    - escopo_treino: String contendo o corpus que foi selecionado.
+    - modo_treinado: String contendo o modo escolhido para construção das séries
+    temporais do treinamento selecionado.
+    - nome_modelo: String contendo o nome central dos modelos da série temporal 
+    (relacionado ao corpus utilizado).
+    - pasta_destino: String contendo o caminho até a pasta que os modelos serão 
+    "depositados".
+
+    ### Retornos:
+    - None: Esta função não possui retornos.    
+    """
     try:
+        # Extração do ID do arquivo no Drive
         file_id = DIC_INFO[tipo_treino][escopo_treino][modo_treinado][nome_modelo]
     except Exception:
         return False
     else:
+        # Criação da pasta de destino, caso esta não exista ainda
         if not os.path.exists(pasta_destino):
             os.makedirs(pasta_destino)
+        
+        # URL no formato que o gdown utiliza para baixar arquivos do Google Drive por meio do ID
         url = f'https://drive.google.com/uc?export=download&id={file_id}'
+        # Caminho onde deverá ser baixado o arquivo neste ambiente de execução
         output = os.path.join(pasta_destino, f'{nome_modelo}.zip')
+        # Execução do processo de baixar o arquivo do Drive e trazê-lo para este ambiente de execução
         gdown.download(url, output, quiet=False)
 
-def escolherModelos(caminho_pasta_modo_treino : str):
+def escolherModelos(caminho_pasta_modo_treino : str) -> str:
+    """
+    Função responsável por escolher qual dos modelos que melhor performaram nas analogias (por meio do modelo 
+    base) relacionados ao corpus e modo selecionados. Geralmente foi escolhido os TOP3 ou TOP4 modelos que 
+    tiveram pontuações mais altas nas analogias gerais.
+
+    ### Parâmetros:
+    - caminho_pasta_modo_treino: String contendo o caminho até os modelos que se saíram melhor para o corpus
+    selecionado.
+
+    ### Retorno:
+    - String contendo o caminho até o modelo selecionado, com base no corpus e modos selecionados anteriormente 
+    ou o número -1 caso o usuário queira voltar uma etapa.
+    """
     lista_pastas_modelos = sorted([m for m in os.listdir(caminho_pasta_modo_treino) if '.' not in m])
     qtd_pastas = len(lista_pastas_modelos)
 
@@ -225,8 +351,6 @@ def escolherModelos(caminho_pasta_modo_treino : str):
 
     if resposta not in ['-1']:
         resposta = obterResposta(resposta=resposta,qtd_respostas=qtd_pastas)
-        # while resposta not in [str(n) for n in range(1,qtd_pastas+1)]:
-        #    resposta = input('\nDigite o número correspondente (entre as opções a cima): ')
 
         pasta_modelo_escolhido = lista_pastas_modelos[resposta]
 
@@ -234,19 +358,22 @@ def escolherModelos(caminho_pasta_modo_treino : str):
 
         limparConsole()
 
+        # Extração das informações do tipo de treino, escopo, modo e nome por meio do caminho completo selecionado
         tipo_treino = os.path.basename(os.path.dirname(os.path.dirname(caminho_pasta_modo_treino)))
         escopo_treino = os.path.basename(os.path.dirname(caminho_pasta_modo_treino))
         modo_treinado = os.path.basename(caminho_pasta_modo_treino)
         nome_modelo = os.path.basename(caminho_pasta_modelo_escolhido)
         
+        # Se os arquivos dos modelos das séries temporais do modelo/treino escolhido não estiverem todas na pasta requerida
         if len([modelo for modelo in os.listdir(caminho_pasta_modelo_escolhido) if modelo.endswith('.wordvectors')]) != DIC_INFO[tipo_treino][escopo_treino]['Quantidade de intervalos']:
             print('Parece que a pasta do modelo escolhido está vazia ou incompleta, vamos fazer o download adequadamente de todos os nossos arquivos para este modelo!')
 
+            # Limpamos a pasta (caso tenha algum outro arquivo)
             for arquivo in [os.path.join(caminho_pasta_modelo_escolhido,arq) for arq in os.listdir(caminho_pasta_modelo_escolhido)]:
                 os.remove(arquivo)
 
             print('\n\n\t Estamos baixando os arquivos referentes ao modelo escolhido!\n\n\t--> Por favor, aguarde...\n\n')
-
+            # Baixamos todos os arquivos das séries temporais referentes ao modelo escolhido
             baixarModelos(tipo_treino=tipo_treino,
                           escopo_treino=escopo_treino,
                           modo_treinado=modo_treinado,
@@ -257,13 +384,25 @@ def escolherModelos(caminho_pasta_modo_treino : str):
     else:
         return resposta
 
-def escolherModelosTemporais(caminho_pasta_modelo : str):
+def escolherModelosTemporais(caminho_pasta_modelo : str) -> list[str] | str:
+    """
+    Função responsável por escolher quais modelos das séries temporais baixadas serão, de fato, utilizados
+    na geração das visualizações.
+
+    ### Parâmetros:
+    - caminho_pasta_modelo: String contendo o caminho até a pasta que armazena os modelos referentes às
+    séries temporais da seleção feita pelo usuário.
+
+    ### Retornos:
+    - Lista de strings dos caminhos até as séries temporais escolhidas ou uma string contendo o número -1,
+    caso o usuário queira voltar uma etapa.
+    """
     lista_modelos_temporais = sorted([m for m in os.listdir(caminho_pasta_modelo) if m.endswith('.wordvectors')])
     qtd_modelos = len(lista_modelos_temporais)
 
     print('Escolha os modelos temporais que serão utilizados:\n')
     for i,pasta in enumerate(lista_modelos_temporais):
-        print(f'{i+1} - {pasta.replace('.wordvectors','')}')
+        print(f'{i+1} - {pasta.replace(".wordvectors","")}')
     print(f'{qtd_modelos+1} - Todos')
     print('\n-1 - Voltar')    
 
@@ -280,11 +419,7 @@ def escolherModelosTemporais(caminho_pasta_modelo : str):
                 resposta = input(f'Por favor, digite uma resposta válida (os números devem estar entre 1 e {qtd_modelos}): ')
             
             respostas = [int(r)-1 for r in resposta.split(',')]
-        
 
-        # while resposta not in [str(n) for n in range(1,qtd_pastas+1)]:
-        #    resposta = input('\nDigite o número correspondente (entre as opções a cima): ')
-        
         caminho_modelos_escolhidos = []
         if isinstance(respostas,int):
             respostas = [respostas]
@@ -296,13 +431,35 @@ def escolherModelosTemporais(caminho_pasta_modelo : str):
     else:
         return resposta
 
-def carregarModelos(lista_caminhos_modelos_temporais : list[str]):
+def carregarModelos(lista_caminhos_modelos_temporais : list[tuple[str,KeyedVectors]]):
+    """
+    Função responsável por carregar e armazenar os modelos das séries temporais.
+
+    ### Parâmetros:
+    - lista_caminhos_modelos_temporais: Lista de strings contendo os caminhos dos modelos das séries temporais.
+    
+    ### Retornos:
+    - Lista de tuplas onde cada tupla tem dois elementos sendo o primeiro o nome do arquivo do modelo e o segundo
+    sendo o objeto KeyedVectors do modelo propriamente dito.
+    """
     modelos_carregados = []
     for caminho_modelo in lista_caminhos_modelos_temporais:
+        # Adicionamos uma tupla na lista com o nome do modelo (removendo a extensão ".wordvectors") e o seu objeto que carrega, de fato, o modelo (no seu formato KeyedVectors/WorVectors)
         modelos_carregados.append((os.path.basename(caminho_modelo).replace('.wordvectors',''),KeyedVectors.load(caminho_modelo,mmap='r')))
     return modelos_carregados
 
-def escolherAcao(tipo_treinamento):
+def escolherAcao(tipo_treinamento : str):
+    """
+    Função responsável por escolher qual visualização será gerada.
+
+    ### Parâmetros:
+    - tipo_treinamento: String contendo o tipo de treino selecionado no início do programa, o qual vai dizer
+    quais visualizações estão disponíveis.
+
+    ### Retornos:
+    - String contendo a ação selecionada ou número -1 ou 0 caso o usuário queira volta ou encerrar o programa,
+    respectivamente.
+    """
     print('Escolha uma das visualizações abaixo:\n\n')
     if tipo_treinamento == 'Com séries temporais':
         for i,acao in enumerate(lista_de_acoes_com_series_temporais):
@@ -318,20 +475,50 @@ def escolherAcao(tipo_treinamento):
         return resposta
 
 def baixarInfoCorpus(caminho : str = r'info_corpus'):
+    """
+    Função responsável por realização o download dos arquivos referentes à contabilização de frequências 
+    feita diretamente no corpus de textos pré-processados usado para alimentar os treinamentos. Esses arquivos
+    estão estruturados da forma que melhor se pensou para realização de armazenamento e busca eficaz das informações
+    importantes para este processo de frequências de tokens no corpus.
+
+    ### Parâmetros:
+    - caminho: String contendo o caminho da pasta que armazenará os arquivos referentes às informações de
+    frequências de tokens no corpus (que estarão separados por pastas de coleções).
+
+    ### Retornos:
+    - None: Esta função não tem retornos.
+    """
     global DIC_INFO_CORPUS
     try:
+        # Extração do ID do arquivo no Drive
         file_id = DIC_INFO_CORPUS['frequencias']
     except Exception:
         return False
     else:
+        # Criação da pasta de destino, caso esta não exista ainda
         if not os.path.exists(caminho):
             os.makedirs(caminho)
+
+        # URL no formato que o gdown utiliza para baixar arquivos do Google Drive por meio do ID
         url = f'https://drive.google.com/uc?export=download&id={file_id}'
+        # Caminho onde deverá ser baixado o arquivo neste ambiente de execução
         output = os.path.join(caminho, f'info_freq_corpus_woke.zip')
+        # Execução do processo de baixar o arquivo do Drive e trazê-lo para este ambiente de execução
         gdown.download(url, output, quiet=False)
 
 def abrirArquivoMsgPack(full_filepath : str,
                         encoding_type : str = None):
+    """
+    Função responsável por abrir os arquivos no formato msgpack.
+
+    ### Parâmetros:
+    - full_filepath: String contendo o caminho completo até o arquivo que deseja-se
+    abrir e extrair o conteúdo (variável salva).
+    - encoding_type: String contendo o tipo de encoding, caso desejar.
+
+    ### Retornos:
+    - Variável salva (e agora aberta e lida) no arquivo msgpack.
+    """
     if not full_filepath.endswith('.msgpack'):
         full_filepath += '.msgpack'
     if encoding_type:
@@ -348,30 +535,55 @@ def abrirArquivoMsgPack(full_filepath : str,
             return variable_loaded
 
 def organizaInfoCorpus(caminho : str = r'info_corpus'):
-    pastas = [p for p in os.listdir(caminho) if '.' not in p]    
+    """
+    Função responsável por organizar o ambiente de pastas/arquivos referentes às informações de frequências
+    de tokens realizada diretamente no corpus de textos pré-processados utilizado nos treinamentos.
+
+    ### Parâmetros:
+    - caminho: String contendo o caminho da pasta que armazenará os arquivos referentes às informações de
+    frequências de tokens no corpus (que estarão separados por pastas de coleções).
+    
+    ### Retornos:
+    - None: Esta função não tem retornos.
+    """
+    # Obtenção da lista de pastas que estão dentro do diretório fornecido
+    pastas = [p for p in os.listdir(caminho) if '.' not in p]
+    # Variável que vai armazenar a informação se a configuração das pastas foi feita adequadamente ou não
     config_feita = True
-    for colecao in DIC_COLECOES_CORPUS.keys():
+    for colecao in DIC_COLECOES_CORPUS.keys(): # Obtendo os nomes das coleções que estão presentes no diretório e vendo se estão nas chaves do dicionário que armazena as informações sobre o corpus
         if colecao not in pastas:
-            config_feita = False
+            config_feita = False    # Caso alguma pasta não seja de uma coleção que temos pré-setada no dicionário
             break
-    if config_feita:        
+    if config_feita: # Se a configuração das pastas das coleções está correta, agora verifica-se se os arquivos dentro de cada coleção também estão corretos, comparando de acordo com as info presentes dentro do dicionário do corpus
         for colecao in DIC_COLECOES_CORPUS.keys():
+            # Obtendo lista de arquivos dentro da coleção via dicionário
             lista_arquivos_dic = DIC_COLECOES_CORPUS[colecao]
+            # Obtendo lista de arquivos dentro da coleção via diretório analisado
             lista_arquivos_caminho = [arq for arq in os.listdir(os.path.join(caminho,colecao)) if arq.startswith('dic_frequencias')]
             for arquivo in lista_arquivos_dic:
                 if arquivo not in lista_arquivos_caminho:
-                    config_feita = False
+                    config_feita = False        # Caso algum arquivo no diretório não esteja no dicionário
                     break
             if not config_feita:
                 break
+    
+    # Se a configuração não tiver sido feita adequadamente, vamos limpar a pasta e baixar todos os arquivos/pastas novamente da forma correta.
     if not config_feita:
         print('\n\n\t\tBaixando arquivos para contabilização de frequências diretamente no corpus...\n\n')
+        for arquivo in [os.path.join(caminho,arq) for arq in os.listdir(caminho) if os.path.isfile(os.path.join(caminho,arq))]:
+            os.remove(arquivo)
+        for pasta in [os.path.join(caminho,p) for p in os.listdir(caminho) if os.path.isdir(os.path.join(caminho,p))]:
+            shutil.rmtree(pasta)
         baixarInfoCorpus(caminho)
         print('\n\n')
         descompactarPasta(caminho)
 
 
 def organizarAmbiente():
+    """
+    Função responsável por organizar o ambiente de execução para comportar as pastas e arquivos esperados 
+    para uma execução adequada.
+    """
     global DIC_INFO
 
     if not os.path.exists(r'resultados_gerados'):
@@ -402,6 +614,8 @@ def organizarAmbiente():
     
     organizaInfoCorpus()
 
+# Dicionário que armazena as informações a respeito da estrutura esperada nos arquivos relativos à contagem de tokens diretamente no corpus
+# É utilizado para fazer a verificação se todos os arquivos estão presentes na pasta requerida
 DIC_COLECOES_CORPUS = {'Administracao': ['dic_frequencias_Administracao_2003.msgpack',
   'dic_frequencias_Administracao_2004.msgpack',
   'dic_frequencias_Administracao_2005.msgpack',
