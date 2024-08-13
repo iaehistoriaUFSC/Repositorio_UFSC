@@ -149,7 +149,9 @@ def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple],pasta_para_sa
   ano_inicial = re.search(r'(\d{4})\_\d{4}',modelos_treinados[0][0]).group(1)
   ano_final = re.search(r'\d{4}\_(\d{4})',modelos_treinados[-1][0]).group(1)
 
-  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Sim_{ano_inicial}_{ano_final}.png')
+  nome_modelo_atual = re.sub(r'\_\d{4}\_\d{4}','',modelos_treinados[0][0])
+
+  caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Sim_{nome_modelo_atual}_{ano_inicial}_{ano_final}.png')
 
   while os.path.exists(caminho_save_fig):  
     caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
