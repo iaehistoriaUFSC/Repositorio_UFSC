@@ -263,19 +263,23 @@ def escolherModelosTemporais(caminho_pasta_modelo : str):
 
     print('Escolha os modelos temporais que serão utilizados:\n')
     for i,pasta in enumerate(lista_modelos_temporais):
-        print(f'{i+1} - {pasta}')
+        print(f'{i+1} - {pasta.replace('.wordvectors','')}')
     print(f'{qtd_modelos+1} - Todos')
     print('\n-1 - Voltar')    
 
     resposta = input('\nDigite os números correspondentes separados por "," (vírgula)\nou o número correspondente a todos:\n').strip()
     if resposta not in ['-1']:
-        if ',' in resposta:
-            while len([r for r in resposta.split(',') if not r.isdigit()])>0:
-                resposta = input('Por favor, digite uma resposta válida: ')
         if resposta == str(qtd_modelos+1):
             respostas = [i for i in range(qtd_modelos)]
         else:
-            respostas = obterResposta(resposta=resposta,qtd_respostas=qtd_modelos)
+            while ',' not in resposta:
+                resposta = input('Por favor, digite uma resposta com mais de uma série temporal: ')
+            while len([r for r in resposta.split(',') if not r.isdigit()])>0:
+                resposta = input('Por favor, digite uma resposta válida (só números): ')
+            while len([r for r in resposta.split(',') if int(r) not in range(1,qtd_modelos+1)])>0 or (len(resposta) == 1 and resposta != str(qtd_modelos+1)):
+                resposta = input(f'Por favor, digite uma resposta válida (os números devem estar entre 1 e {qtd_modelos}): ')
+            
+            respostas = [int(r)-1 for r in resposta.split(',')]
         
 
         # while resposta not in [str(n) for n in range(1,qtd_pastas+1)]:
