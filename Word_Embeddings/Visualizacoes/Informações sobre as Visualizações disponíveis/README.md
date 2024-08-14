@@ -70,7 +70,7 @@
   20. trentinos: 0.5601247549057007
 
 
-  <h6>VP_WOKE_1_CFH_2003_2010_w2v_inc.txt</h6>
+  <h6>VP_WOKE_1_CFH_2014_2016_w2v_inc.txt</h6>
   Lista dos TOP 20 vizinhos mais próximos de etnia, etnias:
 
   1. étnicas: 0.6517886519432068
@@ -95,7 +95,7 @@
   20. indígenas: 0.4935998022556305
 
  
- <h6>VP_WOKE_1_CFH_2003_2010_w2v_inc.txt</h6>
+ <h6>VP_WOKE_1_CFH_2020_2024_w2v_inc.txt</h6>
   Lista dos TOP 20 vizinhos mais próximos de etnia, etnias:
 
   1. raça: 0.7234798073768616
