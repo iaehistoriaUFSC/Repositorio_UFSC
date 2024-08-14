@@ -161,7 +161,7 @@
 
   <p>Nesta visualização podemos também ter uma boa visão sobre a mudança dos campos semânticos de um ou mais tokens ao decorrer do tempo, tendo também a informação dos tokens que mais tiveram sua similaridade com o token central seguidos dos outros tokens que também tiveram alta similaridade. Vamos supor que queremos analisar o campo semântico e o seu top 1 vizinhos mais próximo ao longo da série temporal dos tokens "racismo" e "racista" (poderíamos optar também por buscar por apenas um token central, mas nesse caso vamos usar dois).</p>
 
-  <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Estratos_do_Tempo_para_racismo.png?raw=true" alt="imgestratostempo" />
+  <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Estratos_do_Tempo_para_racismo_racista.png?raw=true" alt="imgestratostempo" />
 
   <p>Aqui vemos que é uma espécie de mapa de calor, mas vertical, ou seja, as cores mais frias representam uma menor similaridade e as cores mais quentes uma maior similaridade. Podemos buscar onde se encontram tais padrões de cores de forma mais intensa e realizar estudos de casos a respeito dos tokens e de seus períodos no mapa de calor, além de visualizar com clareza os top 10 vizinhos que compõe o campo semântico do(s) token(s) pesquisado(s).</p>
 
