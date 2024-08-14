@@ -33,13 +33,13 @@ O repositório possue duas pastas centrais: uma voltada para os códigos utiliza
 ## Desenvolvedores:
 
 ### [Igor Caetano de Souza](https://github.com/IgorCaetano)
-Programador que deu início aos códigos e permanece construindo e realizando a manutenção em todos os códigos de todas as etapas. Atualmente (2023-2024) atua como bolsista de iniciação científica do projeto voltado para a área da programação.
+Estudante de graduação em Engenharia de Controle e Automação e programador que deu início à parte técnica e permanece construindo e realizando a manutenção em todos os códigos de todas as etapas. Atualmente (2023-2024) atua como bolsista de iniciação científica do projeto voltado para a área da programação.
 
 ### [Davi Alves de Azevedo](https://github.com/daviaaze)
-Programador que contribuiu na parte de extração de textos dos PDFs melhorando e otimizando os códigos já existentes.
+Estudante de graduação em História e programador que contribuiu na parte de extração de textos dos PDFs melhorando e otimizando os códigos existentes.
 
 ### [Vinicius X. Tobias](https://github.com/vinixavi95)
-Programador que contribuiu na abertura deste GitHub.
+Estudante de graduação em Ciência da Computação e programador que contribuiu na abertura deste GitHub.
 
 ## Integrantes ativos
 
@@ -47,10 +47,10 @@ Programador que contribuiu na abertura deste GitHub.
 Coordenador e fundador do Grupo de Estudos e Pesquisa em IA e História da UFSC.
 
 ### [Franciele Dias da Silva](http://lattes.cnpq.br/8272002719032465)
-Bolsista de iniciação científica do projeto voltada para o processamento de linguagem natural aplicado à história. Contribuiu nas discussões e nas validações referentes ao desenvolvimento de todas as etapas dos programas do WOKE.
+Estudante de graduação em História e bolsista de iniciação científica do projeto voltada para o processamento de linguagem natural aplicado à história. Desde o início, participou ativamente em discussões literárias sobre Processamento de Linguagem Natural (PLN), História e Inteligência Artificial, além de ter contribuído nas discussões e validações de todas as etapas do desenvolvimento dos modelos WOKE.
 
 ### [Mateus Freitas Borsatti](https://lattes.cnpq.br/1731957464761445)
-Um dos membros mais ativos desde a criação do grupo, contribuiu na idealização do projeto WOKE, assim como nas discussões e nas validações referentes ao desenvolvimento de todas as etapas. Além disso será o autor do primeiro estudo utilizando o WOKE como ferramenta historiográfica.
+Estudante de graduação em História e um dos membros mais ativos desde a criação do grupo, contribuiu na idealização do projeto WOKE, assim como nas discussões e nas validações referentes ao desenvolvimento de todas as etapas. Além disso será o autor do primeiro estudo utilizando o WOKE como ferramenta historiográfica.
 
 ### [Éric Gabriel Kundlatsch](http://lattes.cnpq.br/3926071140042328)
 
