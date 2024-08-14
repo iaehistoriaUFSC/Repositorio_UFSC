@@ -1,5 +1,9 @@
 # Infomação sobre as Visualizações disponíveis para o WOKE
 
+Importante abordar que:
+- A similaridade entre vetores varia de -1 (menos similar) até 1 (mais similar).
+- No resultado das analogias, quanto maior o valor ao lado das palavras encontradas, mais próxima ela estará do resultado esperado pela operação vetorial.
+
 ## 1 - Gráfico das similaridades ao decorrer do tempo
 
 <details>
