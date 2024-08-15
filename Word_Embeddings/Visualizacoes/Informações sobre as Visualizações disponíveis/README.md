@@ -209,3 +209,26 @@ Importante abordar que:
 
 </details>
 
+## 8 - Elemento que não combina dentre os demais
+
+<details>
+  <summary><b>Informações <i>(clique para expandir)</i></b></summary>
+  <h4>Exemplo de uso</h4>
+
+  <p>Esta é uma das visualizações que explora outra funcionalidade muito interessante de modelos Word2Vec: análise de semântica central de um conjunto de tokens e indicando o que menos combina com os demais. Para ficar mais claro vamos analisar um exemplo mais simples e, posteriormente, um exemplo mais voltado para temáticas mais complexas.</p>
+
+  <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/EQMC_WOKE_1_CFH_w2v_tmp_morango.png?raw=true" alt="imgelncomb1" />
+
+  <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/EQMC_WOKE_1_CFH_w2v_tmp_aborto.png?raw=true" alt="imgelncomb2" />
+
+  <p>Dessa forma podemos capturar algumas mudanças de similaridade entre um tema central com relação à um conjunto de tokens, analisando se houve mudança do elemento que menos combina com os demais ou não, além da indicação propriamente dita do token que menos combina.</p>
+
+</details>
+
+## 9 - Frequência de Palavras ao decorrer do tempo
+
+
+
+
+## 10 - Mudança de Palavras ao decorrer do tempo
+
