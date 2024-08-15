@@ -1,6 +1,10 @@
 from visualizacoes_woke import *
 
-def main():    
+def main():
+    """
+    Função principal na execução do programa. Responsável por chamar as outras funções que executam todos os processos da escolha dos modelos até a visualização propriamente dita.
+    Esta função ficará sendo executada ao decorrer da execução de todo o programa, até o usuário decidir finalizá-lo.
+    """
     organizarAmbiente()
     parar_programa = False
 

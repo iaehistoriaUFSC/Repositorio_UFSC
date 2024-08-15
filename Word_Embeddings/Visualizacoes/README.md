@@ -2,6 +2,11 @@
 
 Acessando este diretório você conseguirá rodar programas destinados a exibição dos resultados de múltiplas formas dos nossos modelos treinados.
 
+Agora, vamos para um passo a passo de cada etapa desde o início da execução do programa até a geração de imagens!
+
+## Passo 0 - Aguardar a realização das configurações
+Ao começar a execução será configurado o ambiente do Google Colab não somente para execução dos nossos códigos, mas também para gerar as visualizações adequadamente. Isso tudo pode levar alguns minutos.
+
 ## Passo 1 - Escolher o tipo de treinamento
 
 Ao configurar o ambiente será pedido para você selecionar o tipo de treinamento:
@@ -23,9 +28,9 @@ Se o modo de treino escolhido foi com séries temporais, será solicitado que in
 
 Foram treinados diversos modelos com diferentes parâmetros e selecionou-se os melhores. Nesta etapa será solicitado que escolha um desses modelos que se saíram melhor dentre todos os outros que treinamos.
 
-## Passo 5 - Escolher quais intervalos de anos serão contemplados na visualização
+## Passo 5 - Escolher quais séries temporais serão contempladas na visualização
 
-Agora você já pode escolher se quer visualizar o resultado para todos os modelos disponíveis ou somente para um conjunto específicos de modelos (aconselhamos que você sempre opte por todos, a menos que esteja fazendo uma pesquisa bem específica).
+Agora você já pode escolher se quer visualizar o resultado para todos os modelos das séries temporais disponíveis ou somente para um conjunto específicos de modelos (aconselhamos que você sempre opte por todos, a menos que esteja fazendo uma pesquisa bem específica).
 
 ## Passo 6 - Aguardar os downloads dos arquivos referentes ao modelo escolhido
 
@@ -35,47 +40,6 @@ Nesta etapa você deve ter um pouco de paciência, pois em alguns minutos você 
 
 Agora você finalmente está apto para explorar nosso modelo, escolha qual visualização você gostaria de gerar e divirta-se pesquisando e aprendendo mais sobre PLN na UFSC!
 
-**Importante: As imagens são armazenadas na pasta "*imagens_geradas*" !**
+**Importante: As imagens são armazenadas na pasta "*resultados_gerados*" !**
 
-### Visualizações disponíveis:
-
-- **Gráfico das Similaridades ao decorrer do tempo:**
-
-![imggrafsim](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Similaridades_para_modelos_de_2003_ate_2023.png?raw=true)
-
-- **Vizinhos mais próximos ao decorrer do tempo:**
-
-![imgvizprox](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Vizinhos_mais_proximos_WOKE_1_UFSC_2003_2006_w2v.png?raw=true)
-
-![imgvizprox_](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Vizinhos_mais_proximos_WOKE_1_UFSC_2023_2024_w2v.png?raw=true)
-
-- **Mapa de calor das similaridades ao decorrer do tempo:**
-
-![imgheatmap](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Mapa_de_Calor_para_nazismo.png?raw=true)
-
-- **Estratos do Tempo:**
-
-![imgestrtmp](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Estratos_do_Tempo_para_racismo.png?raw=true)
-
-- **Vetores de Palavras ao decorrer do tempo:**
-
-![imgvetplvs](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Vetores_de_palavras_para_WOKE_4_UFSC_2003_2006_w2v.png?raw=true)
-
-![imgvetplvs_](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Vetores_de_palavras_para_WOKE_4_UFSC_2023_2024_w2v.png?raw=true)
-
-- **Frequência de Palavras ao decorrer do tempo:**
-
-![imgfreq](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Frequencia_de_palavras_para_WOKE_1_UFSC_2003_2006_w2v.png?raw=true)
-
-![imgfreq_](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Frequencia_de_palavras_para_WOKE_1_UFSC_2013_2014_w2v.png?raw=true)
-
-![imgfreq__](https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Frequencia_de_palavras_para_WOKE_1_UFSC_2023_2024_w2v.png?raw=true)
-
-
-- **Mudança vetorial ao decorrer do tempo:**
-O quão mudado o vetor da palavra "gato" está depois de uma década?
-    - **Similaridade entre um vetor no instante "t" e o mesmo vetor num instante "t" + "delta t":**
-    *Visualização ainda em construção!*
-    - **Mudança nos vizinhos mais próximos**
-    *Visualização ainda em construção!*
-
+### ❗ Para mais informações a respeito das visualizações disponíveis, por favor, entre na pasta "***Informações sobre as Visualizações disponíveis***". 
