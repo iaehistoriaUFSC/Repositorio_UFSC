@@ -20,6 +20,8 @@ Para otimizar o tempo e integrar mais os membros do Grupo de Estudos e Pesquisa 
 - Armazenamento de arquivos pré-processados: [msgpack](https://github.com/msgpack/msgpack-python)
 - Algumas bibliotecas básicas do Python também foram necessárias como: *os*, *string*, *re* e *time*.
 
+A escolha da utilização de tais ferramentas para determinados processos foi feita mediante validações feitas com os membros do Grupo de Estudos e Pesquisa em IA e História a fim de buscar a que melhor se encaixaria para nosso cenário.
+
 ## Desenvolvedor
 
 - [Igor Caetano de Souza](https://github.com/IgorCaetano)
