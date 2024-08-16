@@ -227,8 +227,42 @@ Importante abordar que:
 
 ## 9 - Frequência de Palavras ao decorrer do tempo
 
+<details>
+  <summary><b>Informações <i>(clique para expandir)</i></b></summary>
+  <h4>Exemplo de uso</h4>
 
+  <p>Esta é uma visualização que permite coletar informações relacionadas à frequência dos tokens. Você pode observar frequências de tokens selecionados (que você desejar) ou os Top 20 tokens que tem maior frequência nos treinamentos. Na segunda opção você pode aplicar um filtro para remover stopwords que acabaram passando na etapa de pré-processamento, verbos, etc e será gerado além de uma imagem um arquivo de texto para se obter o valor exato da frequência (que não se limita apenas os top 20, mas os top 300 tokens). 
+  
+  Já na opção de selecionar tokens, há 3 formas de realizar esta coleta de frequência: pelo próprio modelo, obtendo a quantidade referente a quantidade de vezes que aquele token apareceu durante o treinamento do determinado modelo, pela diferença da contagem entre os modelos (para obter a quantidade referente aos intervalos de tempo) e a contagem diretamente pelo corpus utilizado para alimentar os treinamentos (que é a mais realista e indicada, pois não sofre influência do min_count/contagem mínima que um token precisa ter para entrar pros modelos, como nas outras duas formas). Ou seja, optando por contagens feitas diretamente pelos modelos, você acaba limitando o alcance para apenas as palavras que entraram para o treinamento/modelo e caso ela não tiver passado pela contagem mínima, acaba recebendo valor 0 (mesmo sem ter necessariamente, 0 aparições). Já com a contagem feita diretamente no corpus você consegue analisar com mais precisão a informação desejada.
+  
+  Falando especificamente da frequência contabilizada diretamente pelo corpus, ela utiliza arquivos específicos para realização da coleta dessas informações. Nesses arquivos temos a frequência normal (contabilizar as aparições nos textos naquele determinado período de tempo) e a frequência relativa (contabilizar a proporção de aparições pela quantidade de palavras naquele determinado período de tempo e multiplicar o resultado por 10.000 para se obter um número mais "palpável").</p>
+
+  Imagem de Top 20 tokens mais frequentes com filtro removendo stopwords, verbos e palavras com menos de 4 letras:
+  <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Freq_WOKE_1_UFSC_2003_2024_w2v_tmp.png?raw=true" alt="imgfreq1" />
+
+  Imagem de frequência normal de palavras selecionadas:
+  <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/FNC_WOKE_1_UFSC_w2v_tmp_racismo_democracia_nazismo_etc?raw=true" alt="imgfreq2" />
+
+  Imagem de frequência relativa de palavras selecionadas:
+  <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/FRC_WOKE_1_UFSC_w2v_tmp_racismo_democracia_nazismo_etc.png?raw=true" alt="imgfreq3" />
+
+</details>
 
 
 ## 10 - Mudança de Palavras ao decorrer do tempo
 
+<details>
+  <summary><b>Informações <i>(clique para expandir)</i></b></summary>
+  <h4>Exemplo de uso</h4>
+
+  <p>Esta é uma visualização que tenta quantificar em uma taxa a mudança semântica que os tokens tiveram ao decorrer do tempo. Ela pode ser feita de duas maneiras: a primeira é utilizando a similaridade por cosseno <b>(aconselhada apenas para treinamentos realizados de forma incremental)</b> e a segunda é utilizando o <a href="https://pt.wikipedia.org/wiki/%C3%8Dndice_Jaccard">índice de Jaccard</a> onde os dois conjuntos analisados são o campo semântico antes e o campo semântico depois para um determinado token.</p>
+
+  Mudança semântica com base na mudança vetorial usando similaridade de cosseno entre o vetor do token no modelo T1 e no modelo T2, para os tokens: imigração, liberdade, legalização, aborto, eutanásia, política, democracia e ética:
+  <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Mdn_selecionadas_2003_2024.png?raw=true" alt="imgmdn1" />
+
+  Mudança semântica com base na mudança vetorial usando índice de Jaccard entre o campo semântico formado pelo token no modelo T1 e no campo semântico formado pelo mesmo token no modelo T2, para os tokens: etnia, raça, gênero, sexualidade, democracia e aborto:
+  <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/MdcIndJcd.png?raw=true" alt="imgmdn2" />
+
+  <p>Utilizando o índice de Jaccard, na hora da realização da quantificação de mudança, é gerado junto com o arquivo de imagem um arquivo de texto referente aos resultados das operações para encontrar a taxa de mudança pelo índice de Jaccard: os campos semânticos antes e depois com o número de vizinhos mais próximos selecionado e a união e intersecção desses conjuntos de tokens dos vizinhos para cada token analisado.</p>
+
+</details>

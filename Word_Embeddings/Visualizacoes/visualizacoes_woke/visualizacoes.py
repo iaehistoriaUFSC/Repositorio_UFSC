@@ -625,7 +625,7 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
     nomes = [str(ano) for ano in range(2003,2024)]
   
   limparConsole()
-  print('\n\n\tPor favor, aguarde! A visualização está em construção!\n\n')
+  print('\n\n\tPor favor, aguarde! A visualização está em construção! Pode levar alguns minutos...\n\n')
 
   fig, ax = plt.subplots(figsize=(16, 8))
 
@@ -1364,19 +1364,24 @@ def MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados : list[tuple], pasta_pa
                             lista_de_palavras=lista_palavras,
                             condicoes_filtro=condicoes_filtro)
   elif resposta_2 == 2:
-    limparConsole()
-    print('\n\n\tVocê está criando uma visualização de Taxa de Mudança Semântica usando Índice de Jaccard.\n\n')
-    qtd_vizinhos = formatarEntrada(input('\nDigite a quantidade de vizinhos mais próximos a ser considerada: '))
-    while not qtd_vizinhos.isdigit():
-      qtd_vizinhos = formatarEntrada(input('\nPor favor, digite um número para representar a quantidade: '))
+    if resposta_1 == 1:
+      limparConsole()
+      print('\n\n\t\tAinda em construção\n\n')
+      time.sleep(3)
+    else:
+      limparConsole()
+      print('\n\n\tVocê está criando uma visualização de Taxa de Mudança Semântica usando Índice de Jaccard.\n\n')
+      qtd_vizinhos = formatarEntrada(input('\nDigite a quantidade de vizinhos mais próximos a ser considerada: '))
+      while not qtd_vizinhos.isdigit():
+        qtd_vizinhos = formatarEntrada(input('\nPor favor, digite um número para representar a quantidade: '))
 
-    qtd_vizinhos = int(qtd_vizinhos)
+      qtd_vizinhos = int(qtd_vizinhos)
 
-    TaxaIndiceJaccard(modelo_inicial=primeiro_modelo,
-                      modelo_final=ultimo_modelo,
-                      lista_de_palavras=lista_palavras,
-                      quantidade_de_vizinhos_mais_proximos=qtd_vizinhos)
-    
+      TaxaIndiceJaccard(modelo_inicial=primeiro_modelo,
+                        modelo_final=ultimo_modelo,
+                        lista_de_palavras=lista_palavras,
+                        quantidade_de_vizinhos_mais_proximos=qtd_vizinhos)
+      
 
 def CalcularTaxaMudancaPelaSimilaridade(similaridade):
     # if similaridade < -1 or similaridade > 1:
@@ -1433,6 +1438,9 @@ def TaxaSimilaridadeCosseno(modelo_inicial,
   for bar in bars:
       bar.set_edgecolor('black')
       bar.set_linewidth(1)
+      yval = bar.get_height()  # Obtém a altura de cada barra (o valor de y)
+      plt.text(bar.get_x() + bar.get_width()/2, yval, f'{yval:.2f}%', 
+               ha='center', va='bottom', fontsize=10, fontweight='bold')
 
   primeiro_ano_inicial = re.search(r'(\d{4})\_\d{4}',nome_primeiro_modelo).group(1)
   ultimo_ano_final = re.search(r'\d{4}\_(\d{4})',nome_ultimo_modelo).group(1)
@@ -1458,8 +1466,8 @@ def TaxaSimilaridadeCosseno(modelo_inicial,
 
   limparConsole()
   print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Mudança pela Similaridade por Cosseno','\n\n')
-  if str_palavras_removidas != '':
-    print('Os seguintes tokens foram removidos das visualizações:',str_palavras_removidas)
+  # if str_palavras_removidas != '':
+  #   print('Os seguintes tokens foram removidos das visualizações:',str_palavras_removidas)
 
   plt.clf()
 
@@ -1478,8 +1486,9 @@ def TaxaIndiceJaccard(modelo_inicial,modelo_final,lista_de_palavras,quantidade_d
       return {'União':(uniao,set(conjunto_A+conjunto_B)),'Interseção':(interseccao,[elemento for elemento in conjunto_A if elemento in conjunto_B])},interseccao/uniao
 
   def TaxaDeMudancaUsandoIndiceJaccard(token : str, modelo_t1, modelo_t2, qtd_vizinhos : int = 10, detalhes : bool = False):
-    campo_semantico_antes = [resultado[0] for resultado in modelo_t1.most_similar(token,topn=qtd_vizinhos)]
-    campo_semantico_depois = [resultado[0] for resultado in modelo_t2.most_similar(token,topn=qtd_vizinhos)]
+    campo_semantico_antes = [resultado[0] for resultado in modelo_t1.most_similar(token,topn=qtd_vizinhos) if resultado]
+    campo_semantico_depois = [resultado[0] for resultado in modelo_t2.most_similar(token,topn=qtd_vizinhos) if resultado]
+
     if not detalhes:
       taxa_mudanca = 1 - indiceJaccard(conjunto_A=campo_semantico_antes,conjunto_B=campo_semantico_depois,detalhes=detalhes)
       return round(taxa_mudanca*100,2)
