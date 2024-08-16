@@ -8,6 +8,9 @@ Ao longo da extração os arquivos de informações dos metadados e os textos ex
 
 Ao final foi gerado uma [Planilha de Metadados](https://docs.google.com/spreadsheets/d/1YqitjS2qVczIYMwx9JtEsM0No3Cg_46EXObhiOGpiEI/edit?usp=sharing) organizados e um [Relatório em PDF](https://drive.google.com/file/d/132hHPHH3xQ4E_iAHeNkc1a7aNlhWT1JP/view?usp=sharing) com o desempenho da extração.
 
+## Escopo para extração de textos
+Trabalhos escritos entre 2003 e 2024 na língua portuguesa.
+
 ## Desenvolvedores
 
 - [Igor Caetano de Souza](https://github.com/IgorCaetano): Todos os processos
