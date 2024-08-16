@@ -241,7 +241,7 @@ Importante abordar que:
   <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/Freq_WOKE_1_UFSC_2003_2024_w2v_tmp.png?raw=true" alt="imgfreq1" />
 
   Imagem de frequência normal de palavras selecionadas:
-  <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/FNC_WOKE_1_UFSC_w2v_tmp_racismo_democracia_nazismo_etc?raw=true" alt="imgfreq2" />
+  <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/FNC_WOKE_1_UFSC_w2v_tmp_racismo_democracia_nazismo_etc.png?raw=true" alt="imgfreq2" />
 
   Imagem de frequência relativa de palavras selecionadas:
   <img src="https://github.com/iaehistoriaUFSC/Repositorio_UFSC/blob/main/Word_Embeddings/Visualizacoes/img_src/FRC_WOKE_1_UFSC_w2v_tmp_racismo_democracia_nazismo_etc.png?raw=true" alt="imgfreq3" />
