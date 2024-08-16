@@ -19,3 +19,7 @@ Dessa forma podemos analisar as palavras (vetores) e verificar quem são seus "v
 Essa possibilidade de analisar campos semânticos construídos no espaço vetorial consegue ir além de simples relações sintáticas ou contextuais e demonstram a grande potencialidade de modelos Word2Vec.
 
 Além disso, podemos também realizar "operações semânticas" como as promissoras **analogias**, as quais estão mais detalhadas na etapa de *Treinamento*.
+
+## Desenvolvedor
+
+- [Igor Caetano de Souza](https://github.com/IgorCaetano)

@@ -11,8 +11,14 @@ Além disso, nesta área do GitHub, também está disponibilizado o notebook que
   <summary><b>Mais informações <i>(clique para expandir)</i></b></summary>
   
   <br>
-  <ul><li><b>Quantidade de coleções contempladas: 106<br>Sendo elas: </li>
-  <li><b>Quantidade de trabalhos contemplados no total: 30.664</b></ul>
+  <ul><li><b>Quantidade de trabalhos contemplados no total: 30.664</b></li>
+  <li><b>Quantidade de coleções contempladas: 106</b>
+  <br>
+    <details>
+      <summary>Visualizar coleções utilizadas <i>(clique para expandir)</i></summary>
+        <ul><li>Administracao</li> <li>Administracao_Universitaria_Mestrado_Profissional</li> <li>Agroecossistemas</li> <li>Agroecossistemas_Mestrado_Profissional</li> <li>Antropologia_Social</li> <li>Aquicultura</li> <li>Arquitetura_e_Urbanismo</li> <li>Assistencia_Farmaceutica</li> <li>Biologia_Celular_e_do_Desenvolvimento</li> <li>Biologia_Vegetal</li> <li>Biologia_de_Fungos_Algas_e_Plantas</li> <li>Bioquimica</li> <li>Biotecnologia</li> <li>Biotecnologia_e_Biociencias</li> <li>Ciencia_da_Computacao</li> <li>Ciencia_da_Informacao</li> <li>Ciencia_dos_Alimentos</li> <li>Ciencia_e_Engenharia_de_Materiais</li> <li>Ciencias_Medicas</li> <li>Ciencias_da_Reabilitacao</li> <li>Contabilidade</li> <li>Controle_de_Gestao_Mestrado_Profissional</li> <li>Cuidados_Intensivos_e_Paliativos_Mestrado_Profissional</li> <li>Desastres_Naturais_Mestrado_Profissional</li> <li>Design</li> <li>Design_e_Expressao_Grafica</li> <li>Direito</li> <li>Direito_Mestrado_Profissional</li> <li>Ecologia</li> <li>Economia</li> <li>Ecossistemas_Agricolas_e_Naturais</li> <li>Educacao</li> <li>Educacao_Cientifica_e_Tecnologica</li> <li>Educacao_Fisica</li> <li>Energia_e_Sustentabilidade</li> <li>Enfermagem</li> <li>Engenharia_Ambiental</li> <li>Engenharia_Ambiental_Mestrado_Profissional</li> <li>Engenharia_Civil</li> <li>Engenharia_Eletrica</li> <li>Engenharia_Mecanica</li> <li>Engenharia_Quimica</li> <li>Engenharia_Textil</li> <li>Engenharia_de_Alimentos</li> <li>Engenharia_de_Automacao_e_Sistemas</li> <li>Engenharia_de_Producao</li> <li>Engenharia_de_Sistemas_Eletronicos</li> <li>Engenharia_de_Transportes_e_Gestao_Territorial</li> <li>Engenharia_e_Ciencias_Mecanicas</li> <li>Engenharia_e_Gestao_do_Conhecimento</li> <li>Ensino_de_Biologia</li> <li>Ensino_de_Biologia_Mestrado_Profissional</li> <li>Ensino_de_Fisica_Mestrado_Profissional</li> <li>Ensino_de_Historia_Mestrado_Profissional</li> <li>Estudos_da_Traducao</li> <li>Farmacia</li> <li>Farmacologia</li> <li>Farmacologia_Mestrado_Profissional</li> <li>Filosofia</li> <li>Fisica</li> <li>Fonoaudiologia</li> <li>Geografia</li> <li>Gestao_do_Cuidado_em_Enfermagem</li> <li>Gestao_do_Cuidado_em_Enfermagem_Mestrado_Profissional</li> <li>Historia</li> <li>Informatica_em_Saude_Mestrado_Profissional</li> <li>Jornalismo</li> <li>Letras_Literatura_Brasileira</li> <li>Letras_Mestrado_Profissional</li> <li>Linguistica</li> <li>Literatura</li> <li>Matematica_Mestrado_Profissional</li> <li>Matematica_Pura_e_Aplicada</li> <li>Matematica_e_Computacao_Cientifica</li> <li>Metodos_e_Gestao_em_Avaliacao_Mestrado_Profissional</li> <li>Metrologia_Cientifica_e_Industrial</li> <li>Neurociencias</li> <li>Nutricao</li> <li>Oceanografia</li> <li>Odontologia</li> <li>Pericias_Criminais_Ambientais_Mestrado_Profissional</li> <li>Programa_de_Pos_Graduacao_Interdisciplinar_em_Ciencias_Humanas</li> <li>Programa_de_Pos_Graduacao_Multicentrico_em_Ciencias_Fisiologicas</li> <li>Programa_de_Pos_Graduacao_Multidisciplinar_em_Saude_Mestrado_Profissional</li> <li>Propriedade_Intelectual_e_Transferencia_de_Tecnologia_para_Inovacao_Mestrado_Profissional</li> <li>Psicologia</li> <li>Quimica</li> <li>Recursos_Geneticos_Vegetais</li> <li>Relacoes_Internacionais</li> <li>Saude_Coletiva</li> <li>Saude_Mental_e_Atencao_Psicossocial_Mestrado_Profissional</li> <li>Saude_Publica</li> <li>Servico_Social</li> <li>Sociologia_Politica</li> <li>Sociologia_e_Ciencia_Politica</li> <li>Tecnologias_da_Informacao_e_Comunicacao</li> <li>Teses_e_dissertacoes_nao_defendidas_na_UFSC</li> <li>Urbanismo_Historia_e_Arquitetura_da_Cidade</li> <li>Engenharia_Mecanica_Mestrado_Profissional</li> <li>Geologia</li> <li>Letras_Ingles_e_Literatura_Correspondente</li> <li>Nanociencia_Processos_e_Materiais_Avancados</li> <li>Medicina_Veterinaria_Convencional_e_Integrativa</li> <li>Ingles_Estudos_Linguisticos_e_Literarios</li> <li>Nanotecnologia_Farmaceutica</li> <li>Teses_e_dissertacoes_do_Centro_Tecnologico</li></ul>
+    </details>
+  </li></ul>
 
 ### Hyperlinks para os temas desta página
 
@@ -1570,8 +1576,13 @@ Além disso, nesta área do GitHub, também está disponibilizado o notebook que
 <details>
   <summary><b>Mais informações <i>(clique para expandir)</i></b></summary>
   <br>
-  <ul><li><b>Quantidade de coleções contempladas: 12<br>Sendo elas: </li>
-  <li><b>Quantidade de trabalhos contemplados no total: 3.554</b></ul>
+  <ul><li><b>Quantidade de trabalhos contemplados no total: 3.554</b></li>
+  <li><b>Quantidade de coleções contempladas: 12</b>
+  <br>
+    <details>
+      <summary>Visualizar coleções utilizadas <i>(clique para expandir)</i></summary>
+        <ul><li>Filosofia</li> <li>Geografia</li> <li>Geologia</li> <li>Historia</li> <li>Psicologia</li> <li>Teses_e_dissertacoes_do_Centro_de_Filosofia_e_Ciencias_Humanas</li> <li>Programa_de_Pos_Graduacao_Interdisciplinar_em_Ciencias_Humanas</li> <li>Servico_Social</li> <li>Sociologia_e_Ciencia_Politica</li> <li>Sociologia_Politica</li> <li>Saude_Mental_e_Atencao_Psicossocial_Mestrado_Profissional</li> <li>Ensino_de_Historia_Mestrado_Profissional</li></ul>
+    </details></li></ul>
 
 ### Hyperlinks para os temas desta página
 
@@ -2175,8 +2186,14 @@ Além disso, nesta área do GitHub, também está disponibilizado o notebook que
 <details>
   <summary><b>Mais informações <i>(clique para expandir)</i></b></summary>
   <br>
-  <ul><li><b>Quantidade de coleções contempladas: 1<br>Sendo ela: </li>
-  <li><b>Quantidade de trabalhos contemplados no total: 555</b></ul>
+  <ul><li><b>Quantidade de trabalhos contemplados no total: 555</b></li>
+  <li><b>Quantidade de coleções contempladas: 1</b>
+  <br>
+    <details>
+      <summary>Visualizar coleções utilizadas <i>(clique para expandir)</i></summary>
+        <ul><li>Historia</li></ul>
+    </details>
+  </li></ul>
 
 ### Hyperlinks para os temas desta página
 
@@ -2976,8 +2993,14 @@ Além disso, nesta área do GitHub, também está disponibilizado o notebook que
 <details>
   <summary><b>Mais informações <i>(clique para expandir)</i></b></summary>
   <br>
-  <ul><li><b>Quantidade de coleções contempladas: 15<br>Sendo elas: </li>
-  <li><b>Quantidade de trabalhos contemplados no total: 3.054</b></ul>
+  <ul><li><b>Quantidade de trabalhos contemplados no total: 3.054</b></li>
+  <li><b>Quantidade de coleções contempladas: 15</b>
+  <br>
+    <details>
+      <summary>Visualizar coleções utilizadas <i>(clique para expandir)</i></summary>
+        <ul><li>Biologia_Celular_e_do_Desenvolvimento</li> <li>Biotecnologia_e_Biociencias</li> <li>Ciencias_da_Reabilitacao</li> <li>Ciencias_Medicas</li> <li>Cuidados_Intensivos_e_Paliativos_Mestrado_Profissional</li> <li>Educacao_Fisica</li> <li>Enfermagem</li> <li>Gestao_do_Cuidado_em_Enfermagem</li> <li>Gestao_do_Cuidado_em_Enfermagem_Mestrado_Profissional</li> <li>Medicina_Veterinaria_Convencional_e_Integrativa</li> <li>Neurociencias</li> <li>Saude_Coletiva</li> <li>Saude_Mental_e_Atencao_Psicossocial_Mestrado_Profissional</li> <li>Saude_Publica</li> <li>Programa_de_Pos_Graduacao_Multidisciplinar_em_Saude_Mestrado_Profissional</li></ul>
+    </details>
+  </li></ul>
 
 ### Hyperlinks para os temas desta página
 
@@ -3575,3 +3598,6 @@ Além disso, nesta área do GitHub, também está disponibilizado o notebook que
 
 </details>
 
+<br>
+<br>
+❗ <i>Observação: A nomenclatura das coleções contempladas para cada treinamento está no formato utilizado para nomear os arquivos, por isso alguns caracteres especiais como acentos e "ç" não constam no nome.</i>
