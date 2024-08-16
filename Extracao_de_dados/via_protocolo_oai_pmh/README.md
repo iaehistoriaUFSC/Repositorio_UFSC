@@ -14,10 +14,17 @@ Cada etapa tem seu próprio arquivo _README_, especificando mais detalhadamente 
 
 ### Etapa 2
 
+- Nesta etapa foram realizadas as extrações de textos e armazenamento em arquivos no formato ".txt" dos arquivos PDFs. Em posse dos links referentes aos PDFs, extraídos com os metadados, pode-se enviar requisições para estes links a fim de baixar o arquivo PDF, realizar a extração do texto, armazenar estes dados extraídos e depois deletamos o arquivo PDF do armazenamento do Drive. Alguns programas se encarregaram de esvaziar a lixeira do Drive para não sobrecarregar o espaço (que antes da atualização de plano era limitado).
+
+### Etapa 3
+
+- A geração da planilha de metadados e do relatório em PDF referentes à extração dos dados é feita nesta etapa. Organiza os dados estruturados armazenados pelas etapas anteriores em uma planilha Excel (".xlsx") e gera indicadores de desempenho referentes ao processo de extração de textos dos trabalhos num arquivo PDF em formato de relatório.
+
+### Etapa 4
+
+- Etapa extra para realização de validações referentes ao processo realizado de extração de dados do Repositório Institucional da UFSC.
 
 ## Atenção!
 - Os arquivos devem ser executados tendo como pasta de trabalho as próprias pastas das etapas ou a pasta "via_protocolo_oai_pmh". Caso contrário o código não será executado da forma adequada;
 
 - Cada etapa tem um requirements.txt diferente;
-
-
