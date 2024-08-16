@@ -20,6 +20,10 @@ Cada etapa tem seu próprio arquivo _README_, especificando mais detalhadamente 
 
 - A geração da planilha de metadados e do relatório em PDF referentes à extração dos dados é feita nesta etapa. Organiza os dados estruturados armazenados pelas etapas anteriores em uma planilha Excel (".xlsx") e gera indicadores de desempenho referentes ao processo de extração de textos dos trabalhos num arquivo PDF em formato de relatório.
 
+### Etapa 4
+
+- Etapa extra para realização de validações referentes ao processo realizado de extração de dados do Repositório Institucional da UFSC.
+
 ## Atenção!
 - Os arquivos devem ser executados tendo como pasta de trabalho as próprias pastas das etapas ou a pasta "via_protocolo_oai_pmh". Caso contrário o código não será executado da forma adequada;
 
