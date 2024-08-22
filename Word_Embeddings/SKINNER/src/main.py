@@ -393,8 +393,8 @@ def gerarConteudoTokensAprofundado(dic_analise : dict, tokens : list[str]) -> st
 def obterResultadoSKINNER(tokens_desejados : list[str], nome_modelo_atual : str, pasta_modelos_atual : str) -> bool:
 
 
-  caminho_arquivo_html=f'/content/html_SKINNER_{nome_modelo_atual}_{'_'.join(tokens_desejados)}.html'
-  caminho_arquivo_relatorio_pdf = f'/content/PDF_SKINNER_{nome_modelo_atual}_{'_'.join(tokens_desejados)}.pdf'
+  caminho_arquivo_html=f'/content/html_SKINNER_{nome_modelo_atual}_{"_".join(tokens_desejados)}.html'
+  caminho_arquivo_relatorio_pdf = f'/content/PDF_SKINNER_{nome_modelo_atual}_{"_".join(tokens_desejados)}.pdf'
 
   # img_src = r'/content/Repositorio_UFSC/Word_Embeddings/SKINNER/src/SKINNER.jpg'
   img_src = r'SKINNER.jpg'
@@ -468,7 +468,7 @@ DIC_INFO = {'HST-03-10':{'Incremental':{'Modelo 1':{'WOKE_1_HST_2003_2010_w2v_in
               'SAUDE-CORPO-03-10':{'Incremental':{},'Temporal':{}},
               'UFSC 2003 - 2006': {'Incremental':{},'Temporal':{}}}
 
-def escolherModelo():
+def SKINNER():
   global DIC_INFO
   while True:
 
