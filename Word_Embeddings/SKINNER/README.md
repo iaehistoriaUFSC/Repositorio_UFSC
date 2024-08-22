@@ -47,9 +47,10 @@ Feita a filtragem da frase passamos a analisar token por token de forma a deixá
 
 Note que os itens listados a cima fornecem a informação dos tokens centrais e seus respectivos tokens de contexto com suas respectivas frequências de ocorrências. Além disso, veja que gênero apareceu 2 vezes na mesma frase, dessa forma sua contagem é atualizada na frase atual, com seu token de contexto "textos" com 2 ocorrências.
 
-Não considerou-se que os próprios tokens centrais aparecessem em seus tokens de contexto (no caso "gênero" não foi considerado um token de contexto para "gênero", por mais que aparecesse dentro da janela de contexto).
-A lógica do filtro nas frases foi validado por análise de respostas no fórum Stack Overflow disponível no link: [How is Word2Vec min_count applied](https://stackoverflow.com/questions/50723303/how-is-word2vec-min-count-applied).
-
+### Importante
+- Não considerou-se que os próprios tokens centrais aparecessem em seus tokens de contexto (no exemplo, "gênero" não foi considerado um token de contexto para "gênero", por mais que aparecesse dentro da janela de contexto).
+- A lógica do filtro nas frases foi validado por análise de respostas no fórum Stack Overflow disponível no link: [How is Word2Vec min_count applied](https://stackoverflow.com/questions/50723303/how-is-word2vec-min-count-applied).
+- A viabilidade de tal desenvolvimento de algoritmo se deu, principalmente, pela disponibilidade de acesso ao corpus de documentos que constituiu o treinamento dos modelos WOKE. Ademais, a estruturação das pastas tornou toda a análise possível: pasta raiz -> pasta da coleção -> pasta do ano -> pasta do trabalho -> arquivos de textos (pré-processados).
 
 ### Observações e Melhorias
 
@@ -59,8 +60,8 @@ O projeto SKINNER ainda está em fase de testes, totalmente funcional, mas não 
 - Ordenação da maior porcentagem para a menor porcentagem de contribuição na listagem de coleções e na listagem de trabalhos.
 - Possibilidade de geração apenas de arquivo HTML com navegação via menu lateral como resultado final, pois o HTML é gerado muito mais rápido que o arquivo PDF.
 
-Embora exista a possibilidade da realização de tais melhorias, é importante destacar que este projeto teve como principal objetivo acender uma luz dentro da "caixa-preta" que assombra o processo de construção de modelos de inteligência artificial, tendo como maior foco, especificamente, modelos de processamento de linguagem natural. 
-Dito isso, pode-se dizer que o resultado atual do SKINNER já mostrou grandes potencialidades na busca por referências dentro do corpus de textos utilizados diante de resultados obtidos por tais modelos.
+**Embora exista a possibilidade da realização de tais melhorias, é importante destacar que este projeto teve como principal objetivo acender uma luz dentro da "caixa-preta" que assombra o processo de construção de modelos de inteligência artificial, tendo como maior foco, especificamente, modelos de processamento de linguagem natural. 
+Dito isso, pode-se dizer que o resultado atual do SKINNER já mostrou grandes potencialidades na busca por referências dentro do corpus de textos utilizados diante de resultados obtidos por tais modelos.**
 
 ## Desenvolvedor
 
