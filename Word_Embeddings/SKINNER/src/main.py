@@ -393,13 +393,14 @@ def gerarConteudoTokensAprofundado(dic_analise : dict, tokens : list[str]) -> st
 def obterResultadoSKINNER(tokens_desejados : list[str], nome_modelo_atual : str, pasta_modelos_atual : str) -> bool:
 
 
-  caminho_arquivo_html=f'/content/html_SKINNER_{nome_modelo_atual}_{"_".join(tokens_desejados)}.html'
-  caminho_arquivo_relatorio_pdf = f'/content/PDF_SKINNER_{nome_modelo_atual}_{"_".join(tokens_desejados)}.pdf'
+  caminho_arquivo_html=f'/content/SKINNER_files/HTMLs/html_SKINNER_{nome_modelo_atual}_{"_".join(tokens_desejados)}.html'
+  caminho_arquivo_relatorio_pdf = f'/content/SKINNER_files/PDFs/PDF_SKINNER_{nome_modelo_atual}_{"_".join(tokens_desejados)}.pdf'
 
-  # img_src = r'/content/Repositorio_UFSC/Word_Embeddings/SKINNER/src/SKINNER.jpg'
-  img_src = r'SKINNER.jpg'
-  # css_src = r'/content/Repositorio_UFSC/Word_Embeddings/SKINNER/src/style_skinner.css'
-  css_src = r'style_skinner.css'
+  os.makedirs(os.path.dirname(caminho_arquivo_html),exist_ok=True)
+  os.makedirs(os.path.dirname(caminho_arquivo_relatorio_pdf),exist_ok=True)
+
+  img_src = r'/content/Repositorio_UFSC/Word_Embeddings/SKINNER/src/SKINNER.jpg'
+  css_src = r'/content/Repositorio_UFSC/Word_Embeddings/SKINNER/src/style_skinner.css'
 
   dic_analise = ConstrucaoContexto(nome_modelo=nome_modelo_atual,tokens=tokens_desejados,pasta_modelos=pasta_modelos_atual)
 
