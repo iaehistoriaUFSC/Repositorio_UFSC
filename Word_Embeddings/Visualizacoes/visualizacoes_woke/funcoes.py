@@ -119,8 +119,7 @@ def descompactarPasta(caminho_pasta : str, excluir_zip : bool = True):
             print(f'Descompactando {i+1} de {qtd_zips}')
             with zipfile.ZipFile(arquivo, 'r') as zip_ref:
                 zip_ref.extractall(caminho_pasta)
-            if excluir_zip:
-                print('TENTANDO REMOVER',arquivo)
+            if excluir_zip:                
                 os.remove(arquivo)
 
 def obterResposta(resposta : str,
