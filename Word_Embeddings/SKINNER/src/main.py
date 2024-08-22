@@ -18,7 +18,10 @@ finally:
 
 OS_ATUAL = platform.system()
 CAMINHO_EXEC_ATUAL = os.getcwd()
-CAMINHO_SKINNER = os.path.join(CAMINHO_EXEC_ATUAL,'SKINNER_files')
+if GOOGLE_COLAB:
+  CAMINHO_SKINNER = os.path.join(r'content','SKINNER_files')
+else:
+  CAMINHO_SKINNER = os.path.join(CAMINHO_EXEC_ATUAL,'SKINNER_files')
 CAMINHO_PLANILHA_METADADOS = os.path.join(CAMINHO_SKINNER,'planilha_metadados_woke.xlsx')
 
 def organizarAmbienteExecucao():
@@ -374,10 +377,11 @@ def gerarConteudoTokensAprofundado(dic_analise : dict, tokens : list[str]) -> st
 
   string_html = ''
   for i,token in enumerate(tokens):
-    string_html += f'''<div class="quebra-de-pagina"><hr class="linha-vermelha"><h2 id="token{i}">{token}</h2><hr class="linha-vermelha">
+    string_html += f'''<div><div class="quebra-de-pagina"><hr class="linha-vermelha"><h2 id="token{i}">{token}</h2><hr class="linha-vermelha">
 
     {gerarConteudoTop20TokensContexto(total_de_ocorrencias_contexto_token=dic_analise[token]['Geral']['Ocorrencias_totais'],
                                       tokens_totais_de_contexto=dic_analise[token]['Geral']['Tokens'])}
+    </div>
 
     {gerarContribuicaoColecoes(total_de_ocorrencias_contexto_token=dic_analise[token]['Geral']['Ocorrencias_totais'],
                                token=token,
