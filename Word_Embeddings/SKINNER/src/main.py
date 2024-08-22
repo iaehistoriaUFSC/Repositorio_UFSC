@@ -19,7 +19,7 @@ finally:
 OS_ATUAL = platform.system()
 CAMINHO_EXEC_ATUAL = os.getcwd()
 if GOOGLE_COLAB:
-  CAMINHO_SKINNER = os.path.join(r'content','SKINNER_files')
+  CAMINHO_SKINNER = r'/content/SKINNER_files'
 else:
   CAMINHO_SKINNER = os.path.join(CAMINHO_EXEC_ATUAL,'SKINNER_files')
 CAMINHO_PLANILHA_METADADOS = os.path.join(CAMINHO_SKINNER,'planilha_metadados_woke.xlsx')
