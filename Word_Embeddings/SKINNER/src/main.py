@@ -453,12 +453,12 @@ DIC_INFO = {'HST-03-10':{'Incremental':{'Modelo 1':{'WOKE_1_HST_2003_2010_w2v_in
                                                     'WOKE_4_HST_2017_2019_w2v_inc':'https://drive.google.com/file/d/1dskJkxgF2FTHJuR59Zuv3ZsipTzJ9Toh/view?usp=drive_link',
                                                     'WOKE_4_HST_2020_2024_w2v_inc':'https://drive.google.com/file/d/1JIgDrcANXH8cQ-UZ69zrLvZQg9EbJEu3/view?usp=drive_link'}},
                            'Temporal':{}},
-              'CFH-03-10':{'Incremental':{'Modelo 1':{'WOKE_1_CFH_2003_2010_w2v_inc':'https://drive.google.com/file/d/1B6RmZIaFasZrmTUGPr1l9n6ISSj4XXrh/view?usp=drive_link'}},
+              'CFH-03-10':{'Incremental':{'Modelo 1':{'WOKE_1_CFH_2003_2010_w2v_inc':'https://drive.google.com/file/d/1PzaQ4_cmeN7PwkO1TbFcKjqZdW7fCBEX/view?usp=drive_link'}},
                            'Temporal':{'Modelo 1':{'WOKE_1_CFH_2003_2010_w2v_tmp':'https://drive.google.com/file/d/1B6RmZIaFasZrmTUGPr1l9n6ISSj4XXrh/view?usp=drive_link',
-                                                   'WOKE_1_CFH_2003_2013_w2v_inc':'https://drive.google.com/file/d/1Noy8xft-tT5Du5MdPoVO_a7c1ghiHzp_/view?usp=drive_link',
-                                                   'WOKE_1_CFH_2003_2016_w2v_inc':'https://drive.google.com/file/d/1t1JAYVaASeHF3g0Y5nEScZnfLhbUu5kU/view?usp=drive_link',
-                                                   'WOKE_1_CFH_2003_2019_w2v_inc':'https://drive.google.com/file/d/1U_4x5Fc7c2uNS-6B3iE5zDSfnii_l6Tt/view?usp=drive_link',
-                                                   'WOKE_1_CFH_2003_2024_w2v_inc':'https://drive.google.com/file/d/1lSdNqxgWcxGZ5UMmjelZ79Z8lDMYQc3g/view?usp=drive_link'}}},
+                                                   'WOKE_1_CFH_2003_2013_w2v_tmp':'https://drive.google.com/file/d/1Noy8xft-tT5Du5MdPoVO_a7c1ghiHzp_/view?usp=drive_link',
+                                                   'WOKE_1_CFH_2003_2016_w2v_tmp':'https://drive.google.com/file/d/1t1JAYVaASeHF3g0Y5nEScZnfLhbUu5kU/view?usp=drive_link',
+                                                   'WOKE_1_CFH_2003_2019_w2v_tmp':'https://drive.google.com/file/d/1U_4x5Fc7c2uNS-6B3iE5zDSfnii_l6Tt/view?usp=drive_link',
+                                                   'WOKE_1_CFH_2003_2024_w2v_tmp':'https://drive.google.com/file/d/1lSdNqxgWcxGZ5UMmjelZ79Z8lDMYQc3g/view?usp=drive_link'}}},
               'SAUDE-CORPO-03-10':{'Incremental':{'Modelo 1':{'WOKE_1_SAUDE-CORPO_2003_2010_w2v_inc':'https://drive.google.com/file/d/1SZx99koZsTg83agzDI92KJ6QmYItbi0B/view?usp=drive_link',
                                                               'WOKE_1_SAUDE-CORPO_2011_2013_w2v_inc':'https://drive.google.com/file/d/1ThhH9z5qSV6-coPkIMLGSyK_by7NWlRk/view?usp=drive_link',
                                                               'WOKE_1_SAUDE-CORPO_2014_2016_w2v_inc':'https://drive.google.com/file/d/1ThhH9z5qSV6-coPkIMLGSyK_by7NWlRk/view?usp=drive_link',
@@ -503,97 +503,100 @@ def SKINNER():
     print('0 - Encerrar programa')
     resposta_corpus = formatarEntrada(input('\nDigite o número referente a sua escolha: '))
     if resposta_corpus != '0':
-      while not resposta_corpus.isdigit() or resposta_corpus not in [str(i) for i in range(1,len(corpus_disponiveis)+1)]:
-        resposta_corpus = formatarEntrada(input('\nPor favor, digite uma resposta válida: '))
-      resposta_corpus = corpus_disponiveis[int(resposta_corpus)-1]
-
-      limparConsole()
-      print('Você escolheu o corpus:',resposta_corpus,'\n')
-      print('Agora escolha qual o modo treinado:\ninc --> Incremental\ntmp --> Temporal\n\n')
-      modos_disponiveis = list(DIC_INFO[resposta_corpus].keys())
-      for i,modo_disponivel in enumerate(modos_disponiveis):
-        print(f'{i+1} - {modo_disponivel}')
-      print('-1 - Voltar para o início')
-      resposta_modo = formatarEntrada(input('\nDigite o número referente a sua escolha: '))
-      if resposta_modo != '-1':
-        while not resposta_modo.isdigit() or resposta_modo not in [str(i) for i in range(1,len(modos_disponiveis)+1)]:
-          resposta_modo = formatarEntrada(input('\nPor favor, digite uma resposta válida: '))
-        resposta_modo = modos_disponiveis[int(resposta_modo)-1]
+      try:
+        while not resposta_corpus.isdigit() or resposta_corpus not in [str(i) for i in range(1,len(corpus_disponiveis)+1)]:
+          resposta_corpus = formatarEntrada(input('\nPor favor, digite uma resposta válida: '))
+        resposta_corpus = corpus_disponiveis[int(resposta_corpus)-1]
 
         limparConsole()
-        print('Você escolheu o modo de treinamento:',resposta_modo,'\n')
-        top_modelos = list(DIC_INFO[resposta_corpus][resposta_modo].keys())
-        if top_modelos:
-          print('Agora escolha a numeração do Modelo:\n\n')
-          for i,top_modelo in enumerate(top_modelos):
-            print(f'{i+1} - {top_modelo}')
-          print('-1 - Voltar para o início')
-          resposta_top_modelo = formatarEntrada(input('\nDigite o número referente a sua escolha: '))
-          if resposta_top_modelo != '-1':
-            while not resposta_top_modelo.isdigit() or resposta_top_modelo not in [str(i) for i in range(1,len(top_modelos)+1)]:
-              resposta_top_modelo = formatarEntrada(input('\nPor favor, digite uma resposta válida: '))
-            resposta_top_modelo = top_modelos[int(resposta_top_modelo)-1]
+        print('Você escolheu o corpus:',resposta_corpus,'\n')
+        print('Agora escolha qual o modo treinado:\ninc --> Incremental\ntmp --> Temporal\n\n')
+        modos_disponiveis = list(DIC_INFO[resposta_corpus].keys())
+        for i,modo_disponivel in enumerate(modos_disponiveis):
+          print(f'{i+1} - {modo_disponivel}')
+        print('-1 - Voltar para o início')
+        resposta_modo = formatarEntrada(input('\nDigite o número referente a sua escolha: '))
+        if resposta_modo != '-1':
+          while not resposta_modo.isdigit() or resposta_modo not in [str(i) for i in range(1,len(modos_disponiveis)+1)]:
+            resposta_modo = formatarEntrada(input('\nPor favor, digite uma resposta válida: '))
+          resposta_modo = modos_disponiveis[int(resposta_modo)-1]
 
-            limparConsole()
-            print('Você escolheu:',resposta_top_modelo,'\n')
-            print('Agora escolha a série temporal a ser utilizada:\n\n')
-            series_temporais = list(DIC_INFO[resposta_corpus][resposta_modo][resposta_top_modelo].keys())
-            for i,serie_temporal in enumerate(series_temporais):
-              print(f'{i+1} - {serie_temporal}')
+          limparConsole()
+          print('Você escolheu o modo de treinamento:',resposta_modo,'\n')
+          top_modelos = list(DIC_INFO[resposta_corpus][resposta_modo].keys())
+          if top_modelos:
+            print('Agora escolha a numeração do Modelo:\n\n')
+            for i,top_modelo in enumerate(top_modelos):
+              print(f'{i+1} - {top_modelo}')
             print('-1 - Voltar para o início')
-            resposta_serie_temporal = formatarEntrada(input('\nDigite o número referente a sua escolha: '))
-            if resposta_serie_temporal != '-1':
-              while not resposta_serie_temporal.isdigit() or resposta_serie_temporal not in [str(i) for i in range(1,len(series_temporais)+1)]:
-                resposta_serie_temporal = formatarEntrada(input('\nPor favor, digite uma resposta válida: '))
-              resposta_serie_temporal = series_temporais[int(resposta_serie_temporal)-1]
+            resposta_top_modelo = formatarEntrada(input('\nDigite o número referente a sua escolha: '))
+            if resposta_top_modelo != '-1':
+              while not resposta_top_modelo.isdigit() or resposta_top_modelo not in [str(i) for i in range(1,len(top_modelos)+1)]:
+                resposta_top_modelo = formatarEntrada(input('\nPor favor, digite uma resposta válida: '))
+              resposta_top_modelo = top_modelos[int(resposta_top_modelo)-1]
 
               limparConsole()
-              print('Você escolheu a série temporal para o modelo:',resposta_serie_temporal,'\n')
-              print('Configurando arquivos do modelo...')
-
-              link_arquivos_modelo_drive = DIC_INFO[resposta_corpus][resposta_modo][resposta_top_modelo][resposta_serie_temporal]
-
-              pasta_arquivos_modelo_atual = os.path.join(CAMINHO_SKINNER,resposta_corpus,resposta_modo,resposta_top_modelo)
-              if not os.path.exists(os.path.join(pasta_arquivos_modelo_atual,resposta_serie_temporal)):
-                baixarArquivoDrive(link_drive=link_arquivos_modelo_drive,caminho_destino=os.path.join(pasta_arquivos_modelo_atual,'pasta_modelo_atual.zip'))
-                descompactarPasta(caminho_pasta=pasta_arquivos_modelo_atual)
-              elif os.path.exists(os.path.join(pasta_arquivos_modelo_atual,'pasta_modelo_atual.zip')):
-                for caminho_arquivo in [os.path.join(pasta_arquivos_modelo_atual,arq) for arq in os.listdir(pasta_arquivos_modelo_atual) if os.path.isfile(os.path.join(pasta_arquivos_modelo_atual,arq)) and arq != 'pasta_modelo_atual.zip']:
-                  os.remove(caminho_arquivo)
-                for caminho_pasta in [os.path.join(pasta_arquivos_modelo_atual,pasta) for pasta in os.listdir(pasta_arquivos_modelo_atual) if os.path.isdir(os.path.join(pasta_arquivos_modelo_atual,pasta))]:
-                  shutil.rmtree(caminho_pasta)
-                descompactarPasta(caminho_pasta=pasta_arquivos_modelo_atual)
-              else:
-                pass
-
-              limparConsole()
-              print('Você escolheu a série temporal para o modelo:',resposta_serie_temporal,'\n')
-              print('Escolha um ou mais tokens a serem buscados:\n\nATENÇÃO:\n- O token precisa existir no modelo para a busca acontecer.\n- Confira a digitação antes de pressionar a tecla Enter.\n\n')
+              print('Você escolheu:',resposta_top_modelo,'\n')
+              print('Agora escolha a série temporal a ser utilizada:\n\n')
+              series_temporais = list(DIC_INFO[resposta_corpus][resposta_modo][resposta_top_modelo].keys())
+              for i,serie_temporal in enumerate(series_temporais):
+                print(f'{i+1} - {serie_temporal}')
               print('-1 - Voltar para o início')
-              token = formatarEntrada(input('Digite um token: '))
-              if token != '-1':
-                tokens_desejados = []
-                while token != '0':
-                  tokens_desejados.append(token)
-                  token = formatarEntrada(input('Digite mais um token (0 para parar): '))
-                limparConsole()
-                print('\n\n\tTokens escolhidos para execução da busca no SKINNER:',', '.join(tokens_desejados))
-                print('\n\t--> Construção do HTML e posterior PDF iniciada. Por favor, aguarde!\n\n')
+              resposta_serie_temporal = formatarEntrada(input('\nDigite o número referente a sua escolha: '))
+              if resposta_serie_temporal != '-1':
+                while not resposta_serie_temporal.isdigit() or resposta_serie_temporal not in [str(i) for i in range(1,len(series_temporais)+1)]:
+                  resposta_serie_temporal = formatarEntrada(input('\nPor favor, digite uma resposta válida: '))
+                resposta_serie_temporal = series_temporais[int(resposta_serie_temporal)-1]
 
-                obterResultadoSKINNER(tokens_desejados=tokens_desejados,
-                                      nome_modelo_atual=resposta_serie_temporal,
-                                      pasta_modelos_atual=pasta_arquivos_modelo_atual)
+                limparConsole()
+                print('Você escolheu a série temporal para o modelo:',resposta_serie_temporal,'\n')
+                print('Configurando arquivos do modelo...')
+
+                link_arquivos_modelo_drive = DIC_INFO[resposta_corpus][resposta_modo][resposta_top_modelo][resposta_serie_temporal]
+
+                pasta_arquivos_modelo_atual = os.path.join(CAMINHO_SKINNER,resposta_corpus,resposta_modo,resposta_top_modelo)
+                if not os.path.exists(os.path.join(pasta_arquivos_modelo_atual,resposta_serie_temporal)):
+                  baixarArquivoDrive(link_drive=link_arquivos_modelo_drive,caminho_destino=os.path.join(pasta_arquivos_modelo_atual,'pasta_modelo_atual.zip'))
+                  descompactarPasta(caminho_pasta=pasta_arquivos_modelo_atual)
+                elif os.path.exists(os.path.join(pasta_arquivos_modelo_atual,'pasta_modelo_atual.zip')):
+                  for caminho_arquivo in [os.path.join(pasta_arquivos_modelo_atual,arq) for arq in os.listdir(pasta_arquivos_modelo_atual) if os.path.isfile(os.path.join(pasta_arquivos_modelo_atual,arq)) and arq != 'pasta_modelo_atual.zip']:
+                    os.remove(caminho_arquivo)
+                  for caminho_pasta in [os.path.join(pasta_arquivos_modelo_atual,pasta) for pasta in os.listdir(pasta_arquivos_modelo_atual) if os.path.isdir(os.path.join(pasta_arquivos_modelo_atual,pasta))]:
+                    shutil.rmtree(caminho_pasta)
+                  descompactarPasta(caminho_pasta=pasta_arquivos_modelo_atual)
+                else:
+                  pass
+
+                limparConsole()
+                print('Você escolheu a série temporal para o modelo:',resposta_serie_temporal,'\n')
+                print('Escolha um ou mais tokens a serem buscados:\n\nATENÇÃO:\n- O token precisa existir no modelo para a busca acontecer.\n- Confira a digitação antes de pressionar a tecla Enter.\n\n')
+                print('-1 - Voltar para o início')
+                token = formatarEntrada(input('Digite um token: '))
+                if token != '-1':
+                  tokens_desejados = []
+                  while token != '0':
+                    tokens_desejados.append(token)
+                    token = formatarEntrada(input('Digite mais um token (0 para parar): '))
+                  limparConsole()
+                  print('\n\n\tTokens escolhidos para execução da busca no SKINNER:',', '.join(tokens_desejados))
+                  print('\n\t--> Construção do HTML e posterior PDF iniciada. Por favor, aguarde!\n\n')
+
+                  obterResultadoSKINNER(tokens_desejados=tokens_desejados,
+                                        nome_modelo_atual=resposta_serie_temporal,
+                                        pasta_modelos_atual=pasta_arquivos_modelo_atual)
+                else:
+                  limparConsole()
               else:
                 limparConsole()
             else:
               limparConsole()
           else:
-            limparConsole()
+            print('Ainda não possuímos arquivos para este(s) modelo(s).\nPor favor, aperte Enter para voltar para o início.')
+            input('\n')
         else:
-          print('Ainda não possuímos arquivos para este(s) modelo(s).\nPor favor, aperte Enter para voltar para o início.')
-          input('\n')
-      else:
-        limparConsole()
+          limparConsole()
+      except Exception as e:
+         print(f'Ocorreu um erro inesperado.\nSe gostaria de contatar um programador do Grupo de Estudos, informe o seguinte erro:\n{e.__class__.__name__}: {str(e)}')
     else:
       limparConsole()
       print('\n\n\tPrograma finalizado.\n\n')
