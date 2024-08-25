@@ -3,7 +3,7 @@
 ## SKINNER - WOKE - UFSC 
 
 O algoritmo Semantic Knowledge and Interpretation Navigator for Nurturing Exact References (SKINNER) foi desenvolvido com o intuito de clarear, na medida do possível, as construções de contexto dos vetores de palavras atribuídas dentro de algumas etapas do algoritmo Word2Vec com base na co-ocorrência de palavras e suas respectivas frequências. Para tal feito, pensou-se em replicar tais etapas e armazenar as informações obtidas.
-Sendo assim, destaca-se que o escopo de análise com base no SKINNER se dá por meio de modelos individuais, ou seja, devemos escolher um modelo para então analisar o processo de construção de contexto com base na co-ocorrência das palavras utilizadas para alimentar seu treinamento.
+Sendo assim, destaca-se que o escopo de análise com base no SKINNER se dá por meio de modelos individuais, ou seja, deve-se escolher um modelo para então analisar o processo de construção de contexto com base na co-ocorrência das palavras utilizadas para alimentar seu treinamento.
 
 Podemos resumir o desenvolvimento deste algoritmo da seguinte forma:
 - **Coleta de informações do modelo utilizado**: Após escolher o modelo que terá sua análise disponibilizada, verifica-se qual foi o tamanho da janela de contexto utilizada no treinamento, bem como os tokens presentes no vocabulário do modelo e o intervalo de datas contemplado pelo treinamento do mesmo.
@@ -50,6 +50,7 @@ Note que os itens listados a cima fornecem a informação dos tokens centrais e 
 ### Importante
 - Não considerou-se que os próprios tokens centrais aparecessem em seus tokens de contexto (no exemplo, "gênero" não foi considerado um token de contexto para "gênero", por mais que aparecesse dentro da janela de contexto).
 - A lógica do filtro nas frases foi validado por análise de respostas no fórum Stack Overflow disponível no link: [How is Word2Vec min_count applied](https://stackoverflow.com/questions/50723303/how-is-word2vec-min-count-applied).
+- Modelos em que as séries temporais foram construídas utilizando o modo "Incremental" tiveram seus arquivos construídos para o SKINNER apenas contemplando o recorte temporal da atualização de treinamento, ou seja, se você optar por analisar o modelo "WOKE_1_CFH_2011_2013_w2v_inc", por exemplo, o SKINNER terá construídos arquivos com base nos arquivos de textos pré-processados da coleção do CFH, durante os anos 2011 e 2013. Se você optar pelo modelo treinado usando o modo "Temporal", no caso "WOKE_1_CFH_2003_2013_w2v_tmp", então você terá acesso à arquivos que foram construídos usando textos de 2003 até 2013.
 - A viabilidade de tal desenvolvimento de algoritmo se deu, principalmente, pela disponibilidade de acesso ao corpus de documentos que constituiu o treinamento dos modelos WOKE. Ademais, a estruturação das pastas tornou toda a análise possível: pasta raiz -> pasta da coleção -> pasta do ano -> pasta do trabalho -> arquivos de textos (pré-processados).
 
 ### Observações e Melhorias
@@ -62,6 +63,10 @@ O projeto SKINNER ainda está em fase de testes, totalmente funcional, mas não 
 
 **Embora exista a possibilidade da realização de tais melhorias, é importante destacar que este projeto teve como principal objetivo acender uma luz dentro da "caixa-preta" que assombra o processo de construção de modelos de inteligência artificial, tendo como maior foco, especificamente, modelos de processamento de linguagem natural. 
 Dito isso, pode-se dizer que o resultado atual do SKINNER já mostrou grandes potencialidades na busca por referências dentro do corpus de textos utilizados diante de resultados obtidos por tais modelos.**
+
+## Sobre os arquivos
+
+Nesta página você terá acesso ao notebook responsável pela construção dos arquivos utilizados pelo SKINNER na hora de apresentar os contextos ("SKINNER_Construção_de_arquivos.ipynb"), ao notebook que executa propriamente dito a aplicação do SKINNER ("Notebook_SKINNER_WOKE_UFSC.ipynb") e na pasta "src" você terá acesso ao arquivo "main.py", onde está o código responsável pelo agrupamento, organização e exibição dos resultados do SKINNER.
 
 ## Desenvolvedor
 

@@ -25,6 +25,12 @@ else:
 CAMINHO_PLANILHA_METADADOS = os.path.join(CAMINHO_SKINNER,'planilha_metadados_woke.xlsx')
 
 def organizarAmbienteExecucao():
+  """
+  Função responsável por realizar a criação da pasta central do SKINNER.
+  Tal pasta será utilizada para armazenar os arquivos baixados para 
+  um determinado modelo, bem como para armazenar os resultados da 
+  busca dos tokens que deseja-se analisar.
+  """
   global CAMINHO_SKINNER
   try:
     os.makedirs(CAMINHO_SKINNER,exist_ok=True)
@@ -33,7 +39,18 @@ def organizarAmbienteExecucao():
   else:
     return True
 
-def coletar_ID_link_Dive(link_drive : str) -> str:
+def coletar_ID_link_Dive(link_drive : str) -> str|None:
+  """
+  Função responsável por coletar o ID de um arquivo ou pasta do Drive
+  com base no seu link de compartilhamento.
+
+  ### Parâmetros:
+  - link_drive: String contendo o link de compartilhamento do arquivo.
+  
+  ### Retornos:
+  - String contendo o ID do arquivo ou None, caso a captura não seja
+  bem sucedida.
+  """
   padrao_regex = r'\/d\/(.+)/'
   busca = re.search(padrao_regex,link_drive)
   if busca:
@@ -44,6 +61,22 @@ def coletar_ID_link_Dive(link_drive : str) -> str:
 def baixarArquivoDrive(link_drive : str,
                        caminho_destino : str,
                        silencio : bool = False) -> bool:
+  """
+  Função responsável por baixar um arquivo presente no ambiente
+  do Google Drive (com acesso liberado) e trazê-lo para o ambiente
+  de execução do programa.
+
+  ### Parâmetros:
+  - link_drive: String contendo o link de compartilhamento do arquivo.
+  - caminho_destino: String contendo o caminho completo (incluindo nome
+  e extensão do arquivo) no ambiente de execução onde deseja armazenar.
+  - silencio: Bool para printar (True) ou não (False) informações sobre 
+  este processo.
+
+  ### Retornos:
+  - Bool para validar o êxito (True) ou não (False) da execução deste
+  processo.
+  """
   try:
     ID_arquivo = coletar_ID_link_Dive(link_drive)
     if ID_arquivo:
@@ -172,55 +205,6 @@ def ConstrucaoContexto(nome_modelo : str,tokens : list[str], pasta_modelos : str
     return dic_analise_completa
   else:
     return None
-
-
-def gerarCapa() -> str:
-    """
-    Gera uma string, para compor a string geral do HTML, referente a capa do
-    relatório.
-
-    :param None: Não há parametros para esta função.
-    :return: String HTML com as características da capa.
-    """
-    string_html = '''<h1>Relatório das etapas<br>Extração de Dados<br>WOKE - UFSC</h1>
-        <br><br><br><br><br><br><br><br><br><br>
-        <p style="text-align: center;">Desenvolvido por: Igor Caetano de Souza
-        <br>Grupo de Estudos e Pesquisa em IA e História - UFSC</p>'''
-    return string_html
-
-def colorir(texto : str,
-            cor_escolhida : str,
-            tag_cor_verde : str = '<cor_verde>',
-            tag_cor_vermelha : str = '<cor_vermelha>',
-            tag_cor_laranja : str = '<cor_laranja>') -> str:
-    """
-    Colore o texto fornecido da cor escolhida, adicionando as tags do CSS referentes a
-    a cor.
-
-    :param texto: String do texto a ser colorido de verde.
-    :param cor_escolhida: String referente uma das cores: verde, vermelho ou laranja.
-    :param tag_cor_verde: String contendo a "tag" da cor verde desejada
-    declarada no arquivo Style CSS.
-    :param tag_cor_vermelha: String contendo a "tag" da cor vermelha desejada
-    declarada no arquivo Style CSS.
-    :param tag_cor_laranja: String contendo a "tag" da cor laranja desejada
-    declarada no arquivo Style CSS.
-    :return: String do texto fornecido com a tag de inicio e fim referente a cor
-    escolhida embutida.
-    """
-    tag_inicio = tag_final = ''
-    cor_escolhida = cor_escolhida.lower()
-    if cor_escolhida in ['verde','esverdeada']:
-        tag_inicio = tag_cor_verde
-        tag_final = tag_cor_verde[0]+'/'+tag_cor_verde[1:]
-    elif cor_escolhida in ['vermelha','vermelho']:
-        tag_inicio = tag_cor_vermelha
-        tag_final = tag_cor_vermelha[0]+'/'+tag_cor_vermelha[1:]
-    elif cor_escolhida in ['laranja','alaranjado','alaranjada']:
-        tag_inicio = tag_cor_laranja
-        tag_final = tag_cor_laranja[0]+'/'+tag_cor_laranja[1:]
-    string_html = tag_inicio+texto+tag_final
-    return string_html
 
 def gerarHTML(titulo : str,
               quebra_de_linha_tamanho_da_imagem : str,
@@ -491,7 +475,7 @@ DIC_INFO = {'HST-03-10':{'Incremental':{'Modelo 1':{'WOKE_1_HST_2003_2010_w2v_in
                                                    'WOKE_1_CFH_2003_2024_w2v_inc':'https://drive.google.com/file/d/12ZOFJaTREVUuI1w1Fqt0PCtz7MDn6WnH/view?usp=drive_link'},
                                        'Modelo 2':{},
                                        'Modelo 3':{}}},
-              'SAUDE-CORPO-03-10':{'Incremental':{},'Temporal':{}},
+              'SAUDE-CORPO-03-10':{'Incremental':{'Modelo 1':{'WOKE_1_SAUDE-CORPO_2003_2010_w2v_inc':'https://drive.google.com/file/d/1SZx99koZsTg83agzDI92KJ6QmYItbi0B/view?usp=drive_link'}},'Temporal':{}},
               'UFSC 2003 - 2006': {'Incremental':{},'Temporal':{}}}
 
 def SKINNER():

@@ -20,6 +20,10 @@ Essa possibilidade de analisar campos semânticos construídos no espaço vetori
 
 Além disso, podemos também realizar "operações semânticas" como as promissoras **analogias**, as quais estão mais detalhadas na etapa de *Treinamento*.
 
+## SKINNER
+
+O algoritmo Semantic Knowledge and Interpretation Navigator for Nurturing Exact References (SKINNER), foi desenvolvido depois de finalizados os treinamentos dos modelos WOKE e visualização de seus resultados. A ideia central é entender melhor como os vetores de palavras foram construídos dentro dos treinamentos. Para mais informações, por favor, acesse a pasta "SKINNER".
+
 ## Desenvolvedor
 
-- [Igor Caetano de Souza](https://github.com/IgorCaetano)
+- Igor Caetano de Souza *[(Perfil GitHub)](https://github.com/IgorCaetano)*

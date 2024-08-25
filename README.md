@@ -33,10 +33,10 @@ O repositório possue duas pastas centrais: uma voltada para os códigos utiliza
 ## Desenvolvedores:
 
 ### Igor Caetano de Souza *[(Perfil GitHub)](https://github.com/IgorCaetano)*
-Estudante de graduação em Engenharia de Controle e Automação e programador que deu início à parte técnica e permanece construindo e realizando a manutenção em todos os códigos de todas as etapas. Atualmente (2023-2024) atua como bolsista de iniciação científica do projeto voltado para a área da programação.
+Estudante de graduação em Engenharia de Controle e Automação e programador que deu início à parte técnica do projeto WOKE (2023-2024) desenvolvendo códigos para todas as etapas de extração de dados, limpeza e pré-processamento, armazenamento, treinamento de modelos Word2Vec e visualização de dados. Além da construção, também realizou a manutenção e documentação dos códigos de todas essas etapas. Atuou em 2023.2 - 2024.2 como bolsista de iniciação científica do projeto voltado para a área da programação, mas também participava ativamente das discussões nas reuniões do grupo de estudos.
 
 ### Davi Alves de Azevedo *[(Perfil GitHub)](https://github.com/daviaaze)*
-Estudante de graduação em História e programador que contribuiu na parte de extração de textos dos PDFs melhorando e otimizando os códigos existentes.
+Estudante de graduação em História e programador que contribuiu na parte de extração de textos dos PDFs, melhorando e otimizando os códigos existentes.
 
 ### Vinicius X. Tobias *[(Perfil GitHub)](https://github.com/vinixavi95)*
 Estudante de graduação em Ciência da Computação e programador que contribuiu na abertura deste GitHub.
@@ -61,6 +61,7 @@ Estudante de graduação em História e um dos membros mais ativos desde a cria�
 ### Sara
 
 ### Jader
+Engenheiro de Controle e Automação que auxiliou em diversas tomadas de decisões no desenvolvimento do projeto na área de Processamento de Linguagem Natural, fornecendo diversos insights importantes do contexto da matemática envolvida na construção dos modelos Word Embbedings. Além disso, participa ativamente com opiniões construtivas e bem embasadas nas discussões das reuniões do grupo de estudos.
 
 ## Integrantes inativos
 ### Ana
