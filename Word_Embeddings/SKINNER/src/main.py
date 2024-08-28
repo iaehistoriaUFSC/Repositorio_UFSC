@@ -15,6 +15,7 @@ finally:
     import os
     import msgpack
     import re
+    import gc
 
 OS_ATUAL = platform.system()
 CAMINHO_EXEC_ATUAL = os.getcwd()
@@ -409,13 +410,19 @@ def obterResultadoSKINNER(tokens_desejados : list[str], nome_modelo_atual : str,
       print("\n\n\tDocumento HTML gerado com sucesso!\n\n\tGerando PDF.\n\t--> Por favor aguarde...")
 
       pdf = html.write_pdf(caminho_arquivo_relatorio_pdf)
+      
+      # Tentativa de mitigar o uso de RAM após conclusão do processo
+      del html
+      del pdf
+      gc.collect()
+
       limparConsole()
 
       print("\n\n\tRelatório PDF gerado com sucesso!\n\n")
       return True
 
   else:
-    print('\n\n\tHTML não conseguiu ser gerado com sucesso...\n\n')
+    print(f'\n\n\tHTML não conseguiu ser gerado com sucesso...\n\tErro encontrado: {msg_geracao_HTML}\n\n')
     return False
 
 def formatarEntrada(entrada : str) -> str:

@@ -55,14 +55,7 @@ Note que os itens listados a cima fornecem a informação dos tokens centrais e 
 
 ### Observações e Melhorias
 
-O projeto SKINNER ainda está em fase de testes, totalmente funcional, mas não totalmente otimizado. Ainda pode-se melhorá-lo da seguinte forma:
-- Filtro para não pesquisar palavras fora do vocabulário;
-- Exibição, no PDF, apenas das coleções e trabalhos que tiveram contribuição, de fato, na construção de contexto para determinado token (atualmente a coleção/trabalho aparece com 0% e um espaço vazio);
-- Ordenação da maior porcentagem para a menor porcentagem de contribuição na listagem de coleções e na listagem de trabalhos.
-- Possibilidade de geração apenas de arquivo HTML com navegação via menu lateral como resultado final, pois o HTML é gerado muito mais rápido que o arquivo PDF.
-
-**Embora exista a possibilidade da realização de tais melhorias, é importante destacar que este projeto teve como principal objetivo acender uma luz dentro da "caixa-preta" que assombra o processo de construção de modelos de inteligência artificial, tendo como maior foco, especificamente, modelos de processamento de linguagem natural. 
-Dito isso, pode-se dizer que o resultado atual do SKINNER já mostrou grandes potencialidades na busca por referências dentro do corpus de textos utilizados diante de resultados obtidos por tais modelos.**
+O projeto SKINNER ainda está em fase de testes, totalmente funcional, mas não totalmente otimizado, logo pode-se observar prováveis erros de uso excessivo de memória RAM ao pesquisar um conjunto muito grande de tokens ou utilizar modelos muito pesados. Algumas melhorias para o SKINNER estsão pontuadas na pasta "Melhorias".
 
 ## Sobre os arquivos
 
