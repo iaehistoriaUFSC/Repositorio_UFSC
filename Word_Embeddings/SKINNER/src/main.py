@@ -453,7 +453,11 @@ DIC_INFO = {'HST-03-10':{'Incremental':{'Modelo 1':{'WOKE_1_HST_2003_2010_w2v_in
                                                     'WOKE_4_HST_2017_2019_w2v_inc':'https://drive.google.com/file/d/1dskJkxgF2FTHJuR59Zuv3ZsipTzJ9Toh/view?usp=drive_link',
                                                     'WOKE_4_HST_2020_2024_w2v_inc':'https://drive.google.com/file/d/1JIgDrcANXH8cQ-UZ69zrLvZQg9EbJEu3/view?usp=drive_link'}},
                            'Temporal':{}},
+<<<<<<< Updated upstream
               'CFH-03-10':{'Incremental':{'Modelo 1':{}},
+=======
+              'CFH-03-10':{'Incremental':{},
+>>>>>>> Stashed changes
                            'Temporal':{'Modelo 1':{'WOKE_1_CFH_2003_2010_w2v_tmp':'https://drive.google.com/file/d/1B6RmZIaFasZrmTUGPr1l9n6ISSj4XXrh/view?usp=drive_link',
                                                    'WOKE_1_CFH_2003_2013_w2v_tmp':'https://drive.google.com/file/d/1Noy8xft-tT5Du5MdPoVO_a7c1ghiHzp_/view?usp=drive_link',
                                                    'WOKE_1_CFH_2003_2016_w2v_tmp':'https://drive.google.com/file/d/1t1JAYVaASeHF3g0Y5nEScZnfLhbUu5kU/view?usp=drive_link',
@@ -584,7 +588,7 @@ def SKINNER():
         else:
           limparConsole()
       except Exception as e:
-         print(f'Ocorreu um erro inesperado.\nSe gostaria de contatar um programador do Grupo de Estudos, informe o seguinte erro:\n{e.__class__.__name__}: {str(e)}')
+        print(f'\n\n\t! Ocorreu um erro inesperado... :/\n\n\t! Se você gostaria de contatar um programador do Grupo de Estudos, informe o seguinte erro:\n\n\t! {e.__class__.__name__}: {str(e)}\n\n\t! Junto com o nome do modelo e os tokens buscados.\n\n\t! Pedimos desculpas pelo ocorrido :/\n\n')
     else:
       limparConsole()
       print('\n\n\tPrograma finalizado.\n\n')
