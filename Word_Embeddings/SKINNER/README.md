@@ -55,7 +55,7 @@ Note que os itens listados a cima fornecem a informação dos tokens centrais e 
 
 ### Observações e Melhorias
 
-O projeto SKINNER ainda está em fase de testes, totalmente funcional, mas não totalmente otimizado, logo pode-se observar prováveis erros de uso excessivo de memória RAM ao pesquisar um conjunto muito grande de tokens ou utilizar modelos muito pesados. Algumas melhorias para o SKINNER estsão pontuadas na pasta "Melhorias".
+O projeto SKINNER ainda está em fase de testes, totalmente funcional, mas não totalmente otimizado, logo pode-se observar prováveis erros de uso excessivo de memória RAM ao pesquisar um conjunto muito grande de tokens ou utilizar modelos muito pesados. Algumas melhorias para o SKINNER estão pontuadas na pasta "Melhorias".
 
 ## Sobre os arquivos
 
