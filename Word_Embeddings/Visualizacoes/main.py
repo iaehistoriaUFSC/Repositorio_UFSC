@@ -53,28 +53,31 @@ def main():
                         while acao != '-1' and not parar_programa: 
                             limparConsole()                              
                             if os.path.basename(tipo_treinamento) == 'Com séries temporais':
-                                if acao == 'Gráfico das similaridades ao decorrer do tempo':        # Os nomes precisam estar iguais os nomes no arquivo de funcoes.py na variável lista_de_acoes_com_series_temporais
-                                    SimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-                                elif acao == 'Vizinhos mais próximos ao decorrer do tempo (.png e .txt)':
-                                    VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-                                elif acao == 'Mapa de calor das similaridades ao decorrer do tempo':
-                                    MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-                                elif acao == 'Estratos do Tempo':
-                                    EstratosDoTempo(modelos_treinados=modelos_carregados)
-                                elif acao == 'Frequência de Palavras ao decorrer do tempo':
-                                    FrequenciaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-                                elif acao == 'Vetores de Palavras':
-                                    VetoresDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-                                elif acao == 'Comparação entre Palavras':
-                                    ComparacaoEntrePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-                                elif acao == 'Mudança de Palavras ao decorrer do tempo':
-                                    MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
-                                elif acao == 'Rede dinâmica dos campos semânticos ao decorrer do tempo':
-                                    RedeDinamicaCampoSemantico(modelos_treinados=modelos_carregados)
-                                elif acao == 'Elemento que não combina dentre os demais':
-                                    ElementoQueNaoCombina(modelos_treinados=modelos_carregados)
-                                else:
-                                    break                                
+                                try:
+                                    if acao == 'Gráfico das similaridades ao decorrer do tempo':    # Os nomes precisam estar iguais os nomes no arquivo de funcoes.py na variável lista_de_acoes_com_series_temporais
+                                        SimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+                                    elif acao == 'Vizinhos mais próximos ao decorrer do tempo (.png e .txt)':
+                                        VizinhosMaisProximosAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+                                    elif acao == 'Mapa de calor das similaridades ao decorrer do tempo':
+                                        MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+                                    elif acao == 'Estratos do Tempo':
+                                        EstratosDoTempo(modelos_treinados=modelos_carregados)
+                                    elif acao == 'Frequência de Palavras ao decorrer do tempo':
+                                        FrequenciaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+                                    elif acao == 'Vetores de Palavras':
+                                        VetoresDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+                                    elif acao == 'Comparação entre Palavras':
+                                        ComparacaoEntrePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+                                    elif acao == 'Mudança de Palavras ao decorrer do tempo':
+                                        MudancaDePalavrasAoDecorrerDoTempo(modelos_treinados=modelos_carregados)
+                                    elif acao == 'Rede dinâmica dos campos semânticos ao decorrer do tempo':
+                                        RedeDinamicaCampoSemantico(modelos_treinados=modelos_carregados)
+                                    elif acao == 'Elemento que não combina dentre os demais':
+                                        ElementoQueNaoCombina(modelos_treinados=modelos_carregados)
+                                    else:
+                                        break
+                                except Exception:
+                                    printarErroInesperado()
                             acao = escolherAcao(os.path.basename(tipo_treinamento))
                             if acao == '0':
                                 parar_programa = True

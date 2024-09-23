@@ -479,7 +479,16 @@ DIC_INFO = {'HST-03-10':{'Incremental':{'Modelo 1':{'WOKE_1_HST_2003_2010_w2v_in
                                                    'WOKE_4_HST_2003_2016_w2v_tmp':'https://drive.google.com/file/d/1eW0oJfFUCewrWzemJxEMPCkY9YNqVMDJ/view?usp=drive_link',
                                                    'WOKE_4_HST_2003_2019_w2v_tmp':'https://drive.google.com/file/d/1eNKpmpuCc9Legi2HStX2NoQqC7CQICdC/view?usp=drive_link',
                                                    'WOKE_4_HST_2003_2024_w2v_tmp':'https://drive.google.com/file/d/1lCYA4obqoWRy2_TMG9sMB4v77ihhhYuk/view?usp=drive_link'}}},
-              'CFH-03-10':{'Incremental':{'Modelo 1':{}},
+              'CFH-03-10':{'Incremental':{'Modelo 1':{'WOKE_1_CFH_2003_2010_w2v_inc':'https://drive.google.com/file/d/1_-lhKN5zK_mzXyzuG-ZTpmHs7OHpK0mc/view?usp=drive_link',
+                                                      'WOKE_1_CFH_2011_2013_w2v_inc':'https://drive.google.com/file/d/1uGhlY7odmcAVeK6z5JE7EPQ5ORn224Mz/view?usp=drive_link',
+                                                      'WOKE_1_CFH_2014_2016_w2v_inc':'https://drive.google.com/file/d/1BHFzfZABpXUxmZRenqI3pQVt5Wt5NYmP/view?usp=drive_link',
+                                                      'WOKE_1_CFH_2017_2019_w2v_inc':'https://drive.google.com/file/d/1ltLfOyMAHa1KKfdgcoEtqWUt7L74YhEH/view?usp=drive_link',
+                                                      'WOKE_1_CFH_2020_2024_w2v_inc':'https://drive.google.com/file/d/1PHzr330Q3oqLyrmFYnyIkpPjbkXk-s5Z/view?usp=drive_link'},
+                                          'Modelo 2':{'WOKE_2_CFH_2003_2010_w2v_inc':'https://drive.google.com/file/d/1glYpHxXdAdMgRZ5KU5J7zJBEjmSpQx9e/view?usp=drive_link',
+                                                      'WOKE_2_CFH_2011_2013_w2v_inc':'https://drive.google.com/file/d/1Iv7Yj5KYcnZ0yyjLAbx6o3ByylJPknQk/view?usp=drive_link',
+                                                      'WOKE_2_CFH_2014_2016_w2v_inc':'https://drive.google.com/file/d/1nCiE-hIKYENCDOgIgY5LUuFMP_o4V07d/view?usp=drive_link',
+                                                      'WOKE_2_CFH_2017_2019_w2v_inc':'https://drive.google.com/file/d/1avJ2wI2tkEKPjw4u02c8u6o3V7pHYupv/view?usp=drive_link',
+                                                      'WOKE_2_CFH_2020_2024_w2v_inc':'https://drive.google.com/file/d/1EKXnHgsUMqP9AvITBVjzyescDKldkkPx/view?usp=drive_link'}},
                            'Temporal':{'Modelo 1':{'WOKE_1_CFH_2003_2010_w2v_tmp':'https://drive.google.com/file/d/1B6RmZIaFasZrmTUGPr1l9n6ISSj4XXrh/view?usp=drive_link',
                                                    'WOKE_1_CFH_2003_2013_w2v_tmp':'https://drive.google.com/file/d/1Noy8xft-tT5Du5MdPoVO_a7c1ghiHzp_/view?usp=drive_link',
                                                    'WOKE_1_CFH_2003_2016_w2v_tmp':'https://drive.google.com/file/d/1t1JAYVaASeHF3g0Y5nEScZnfLhbUu5kU/view?usp=drive_link',
@@ -503,7 +512,7 @@ DIC_INFO = {'HST-03-10':{'Incremental':{'Modelo 1':{'WOKE_1_HST_2003_2010_w2v_in
                                    'Temporal':{'Modelo 1':{'WOKE_1_SAUDE-CORPO_2003_2010_w2v_tmp':'https://drive.google.com/file/d/1Lh-n-clH5j75nfbr8LOOEifx58V2Mifl/view?usp=drive_link'},
                                                 'Modelo 2':{'WOKE_2_SAUDE-CORPO_2003_2010_w2v_tmp':'https://drive.google.com/file/d/1lt7I6rY-qSQjDpKOVApwG4sLET2qUcv7/view?usp=drive_link'},
                                                 'Modelo 3':{'WOKE_3_SAUDE-CORPO_2003_2010_w2v_tmp':'https://drive.google.com/file/d/1XuSp3Bm6EEL1Je6cSLhvC3rJNrIUZGDK/view?usp=drive_link'}}},
-              'UFSC 2003 - 2006': {'Incremental':{},
+              'UFSC 2003 - 2006': {'Incremental':{'Modelo 1':{'WOKE_1_UFSC_2003_2006_w2v_inc':'https://drive.google.com/file/d/1BoaGPBYaF0SDCSxRS4hrnOHOJsKuIgSe/view?usp=drive_link'}},
                                    'Temporal':{}}}
 
 def SKINNER():
