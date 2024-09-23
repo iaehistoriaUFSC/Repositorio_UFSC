@@ -2,8 +2,6 @@
 
 Acessando este diretório você conseguirá rodar programas destinados a exibição dos resultados de múltiplas formas dos nossos modelos treinados.
 
-Para acessar nosso notebook de execução das Visualizações dos Resultados dos Modelos WOKE, por favor, clique neste [link](https://colab.research.google.com/drive/1WQ-BxqWycFUzObUvyDbWo4aT40aB355C?usp=sharing).
-
 Agora, vamos para um passo a passo de cada etapa desde o início da execução do programa até a geração de imagens!
 
 ## Passo 0 - Aguardar a realização das configurações

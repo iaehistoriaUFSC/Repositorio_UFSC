@@ -2,7 +2,6 @@
 import zipfile
 import os, shutil
 import platform
-import time
 from gensim.models import KeyedVectors
 import gdown
 import msgpack
@@ -411,18 +410,14 @@ def escolherModelosTemporais(caminho_pasta_modelo : str) -> list[str] | str:
         if resposta == str(qtd_modelos+1):
             respostas = [i for i in range(qtd_modelos)]
         else:
-            if ',' not in resposta:
-                if resposta != str(qtd_modelos+1):
-                    print('Parece que você tentou digitar o número equivalente a "Todos"...')
-                    time.sleep(2)
-                    respostas = [i for i in range(qtd_modelos)]
-            else:
-                while len([r for r in resposta.split(',') if not r.isdigit()])>0:
-                    resposta = input('Por favor, digite uma resposta válida (só números): ')
-                while len([r for r in resposta.split(',') if int(r) not in range(1,qtd_modelos+1)])>0 or (len(resposta) == 1 and resposta != str(qtd_modelos+1)):
-                    resposta = input(f'Por favor, digite uma resposta válida (os números devem estar entre 1 e {qtd_modelos}): ')
+            while ',' not in resposta:
+                resposta = input('Por favor, digite uma resposta com mais de uma série temporal: ')
+            while len([r for r in resposta.split(',') if not r.isdigit()])>0:
+                resposta = input('Por favor, digite uma resposta válida (só números): ')
+            while len([r for r in resposta.split(',') if int(r) not in range(1,qtd_modelos+1)])>0 or (len(resposta) == 1 and resposta != str(qtd_modelos+1)):
+                resposta = input(f'Por favor, digite uma resposta válida (os números devem estar entre 1 e {qtd_modelos}): ')
             
-                respostas = [int(r)-1 for r in resposta.split(',')]
+            respostas = [int(r)-1 for r in resposta.split(',')]
 
         caminho_modelos_escolhidos = []
         if isinstance(respostas,int):
@@ -537,7 +532,6 @@ def abrirArquivoMsgPack(full_filepath : str,
             variable_loaded = msgpack.unpackb(variable_bytes, raw=False)
             f.close()
             return variable_loaded
-    
 
 def organizaInfoCorpus(caminho : str = r'info_corpus'):
     """
@@ -618,64 +612,6 @@ def organizarAmbiente():
         os.makedirs(r'info_corpus')
     
     organizaInfoCorpus()
-
-def printarErroInesperado() -> None:
-    msg1 = 'Ops! Aconteceu um erto '
-    msg_ = ':P'
-    msg1_ = 'ro inesperado'
-    msg1__ = '...  :/'
-    msg2 = 'Por gentileza, informe este cenário para algum programador do Grupo de Estudos e Pesquisa em IA e História da UFSC.'
-    msg3 = 'Pedimos perdão pelo ocorrido, vamos trabalhar para futuras correções!'
-    msg = ''
-    for c in msg1:        
-        msg += c
-        limparConsole()
-        print(msg)
-        time.sleep(0.1)
-    
-    for i in range(1,3):
-        msg = msg[:-i]
-        limparConsole()        
-        print(msg)
-        time.sleep(0.2)
-    
-    msg += '   ' + msg_
-    limparConsole()
-    print(msg)
-    time.sleep(0.2)
-    msg = msg[:-len('   ' + msg_)]
-
-    for c in msg1_:        
-        msg += c
-        limparConsole()
-        print(msg)
-        time.sleep(0.1)
-        
-    msg += msg1__
-    limparConsole()
-    print(msg)
-    
-    msg_final = msg+ '\n\n'+msg2
-
-    limparConsole()
-    print(msg_final)
-    time.sleep(2.7)
-
-    msg_final_ = msg_final + '\n\n--> '+msg3 + ' <--\n\n'
-
-    for i in range(4):
-        limparConsole()
-        print(msg_final)
-        time.sleep(0.5)
-        limparConsole()
-        print(msg_final_)
-        time.sleep(0.5)        
-    time.sleep(1)
-
-    limparConsole()
-    msg_final_ += '-'*100 + '\n\n'
-    print(msg_final_)
-
 
 # Dicionário que armazena as informações a respeito da estrutura esperada nos arquivos relativos à contagem de tokens diretamente no corpus
 # É utilizado para fazer a verificação se todos os arquivos estão presentes na pasta requerida
