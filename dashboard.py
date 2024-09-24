@@ -32,9 +32,9 @@ if authentication_status:
 
     # Sidebar for navigation
     page = st.sidebar.selectbox("Choose a page", [
-        "File Uploader"
-        "Text Embeddings and Visualization",
+        "File Uploader",
         "Show Labeled Tokens",
+        "Text Embeddings and Visualization",
     ])
 
     if page == "File Uploader":
