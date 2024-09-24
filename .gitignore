@@ -1,0 +1,15 @@
+./prev_work
+.__pycache__
+./*/__pycache__
+./__pycache__
+./.ipynb_checkpoints
+./*/.ipynb_checkpoints
+./.vscode
+./*/.idea
+config.yaml
+./*/config.yaml
+*.csv
+secrets
+.idea
+.idea/*
+
