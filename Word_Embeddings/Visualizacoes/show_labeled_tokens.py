@@ -7,6 +7,7 @@ import ast
 def main():
     st.title('Data Labelling')
     UPLOADED_DATA_FOLDER = 'uploaded_data'
+    LABELING_FOLDER = 'labeled_data'
     # let the user select from a list of csv files from 'uploaded_data' folder
     if os.path.exists(UPLOADED_DATA_FOLDER):
         csv_files = os.listdir(UPLOADED_DATA_FOLDER)
@@ -24,7 +25,7 @@ def main():
 
         add_colour = lambda word, label: f'<span style="color: red">{word}</span>' if label == 'LABEL_1' else f'<span style="color: green">{word}</span>'
         add_grey = lambda word, label: f'<span style="color: grey">{word}</span>'
-
+        metaphors = [x for x in paragraph if x != 'nan' and x != '' and type(x) == str and ast.literal_eval(x)['score'] > .95 and ast.literal_eval(x)['entity'] == 'LABEL_1']
 
         words = [add_colour(
             ast.literal_eval(x)['word'].replace('Ġ', ' '),
@@ -66,18 +67,29 @@ def main():
         #             words.append(add_colour(word, 'LABEL_1'))
         #         else:
         #             words.append(add_colour(word, label))
-        return words
+        return words, metaphors
 
-    words = do_coloring(paragraph)
+    words, metaphors = do_coloring(paragraph)
 
     st.markdown(''.join(words), unsafe_allow_html=True)
 
     # transform the words into a dataframe
-    words_df = pd.DataFrame(words, columns=['word'])
+    words_df = pd.DataFrame(metaphors, columns=['metaphors'])
     words_df['Correct'] = False
     words_df['Correct'] = words_df['Correct'].astype(bool)
-    words_df['Incorrect'] = False
-    words_df['Incorrect'] = words_df['Incorrect'].astype(bool)
 
     # let the user select the correct or incorrect words
     st.data_editor(words_df)
+    # save the dataframe with the correct words
+    # logging info will be the name of the file, the name of the user and the date and the words that are correct and incorrect
+    logging_info = {
+        'filename': csv_path,
+        'user': st.session_state.username,
+        'date': pd.Timestamp.utcnow(),
+        'correct_words': words_df[words_df['Correct'] == True]['metaphors'].tolist(),
+        'incorrect_words': words_df[words_df['Correct'] == False]['metaphors'].tolist()
+    }
+    # save the logging info to a csv file
+    path_to_save = os.path.join(LABELING_FOLDER, csv_path)
+    os.makedirs(os.path.dirname(path_to_save), exist_ok=True)
+    pd.DataFrame.from_dict(logging_info, orient='index').to_csv(path_to_save, index=False, mode='a')

@@ -29,6 +29,8 @@ name, authentication_status, username = authenticator.login()
 if authentication_status:
     authenticator.logout('Logout', 'main')
     st.write(f'Welcome *{name}*')
+    # set the username as a session variable
+    st.session_state.username = username
 
     # Sidebar for navigation
     page = st.sidebar.selectbox("Choose a page", [
