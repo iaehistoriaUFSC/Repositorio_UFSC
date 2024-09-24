@@ -6,4 +6,9 @@
 ./*/.ipynb_checkpoints
 ./.vscode
 ./*/.idea
-./.idea
+config.yaml
+./*/config.yaml
+secrets
+.idea
+.idea/*
+
