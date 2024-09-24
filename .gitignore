@@ -8,6 +8,7 @@
 ./*/.idea
 config.yaml
 ./*/config.yaml
+*.csv
 secrets
 .idea
 .idea/*
