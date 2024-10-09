@@ -154,7 +154,7 @@ def SimilaridadesAoDecorrerDoTempo(modelos_treinados : list[tuple],pasta_para_sa
   caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Sim_{nome_modelo_atual}_{ano_inicial}_{ano_final}.png')
 
   while os.path.exists(caminho_save_fig):  
-    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+    caminho_save_fig = caminho_save_fig.replace('.png','_.png')
 
   plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
@@ -279,7 +279,7 @@ def VizinhosMaisProximos(tupla_modelo_escolhido : tuple[str,KeyedVectors],
       caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'VP_{nome_modelo_escolhido}_{palavra_central}.png')
 
       while os.path.exists(caminho_save_fig):  
-        caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+        caminho_save_fig = caminho_save_fig.replace('.png','_.png')
 
       plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
@@ -294,6 +294,18 @@ def VizinhosMaisProximos(tupla_modelo_escolhido : tuple[str,KeyedVectors],
     limparConsole()
     print('\n\n\tImagem salva em',PASTA_SAVE_IMAGENS,'-->','Vizinhos mais próximos','-->',palavra_central,'\n\n')
     plt.clf()
+
+def coletarApenasToken(linha : str) -> str:
+  linha_sem_ranking = linha[linha.index('.')+1:]
+  linha_sem_similaridade = linha_sem_ranking.split()[0]
+  linha_formatada = linha_sem_similaridade.strip()
+  return linha_formatada
+
+def obterTxtObsidian(txt : str) -> str:
+  tokens = []
+  for linha in txt.split('\n'):
+    tokens.append(f'[[{coletarApenasToken(linha)}]]')
+  return ' '.join(tokens)
 
 def VizinhosMaisProximosTxt(tupla_modelo_escolhido : tuple[str,KeyedVectors],
                             palavra_central : str,
@@ -319,12 +331,20 @@ def VizinhosMaisProximosTxt(tupla_modelo_escolhido : tuple[str,KeyedVectors],
     os.makedirs(pasta_para_salvar_palavra_central,exist_ok=True)
     
     caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'VP_{nome_modelo_escolhido}.txt')
-
+    
     while os.path.exists(caminho_save_txt):
-      caminho_save_txt = caminho_save_txt.replace('.txt','_copia.txt')
+      caminho_save_txt = caminho_save_txt.replace('.txt','_.txt')    
     
     with open(caminho_save_txt,'w',encoding='utf-8') as f:
       f.write(txt)
+
+    caminho_save_txt_obsidian = os.path.join(pasta_para_salvar_palavra_central,f'{palavra_central}.txt')
+    while os.path.exists(caminho_save_txt_obsidian):
+      caminho_save_txt_obsidian = caminho_save_txt_obsidian.replace('.txt','_.txt') 
+    
+    txt_obsidian = obterTxtObsidian(txt)
+    with open(caminho_save_txt,'w',encoding='utf-8') as f:
+      f.write(txt_obsidian)
     
     limparConsole()
     print(f'Arquivo de texto gerado e salvo em "Vizinhos mais próximos" --> "{nome_pasta}"')
@@ -386,7 +406,7 @@ def MapaDeCalorSimilaridadesAoDecorrerDoTempo(modelos_treinados,pasta_para_salva
     caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'MC_{palavra_central}.png')
 
     while os.path.exists(caminho_save_fig):  
-      caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+      caminho_save_fig = caminho_save_fig.replace('.png','_.png')
 
     plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
     
@@ -722,7 +742,7 @@ def FrequenciaDePalavrasSelecionadasAoDecorrerDoTempo(modelos_treinados : list[t
         caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'FRC_{nome_modelo}_{"_".join(lista_palavras[:3])}_etc.png') # Freq relativa corpus
 
     while os.path.exists(caminho_save_fig):
-      caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+      caminho_save_fig = caminho_save_fig.replace('.png','_.png')
 
     plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
@@ -778,14 +798,14 @@ def FrequenciaDePalavrasTop20(tupla_modelo_escolhido,
     os.makedirs(pasta_para_salvar_palavra_central)
 
   while os.path.exists(caminho_save_fig):  
-    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+    caminho_save_fig = caminho_save_fig.replace('.png','_.png')
 
   for i,palavra in enumerate(palavras_filtradas[:300]):
     txt += f'{str(i+1)}. {palavra}: {"{0:,}".format(modelo.get_vecattr(palavra,"count")).replace(",",".")}\n'
 
 
   while os.path.exists(caminho_save_txt):  
-    caminho_save_txt = caminho_save_txt.replace('.txt','_copia.txt')
+    caminho_save_txt = caminho_save_txt.replace('.txt','_.txt')
 
   with open(caminho_save_txt,'w',encoding='utf-8') as f:
     f.write(txt)
@@ -894,7 +914,7 @@ def EstratosDoTempo(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS):
     caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Estratos do Tempo para {palavra_central}.png')
 
     while os.path.exists(caminho_save_fig):  
-      caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+      caminho_save_fig = caminho_save_fig.replace('.png','_.png')
 
     plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
     
@@ -1247,7 +1267,7 @@ def ElementoQueNaoCombina(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS
     caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'EQMC_{nome_modelo_escolhido}.png')
 
     while os.path.exists(caminho_save_fig):
-      caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+      caminho_save_fig = caminho_save_fig.replace('.png','_.png')
 
     plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
@@ -1263,7 +1283,7 @@ def ElementoQueNaoCombina(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IMAGENS
     # caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'EQMC_{nome_modelo_escolhido}.txt')
 
     # while os.path.exists(caminho_save_txt):
-    #   caminho_save_txt = caminho_save_txt.replace('.txt','_copia.txt')
+    #   caminho_save_txt = caminho_save_txt.replace('.txt','_.txt')
     
     # with open(caminho_save_txt,'w',encoding='utf-8') as f:
     #   f.write(txt)
@@ -1465,7 +1485,7 @@ def TaxaSimilaridadeCosseno(modelo_inicial,
       caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'Mdn_selecionadas_{primeiro_ano_inicial}_{ultimo_ano_final}.png')
 
   while os.path.exists(caminho_save_fig):
-    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+    caminho_save_fig = caminho_save_fig.replace('.png','_.png')
 
   plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
 
@@ -1655,7 +1675,7 @@ def RedeDinamicaCampoSemantico(modelos_treinados,pasta_para_salvar=PASTA_SAVE_IM
   caminho_save_fig = os.path.join(pasta_para_salvar_palavra_central,f'RD_CS_{palavra_central}_{nome_modelo}.png')
 
   while os.path.exists(caminho_save_fig):  
-    caminho_save_fig = caminho_save_fig.replace('.png','_copia.png')
+    caminho_save_fig = caminho_save_fig.replace('.png','_.png')
 
   plt.savefig(caminho_save_fig, dpi=300, bbox_inches='tight')
   
