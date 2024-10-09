@@ -297,14 +297,16 @@ def VizinhosMaisProximos(tupla_modelo_escolhido : tuple[str,KeyedVectors],
 
 def coletarApenasToken(linha : str) -> str:
   linha_sem_ranking = linha[linha.index('.')+1:]
-  linha_sem_similaridade = linha_sem_ranking.split()[0]
+  linha_sem_similaridade = linha_sem_ranking[:linha_sem_ranking.index(': ')]
   linha_formatada = linha_sem_similaridade.strip()
   return linha_formatada
 
 def obterTxtObsidian(txt : str) -> str:
   tokens = []
   for linha in txt.split('\n'):
-    tokens.append(f'[[{coletarApenasToken(linha)}]]')
+    if linha: # Se não for linha vazia
+      if linha[0].isdigit() and '.' in linha and ': ' in linha: # Se a linha começar com um número, tiver um "." e um ": "
+        tokens.append(f'[[{coletarApenasToken(linha)}]]')
   return ' '.join(tokens)
 
 def VizinhosMaisProximosTxt(tupla_modelo_escolhido : tuple[str,KeyedVectors],
@@ -330,6 +332,7 @@ def VizinhosMaisProximosTxt(tupla_modelo_escolhido : tuple[str,KeyedVectors],
 
     os.makedirs(pasta_para_salvar_palavra_central,exist_ok=True)
     
+    
     caminho_save_txt = os.path.join(pasta_para_salvar_palavra_central,f'VP_{nome_modelo_escolhido}.txt')
     
     while os.path.exists(caminho_save_txt):
@@ -338,12 +341,12 @@ def VizinhosMaisProximosTxt(tupla_modelo_escolhido : tuple[str,KeyedVectors],
     with open(caminho_save_txt,'w',encoding='utf-8') as f:
       f.write(txt)
 
-    caminho_save_txt_obsidian = os.path.join(pasta_para_salvar_palavra_central,f'{palavra_central}.txt')
+    caminho_save_txt_obsidian = os.path.join(pasta_para_salvar_palavra_central,f'{'_'.join(palavra_central)+'_'+nome_modelo_escolhido}.txt')
     while os.path.exists(caminho_save_txt_obsidian):
-      caminho_save_txt_obsidian = caminho_save_txt_obsidian.replace('.txt','_.txt') 
+      caminho_save_txt_obsidian = caminho_save_txt_obsidian.replace('.txt','_.txt')
     
     txt_obsidian = obterTxtObsidian(txt)
-    with open(caminho_save_txt,'w',encoding='utf-8') as f:
+    with open(caminho_save_txt_obsidian,'w',encoding='utf-8') as f:
       f.write(txt_obsidian)
     
     limparConsole()
