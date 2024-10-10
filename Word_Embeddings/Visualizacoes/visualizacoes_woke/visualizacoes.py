@@ -341,12 +341,12 @@ def VizinhosMaisProximosTxt(tupla_modelo_escolhido : tuple[str,KeyedVectors],
     with open(caminho_save_txt,'w',encoding='utf-8') as f:
       f.write(txt)
 
-    caminho_save_txt_obsidian = os.path.join(pasta_para_salvar_palavra_central,f'{"_".join(palavra_central)+"_"+nome_modelo_escolhido}.txt')
-    while os.path.exists(caminho_save_txt_obsidian):
-      caminho_save_txt_obsidian = caminho_save_txt_obsidian.replace('.txt','_.txt')
+    caminho_save_md_obsidian = os.path.join(pasta_para_salvar_palavra_central,f'{"_".join(palavra_central)+"_"+nome_modelo_escolhido}.md')
+    while os.path.exists(caminho_save_md_obsidian):
+      caminho_save_md_obsidian = caminho_save_md_obsidian.replace('.md','_.md')
     
     txt_obsidian = obterTxtObsidian(txt)
-    with open(caminho_save_txt_obsidian,'w',encoding='utf-8') as f:
+    with open(caminho_save_md_obsidian,'w',encoding='utf-8') as f:
       f.write(txt_obsidian)
     
     limparConsole()
