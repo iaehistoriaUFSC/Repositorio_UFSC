@@ -1,5 +1,21 @@
 # Repositório de códigos do Grupo de Estudos e Pesquisa em IA e História da UFSC
 
+## Aplicativo WOKE para Windows
+
+O instalador `Woke_Setup_v0.1.3-demo_Runtime-fix_Windows_2026-07-23.exe` cria uma
+instalação local com Python 3.12, atalhos e desinstalador. Durante a instalação,
+o usuário pode baixar os dois pacotes recomendados — **História (HST) Temporal,
+Modelo 1** e **História (HST) Incremental, Modelo 1** —, cobrindo a série de
+2003–2010 até 2020–2024, deixar o download para depois ou solicitar todos os 28
+pacotes catalogados. Os modelos permanecem no computador e as análises
+posteriores funcionam sem internet.
+
+A interface oferece dez formas de exploração presentes no programa original:
+similaridades temporais, vizinhos mais próximos, rede semântica, mapa de calor,
+estratos do tempo, PCA de vetores, analogias, elemento destoante, frequência e
+mudança semântica. Os resultados podem ser exportados como HTML interativo e
+CSV.
+
 ## 🎯 Objetivo do projeto
 Treinar modelos de Word Embeddings com textos puramente acadêmicos, extraídos dos PDFs de trabalhos da comunidade de Teses e Dissertações do Repositório Institucional da Universidade Federal de Santa Catarina a fim de analisar conceitos, semântica e análise diacrônica destes mesmos.
 

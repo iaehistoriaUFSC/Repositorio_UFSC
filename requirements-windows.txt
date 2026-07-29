@@ -1,0 +1,11 @@
+streamlit>=1.45,<2
+gensim>=4.3.3,<4.4
+numpy>=1.26,<2.1
+scipy>=1.11,<1.14
+pandas>=2.2,<3
+plotly>=5.24,<7
+scikit-learn>=1.5,<2
+networkx>=3.3,<4
+gdown>=6.1,<7
+pywebview>=5.3,<7
+pillow>=10,<13

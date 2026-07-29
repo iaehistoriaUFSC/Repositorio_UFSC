@@ -1,15 +1,30 @@
-./prev_work
-.__pycache__
-./*/__pycache__
-./__pycache__
-./.ipynb_checkpoints
-./*/.ipynb_checkpoints
-./.vscode
-./*/.idea
+# Python environments and generated files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+venv-*/
+
+# Notebook and editor state
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# Local configuration and outputs
 config.yaml
-./*/config.yaml
-*.csv
 secrets
-.idea
-.idea/*
+prev_work/
+*.csv
+*.log
+.runtime-ready
+
+# WOKE model packages are downloaded on demand and kept outside Git
+modelos_teste/
+models_downloads/
+
+# Superseded local WOKE installer builds
+Woke_Setup_v0.1.0-*.exe
+Woke_Setup_v0.1.1-*.exe
+Woke_Setup_v0.1.2-*.exe
 
