@@ -1,0 +1,395 @@
+{
+  "dataset_id": "metaphoriq-temporal-graph-prototype3-v1",
+  "contract_version": 1,
+  "counts": {
+    "families": 6,
+    "classes": 45,
+    "assignable_classes": 44,
+    "terms": 388,
+    "examples": 214,
+    "annotations": 163,
+    "corpus_sentences": 2863,
+    "documents": 2863,
+    "publications": 227,
+    "sources": 200,
+    "source_candidates": 135,
+    "agents": 216,
+    "review_queue": 99,
+    "source_review_queue": 158,
+    "graph_nodes": 7320,
+    "graph_edges": 8074,
+    "timeline_events": 2443
+  },
+  "node_counts_by_kind": {
+    "agent": 216,
+    "annotation": 163,
+    "class": 45,
+    "corpus_sentence": 2863,
+    "document": 2863,
+    "example": 214,
+    "family": 6,
+    "publication": 227,
+    "source": 200,
+    "source_candidate": 135,
+    "term": 388
+  },
+  "edge_counts_by_type": {
+    "annotation_classified_as": 163,
+    "annotation_has_source_candidate": 135,
+    "annotation_matches_example": 134,
+    "class_has_term": 409,
+    "class_parent": 18,
+    "class_shared_term": 19,
+    "corpus_in_document": 2863,
+    "document_in_publication": 2863,
+    "example_classified_as": 214,
+    "example_has_source": 200,
+    "example_in_publication": 214,
+    "family_contains_class": 45,
+    "same_class_next": 145,
+    "semantic_similarity": 319,
+    "source_candidate_has_agent": 133,
+    "source_has_agent": 200
+  },
+  "annotation_reconciliation": {
+    "candidate": 1,
+    "matched": 134,
+    "unmatched": 28
+  },
+  "source_mining": {
+    "host_citation_records": 107,
+    "host_only_unresolved": 23,
+    "possible_host_authorship": 1,
+    "earlier_source_candidates": 131,
+    "dated_exploratory_candidates": 120,
+    "examples_with_mined_date_candidates": 0,
+    "annotations_with_mined_date_candidates": 21
+  },
+  "chronology": {
+    "resolved_examples": 188,
+    "unresolved_examples": 26,
+    "pre_1600_examples": 3,
+    "default_visible_examples": 90,
+    "minimum_resolved_year": -500,
+    "maximum_resolved_year": 2024
+  },
+  "class_compatibility": [
+    {
+      "class_id": "1.1",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 0,
+      "status": "aligned"
+    },
+    {
+      "class_id": "1.2",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 1,
+      "status": "aligned"
+    },
+    {
+      "class_id": "1.3",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 2,
+      "status": "aligned"
+    },
+    {
+      "class_id": "1.4",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 3,
+      "status": "aligned"
+    },
+    {
+      "class_id": "1.5",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 4,
+      "status": "aligned"
+    },
+    {
+      "class_id": "1.5.1",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 5,
+      "status": "aligned"
+    },
+    {
+      "class_id": "1.5.2",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 6,
+      "status": "aligned"
+    },
+    {
+      "class_id": "1.5.3",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 7,
+      "status": "aligned"
+    },
+    {
+      "class_id": "1.6",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 8,
+      "status": "aligned"
+    },
+    {
+      "class_id": "1.7",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 9,
+      "status": "aligned"
+    },
+    {
+      "class_id": "2.1",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 10,
+      "status": "aligned"
+    },
+    {
+      "class_id": "2.2",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 11,
+      "status": "aligned"
+    },
+    {
+      "class_id": "2.3",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 12,
+      "status": "aligned"
+    },
+    {
+      "class_id": "2.4",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 13,
+      "status": "aligned"
+    },
+    {
+      "class_id": "2.5",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 14,
+      "status": "aligned"
+    },
+    {
+      "class_id": "2.6",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 15,
+      "status": "aligned"
+    },
+    {
+      "class_id": "2.7",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 16,
+      "status": "aligned"
+    },
+    {
+      "class_id": "2.8",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 17,
+      "status": "aligned"
+    },
+    {
+      "class_id": "3.1",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 18,
+      "status": "aligned"
+    },
+    {
+      "class_id": "3.2",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 19,
+      "status": "aligned"
+    },
+    {
+      "class_id": "3.2.1",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 20,
+      "status": "aligned"
+    },
+    {
+      "class_id": "3.2.2",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 21,
+      "status": "aligned"
+    },
+    {
+      "class_id": "3.2.3",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 22,
+      "status": "aligned"
+    },
+    {
+      "class_id": "3.3",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 23,
+      "status": "aligned"
+    },
+    {
+      "class_id": "3.3.1",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 24,
+      "status": "aligned"
+    },
+    {
+      "class_id": "3.3.2",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 25,
+      "status": "aligned"
+    },
+    {
+      "class_id": "3.3.3",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 26,
+      "status": "aligned"
+    },
+    {
+      "class_id": "4.1",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 27,
+      "status": "aligned"
+    },
+    {
+      "class_id": "4.2",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 28,
+      "status": "aligned"
+    },
+    {
+      "class_id": "4.3",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 29,
+      "status": "aligned"
+    },
+    {
+      "class_id": "5.1",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 30,
+      "status": "aligned"
+    },
+    {
+      "class_id": "5.2",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 31,
+      "status": "aligned"
+    },
+    {
+      "class_id": "5.3",
+      "assignable_current_ontology": false,
+      "legacy_model_label_index": 32,
+      "status": "legacy_model_label_is_grouping_node"
+    },
+    {
+      "class_id": "5.3.1",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 33,
+      "status": "aligned"
+    },
+    {
+      "class_id": "5.3.2",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 34,
+      "status": "aligned"
+    },
+    {
+      "class_id": "5.3.3",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 35,
+      "status": "aligned"
+    },
+    {
+      "class_id": "5.3.4",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 36,
+      "status": "aligned"
+    },
+    {
+      "class_id": "5.3.5",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 37,
+      "status": "aligned"
+    },
+    {
+      "class_id": "5.3.6",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 38,
+      "status": "aligned"
+    },
+    {
+      "class_id": "5.3.6.1",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": null,
+      "status": "assignable_missing_from_legacy_model"
+    },
+    {
+      "class_id": "5.3.7",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 39,
+      "status": "aligned"
+    },
+    {
+      "class_id": "6.1",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 40,
+      "status": "aligned"
+    },
+    {
+      "class_id": "6.2",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 41,
+      "status": "aligned"
+    },
+    {
+      "class_id": "6.3",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 42,
+      "status": "aligned"
+    },
+    {
+      "class_id": "3.3.4",
+      "assignable_current_ontology": true,
+      "legacy_model_label_index": 43,
+      "status": "aligned"
+    }
+  ],
+  "vectors": {
+    "id": "lexical-hash-tfidf-256-v1",
+    "status": "development_baseline",
+    "method": "signed feature hashing over Unicode word unigrams and bigrams with TF-IDF and L2 normalization",
+    "not_claimed_as": [
+      "RoBERTa",
+      "transformer",
+      "PCA",
+      "UMAP"
+    ],
+    "rows": 3291,
+    "dimensions": 256,
+    "dtype": "float32",
+    "endianness": "little",
+    "matrix_file": "lexical-hash-tfidf-256-v1.f32",
+    "index_file": "lexical-hash-tfidf-256-v1.index.jsonl",
+    "projection": {
+      "id": "signed-hash-random-projection-3d-v1",
+      "method": "deterministic signed random projection followed by per-axis z-score",
+      "file": "signed-hash-random-projection-3d-v1.jsonl",
+      "status": "development_layout"
+    }
+  },
+  "database": {
+    "file": "metaphoriq-visualization.sqlite",
+    "sqlite_version": "3.50.4",
+    "user_version": 1,
+    "integrity_check": "ok",
+    "fts5": true,
+    "table_counts": {
+      "nodes": 7320,
+      "edges": 8074,
+      "timeline_events": 2443,
+      "entity_records": 7577,
+      "vector_index": 3291,
+      "layout_3d": 3291,
+      "periods": 7
+    }
+  },
+  "warnings": [
+    "Counts describe the annotated collection, not historical prevalence.",
+    "The source export contained no RoBERTa embeddings; the included vector set is a lexical development baseline.",
+    "Candidate and unmatched TXT reconciliation records require humanities review.",
+    "Fernández Sebastián/Sebastián 2024 is presumed to identify the host publication, not the quotation occurrence, unless explicitly verified otherwise.",
+    "Machine-mined source and date candidates are isolated on a non-default exploratory chronology axis.",
+    "Legacy model labels include grouping node 5.3 and omit assignable node 5.3.6.1."
+  ]
+}

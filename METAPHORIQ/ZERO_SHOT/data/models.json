@@ -1,0 +1,66 @@
+{
+  "registry_version": 1,
+  "models": [
+    {
+      "id": "melbert",
+      "label": "MelBERT (VUA-18)",
+      "role": ["detection"],
+      "kind": "melbert_repository",
+      "recommended": true,
+      "experimental": false,
+      "languages": ["en"],
+      "training_data": "VUA-18",
+      "repository": "https://github.com/jin530/MelBERT.git",
+      "checkpoint_url": "https://drive.google.com/uc?id=1RKyP-_kje6xWlNuXeoSIHZnYxUyXnupZ",
+      "checkpoint_file_id": "1RKyP-_kje6xWlNuXeoSIHZnYxUyXnupZ",
+      "license": "not declared upstream; download-only research integration",
+      "citation_url": "https://aclanthology.org/2021.naacl-main.141/",
+      "notes": "Binary target-word detector. Official code targets Python 3.7 / Torch 1.6 / Transformers 4.2.2."
+    },
+    {
+      "id": "xlmr",
+      "label": "XLM-R VUA token detector",
+      "role": ["detection", "taxonomy_encoder"],
+      "kind": "huggingface",
+      "recommended": true,
+      "experimental": false,
+      "languages": ["multilingual-zero-shot", "training-en"],
+      "training_data": "VU Amsterdam Metaphor Corpus",
+      "repository_id": "lwachowiak/Metaphor-Detection-XLMR",
+      "positive_label_id": 1,
+      "license": "CC-BY-NC-SA-3.0",
+      "citation_url": "https://aclanthology.org/2022.flp-1.7/",
+      "notes": "Token classifier trained on English VUAMC; multilingual transfer requires local evaluation."
+    },
+    {
+      "id": "cl_roberta",
+      "label": "CreativeLang RoBERTa VUA-20",
+      "role": ["detection", "taxonomy_encoder"],
+      "kind": "huggingface",
+      "recommended": false,
+      "experimental": false,
+      "languages": ["en"],
+      "training_data": "CreativeLang/vua20_metaphor",
+      "repository_id": "CreativeLang/metaphor_detection_roberta_seq",
+      "positive_label_id": 1,
+      "license": "CC-BY-2.0",
+      "citation_url": "https://aclanthology.org/2023.eacl-main.114/",
+      "notes": "English token-classification baseline released by CreativeLang."
+    },
+    {
+      "id": "framebert",
+      "label": "FrameBERT + FrameNet",
+      "role": ["detection", "frame_labels"],
+      "kind": "framebert_repository",
+      "recommended": false,
+      "experimental": true,
+      "languages": ["en"],
+      "training_data": "VUA / MOH-X / TroFi",
+      "repository": "https://github.com/liyucheng09/MetaphorFrame.git",
+      "license": "not declared upstream; download-only research integration",
+      "citation_url": "https://aclanthology.org/2023.eacl-main.114/",
+      "notes": "Experimental: requires the official repository and FrameNet/frame-finder resources."
+    }
+  ]
+}
+

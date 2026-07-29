@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-07-28T23:28:06.092351+00:00",
+  "source": "../Zeitschichten/prototype-3 organized snapshot",
+  "files": [
+    {
+      "file": "models.json",
+      "bytes": 2598,
+      "sha256": "e1d461433559dff4c1100a37f5b9dda1cd23a7565819b1b9dd6fdccb28ced96a"
+    },
+    {
+      "file": "reference/annotations.jsonl",
+      "bytes": 261246,
+      "sha256": "264e48b27313055e9e996850f096a370adc28f6642612b7dcadada4c474ec407"
+    },
+    {
+      "file": "reference/dataset-profile.json",
+      "bytes": 10397,
+      "sha256": "6300c24a8de04a34d8093b303258aef48ac9bfa7b07991a4e5bf18576fc6634a"
+    },
+    {
+      "file": "reference/examples.jsonl",
+      "bytes": 908377,
+      "sha256": "12d79dd1393e14b8337e54a1bfca4c05e172c3912b19be7215e6a8af219a9b43"
+    },
+    {
+      "file": "reference/families.jsonl",
+      "bytes": 3630,
+      "sha256": "a8b5c7c4e09855f4e794f53becfd756569aa5e46861ca66eb84b6a04458b741e"
+    },
+    {
+      "file": "reference/javier_taxonomy_updated_44_classes.json",
+      "bytes": 85587,
+      "sha256": "264cec77860a3abb4d8326bdda1e20a00dbec73e58ce242e017581cfff45205a"
+    },
+    {
+      "file": "reference/metaphoriq-taxonomy.txt",
+      "bytes": 38434,
+      "sha256": "1f436ee71dfba8ece3c8c258cb6374f020283faf3043f3a6bd3a1a8826be4459"
+    },
+    {
+      "file": "reference/taxonomy_nodes.jsonl",
+      "bytes": 38315,
+      "sha256": "47969a3a1c19b403568863cdc412f310ff9d09e06bea38928ff323a5d34fbe05"
+    }
+  ]
+}
